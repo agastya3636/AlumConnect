@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
-    fullname: {
+const alumniSchema = new mongoose.Schema({
+    name: {
         type: String,
         required: [true, "Fullname is required"],
         trim: true,
@@ -59,8 +59,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-
+    yearofpassing: {
+        type: Number,
+        required:true,
+    },
 });
 
 
-export const User = mongoose.model("Alumni", userSchema);
+export const Alumni = mongoose.model("Alumni", alumniSchema);
