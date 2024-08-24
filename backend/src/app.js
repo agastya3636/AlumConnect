@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 
 import routerAlumni from './routes/alumni.routes.js'
+import routerJobs from './routes/jobs.routes.js'
 
 
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use("/alumni", routerAlumni);
+app.use("/jobs", routerJobs);
 
 
 app.get("/",
