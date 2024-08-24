@@ -21,7 +21,7 @@ const forumSchema = new mongoose.Schema({
     },
     posted_by: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Alumni",
+        ref: "User",
     },
     collage:
     {
