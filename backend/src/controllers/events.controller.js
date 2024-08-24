@@ -27,20 +27,58 @@ const EventPosts = asyncHandeller(
             // collage
         } = req.body;
 
-        const event = new Event({
-            title,
-            description,
-            location,
-            // posted_by,
-            date,
-            
-            // collage
-        });
-        await event.save();
-        res.status(200).json({
-            success: true,
-            message: "Event Post endpoint hit",
-        });
+        if(!title || title.trim() === ""){
+
+            return res.status(400).json({
+                success: false,
+                message:"title is required"
+            });
+        }
+        if(!description|| description.trim() === ""){
+
+            return res.status(400).json({
+                success: false,
+                message:"Description is required"
+            });
+        }
+        if(!location || location.trim() === ""){
+
+            return res.status(400).json({
+                success: false,
+                message:"Location is required"
+            });
+        }
+        if(!date || date.trim() === ""){
+
+            return res.status(400).json({
+                success: false,
+                message:"Date is required"
+            });
+        }
+    
+        try{
+            const event = new Event({
+                title,
+                description,
+                location,
+                date,
+                // postedBy,
+                //college
+            });
+
+            await event.save();
+            res.status(200).json({
+                success: true,
+                message: "Event post endpoint hit",
+            });
+        }
+       catch(error) {
+            res.status(500).json({
+                success:false,
+                message : "Failed to register the Event"
+            });
+       }
+    
     }
 );
 
