@@ -7,7 +7,7 @@ const AppLayout = () => {
     <div className="grid applayout h-screen  ">
       <Header />
       <Sidebar />
-      <main className="bg-gray-200 pt-10 px-12 pb-12">
+      <main className="bg-gray-200 pt-10 px-12 pb-12 overflow-y-scroll">
         <Outlet />
       </main>
     </div>

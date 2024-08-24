@@ -9,3 +9,24 @@
 .sidebar {
   grid-row: 1 / -1;
 }
+
+.navlinks:link {
+  color: #ddd;
+}
+
+.navlinks:visited {
+  color: #000;
+}
+
+.navlinks:focus {
+  text-decoration: none;
+  background: #ccc;
+}
+
+.navlinks:hover {
+  text-decoration: none;
+}
+
+.navlinks:active {
+  background: #ddd;
+}
