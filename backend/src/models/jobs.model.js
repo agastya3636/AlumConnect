@@ -33,11 +33,15 @@ const jobSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Collage",
     },
-    collage:
-    {
+    collage:  {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Collage",
     },
+   link: {
+        type : String,
+        required : [true , " application link is  requried"],
+        trim : true,
+    }
 });
 
 export const Job = mongoose.model("Job", jobSchema);
