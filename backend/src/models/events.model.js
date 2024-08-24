@@ -19,6 +19,7 @@ const eventSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: [true, "Date is required"],
+        default:Date.now,
     },
     created_at: {
         type: Date,
@@ -28,15 +29,15 @@ const eventSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    posted_by: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Collage",
-    },
-    collage:
-    {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Collage",
-    },
+    // posted_by: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Collage",
+    // },
+    // collage:
+    // {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Collage",
+    // },
 });
 
 export const Event = mongoose.model("Event", eventSchema);
