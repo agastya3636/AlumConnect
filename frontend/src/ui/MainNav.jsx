@@ -1,32 +1,81 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import {
+  AiOutlineHome,
+  AiOutlineRead,
+  AiOutlineUsergroupAdd,
+  AiOutlineUser,
+  AiOutlineCalendar,
+  AiOutlineContainer,
+  AiOutlineNodeIndex,
+} from "react-icons/ai";
 
 const MainNav = () => {
   return (
-    <nav className="py-12">
-      <ul className="flex flex-col gap-2 text-xl font-semibold ">
-        <li className="hover:bg-gray-200 px-2 py-1">
-          <NavLink to="dashboard" className="">
-            Home
+    <nav className="py-22">
+      <ul className="flex flex-col gap-3 text-xl font-semibold ">
+        <li className="  hover:bg-gray-200 rounded active:bg-purple-200   ">
+          <NavLink
+            to="dashboard"
+            className="flex items-center gap-4 px-8 navlinks  py-2"
+          >
+            <AiOutlineHome />
+            <span>Home</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 px-2 py-1">
-          <NavLink to="alumnidirectory">Alumni Directory</NavLink>
+        <li className="hover:bg-gray-200 ">
+          <NavLink
+            to="alumnidirectory"
+            className="flex items-center gap-4 px-8 navlinks  py-2"
+          >
+            <AiOutlineUsergroupAdd />
+            <span>Batches</span>
+          </NavLink>
         </li>
-        <li className="hover:bg-gray-200 px-2 py-1">
-          <NavLink to="events">Events</NavLink>
+        <li className="hover:bg-gray-200 ">
+          <NavLink
+            to="events"
+            className="flex items-center gap-4 px-8 navlinks  py-2"
+          >
+            <AiOutlineCalendar />
+            <span>Events</span>
+          </NavLink>
         </li>
-        <li className="hover:bg-gray-200 px-2 py-1">
-          <NavLink to="discussionforums">Forums</NavLink>
+        <li className="hover:bg-gray-200 ">
+          <NavLink
+            to="discussionforums"
+            className="flex items-center gap-4 px-8 navlinks  py-2"
+          >
+            <AiOutlineRead />
+            <span>Forums</span>
+          </NavLink>
         </li>
-        <li className="hover:bg-gray-200 px-2 py-1">
-          <NavLink to="mentorship">Mentorship</NavLink>
+        <li className="hover:bg-gray-200 ">
+          <NavLink
+            to="mentorship"
+            className="flex items-center gap-4 px-8 navlinks  py-2"
+          >
+            <AiOutlineContainer />
+            Mentorship
+          </NavLink>
         </li>
-        <li className="hover:bg-gray-200 px-2 py-1">
-          <NavLink to="placement">Placement</NavLink>
+        <li className="hover:bg-gray-200 ">
+          <NavLink
+            to="placement"
+            className="flex items-center gap-4 px-8 navlinks  py-2"
+          >
+            <AiOutlineNodeIndex />
+            <span>Placement</span>
+          </NavLink>
         </li>
-        <li className="hover:bg-gray-200 px-2 py-1">
-          <NavLink to="profile">My Profile</NavLink>
+        <li className="hover:bg-gray-200 ">
+          <NavLink
+            to="profile"
+            className="flex items-center gap-4 px-8 navlinks  py-2"
+          >
+            <AiOutlineUser />
+            <span>My Profile</span>
+          </NavLink>
         </li>
       </ul>
     </nav>
