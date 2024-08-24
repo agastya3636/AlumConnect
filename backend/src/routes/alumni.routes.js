@@ -18,8 +18,14 @@ router.route("/login").post(
         });
     }
 )
-router.route("/jobpost").post(
-    alumniController.JobPosts
+
+router.route("/register").post(
+    (req, res) => {
+        res.status(200).json({
+            success: true,
+            message: "Register endpoint hit",
+        });
+    }
 )
 
 export default router;
