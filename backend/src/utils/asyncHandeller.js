@@ -5,7 +5,7 @@ const asyncHandeller = (fn) =>
     {
         return Promise
             .resolve(fn(req, res, next))
-            .catch(next);
+            .catch((err) => next(err));
     };
     }
 
