@@ -65,5 +65,25 @@ const alumniSchema = new mongoose.Schema({
     },
 });
 
+alumniSchema.pre("save", async function(next) {
+    const alumni = this;
+    if (!alumni.isModified("password")) {
+        return next();
+    }
+    try {
+        const saltRound = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(alumni.password, saltRound);
+        alumni.password = hashPassword;
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
+alumniSchema.methods.verifyPassword=async function (password) {
+    
+    const isMatch = await bcrypt.compare(password,this.password);
+    return isMatch; 
+}
 
 export const Alumni = mongoose.model("Alumni", alumniSchema);

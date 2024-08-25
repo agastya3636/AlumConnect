@@ -56,7 +56,7 @@ collageSchema.pre("save", async function(next) {
 });
 collageSchema.methods.verifyPassword=async function (password) {
    
-    const isMatch = bcrypt.compare(password,this.password);
+    const isMatch = await bcrypt.compare(password,this.password);
     return isMatch; 
 }
 

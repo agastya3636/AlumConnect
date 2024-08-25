@@ -54,4 +54,25 @@ const studentSchema = new mongoose.Schema({
     },
 });
 
+studentSchema.pre("save", async function(next) {
+    const student = this;
+    if (!student.isModified("password")) {
+        return next();
+    }
+    try {
+        const saltRound = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(student.password, saltRound);
+        student.password = hashPassword;
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
+studentSchema.methods.verifyPassword=async function (password) {
+    
+    const isMatch = await bcrypt.compare(password,this.password);
+    return isMatch; 
+}
+
 export const Student = mongoose.model("Student", studentSchema);
