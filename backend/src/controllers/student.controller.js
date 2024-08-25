@@ -4,9 +4,73 @@ import { asyncHandeller } from "../utils/asyncHandeller";
 const studentRegister = asyncHandeller(async (req, res) => {
     try {
         const { rollno, fullname, email, username, password, collage, department, batch } = req.body;
-        if (!rollno || !fullname || !email || !username || !password || !collage || !department || !batch) {
-            return res.status(400).json({ message: 'Rollno is required, Fullname is required, Email is required, Username is required, Password is required, Collage is required, Department is required, Batch is required' });
+       
+        if(!rollno|| rollno.trim()===""){
+
+            return res.status(400).json({
+                success: false,
+                message:"Roll No is required"
+            });
         }
+
+        if(!fullname|| fullname.trim() === ""){
+
+            return res.status(400).json({
+                success: false,
+                message:"Fullname is required"
+            });
+        }
+
+        if(!email || email.trim() === ""){
+
+            return res.status(400).json({
+                success: false,
+                message:"Email is required"
+            });
+        }
+
+        if(!username || username.trim() === ""){
+
+            return res.status(400).json({
+                success: false,
+                message:"User name is required"
+            });
+        }
+
+        if(!password ){
+
+            return res.status(400).json({
+                success: false,
+                message:"Password is required"
+            });
+        }
+
+        if(!collage|| collage.trim() === ""){
+
+            return res.status(400).json({
+                success: false,
+                message:"College is required"
+            });
+        }
+
+        if(!department|| department.trim() === ""){
+
+            return res.status(400).json({
+                success: false,
+                message:"Department is required"
+            });
+        }
+
+        if(!batch || batch.trim() === ""){
+
+            return res.status(400).json({
+                success: false,
+                message:"Batch is required"
+            });
+        }
+      
+
+
         const userExist1 = await Student.findOne({ email });
         const userExist2 = await Student.findOne({ username });
         if (userExist1 || userExist2) {

@@ -33,7 +33,7 @@ const alumniLogin = asyncHandeller(
             email: userExist.email,
             username: userExist.username,
             role: userExist.role,
-            message: "Alumni Login endpoint hit",
+            message: "Alumni Login endpoint hit"
         });
         
         
@@ -47,7 +47,7 @@ const alumniProfile = asyncHandeller(
         res.status(200).json({
             success: true,
             user: user,
-            message: "Alumni Profile endpoint hit",
+            message: "Alumni Profile endpoint hit"
         });
     }
 );
@@ -56,11 +56,11 @@ const alumniUpdateProfile = asyncHandeller(
     async (req, res) => {
         const { _id } = req.user;
         const user = await Alumni.findByIdAndUpdate(_
-            id, req.body, { new: true });
+            id,req.body, { new: true });
         res.status(200).json({
             success: true,
             user: user,
-            message: "Alumni Update Profile endpoint hit",
+            message: "Alumni Update Profile endpoint hit"
         });
     }
 );
