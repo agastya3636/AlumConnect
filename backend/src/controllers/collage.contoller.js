@@ -5,8 +5,17 @@ import { asyncHandeller } from "../utils/asyncHandeller.js";
 const collageRegister = asyncHandeller(async (req, res) => {
     try{
     const { name,email,username,password,role } = req.body;
-    if (!name || !email || !username||!password || !role) {
-        return res.status(400).json({ message: 'Name is required, Email is required, Password is required, Username is required, Role is required' });
+    if (!name||name.trim()==="") {
+        return res.status(400).json({ message: 'Name is required' });
+    }
+    if (!email||email.trim()==="") {
+        return res.status(400).json({ message: 'Email is required' });
+    }
+    if (!password||password.trim()==="") {
+        return res.status(400).json({ message: ' Password is required' });
+    }
+    if (!role||role.trim()==="") {
+        return res.status(400).json({ message: 'Role is required' });
     }
     const userExist1 = await Collage.findOne({ email });
     const userExist2 = await Collage.findOne({ username });
@@ -46,8 +55,11 @@ const collageLogin = asyncHandeller(
         try {
             const { username, password } = req.body;
 
-            if (!username || !password) {
-                return res.status(400).json({ message: "Username and password are required" });
+            if (!username ||username.trim()==='') {
+                return res.status(400).json({ message: "Username  are required" });
+            }
+            if (!password||password.trim()==='') {
+                return res.status(400).json({ message: " password are required" });
             }
             const userExist = await Collage.findOne({ username });
     

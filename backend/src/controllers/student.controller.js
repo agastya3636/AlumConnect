@@ -1,4 +1,4 @@
-import { Student } from "../models/student.model";
+import { Student } from "../models/student.model.js";
 import { asyncHandeller } from "../utils/asyncHandeller";
 
 const studentRegister = asyncHandeller(async (req, res) => {
@@ -101,8 +101,7 @@ const studentProfile = asyncHandeller(
 const studentUpdateProfile = asyncHandeller(
     async (req, res) => {
         const { _id } = req.user;
-        const user = await Student.findByIdAndUpdate(_
-            id, req.body, { new: true });
+        const user = await Student.findByIdAndUpdate(_id, req.body, { new: true });
         res.status(200).json({
             success: true,
             user: user,
