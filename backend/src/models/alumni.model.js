@@ -33,21 +33,15 @@ const alumniSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    updated_at: {
-        type: Date,
-        default: Date.now,
-    },
     collage: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Collage",
     },
     department: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Department",
+        type: String,
     },
     batch: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Batch",
+        type:String,
     },
     linkedinlink: {
         type: String,

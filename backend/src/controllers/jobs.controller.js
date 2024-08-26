@@ -93,4 +93,46 @@ const JobPosts = asyncHandeller(
        
 });
 
-export { getJobs , JobPosts};
+const getJobPostById = asyncHandeller(
+    async (req, res) => {
+        const job = await Job.findById(req.params.id);
+        res.status(200).json({
+            success: true,
+            job,
+            message: "Job fetched successfully",
+        });
+    }
+);
+
+const updateJobPostById = asyncHandeller(
+    async (req, res) => {
+        const job = await Job.findByIdAndUpdate
+            (req.params.id, req.body, { new: true });
+        res.status(200).json({
+            success: true,
+            job,
+            message: "Job updated successfully",
+        });
+    }
+);
+
+const deleteJobPostById = asyncHandeller(
+    async (req, res) => {
+        const job = await Job.findByIdAndDelete(req.params.id);
+        res.status(200).json({
+            success: true,
+            job,
+            message: "Job deleted successfully",
+        });
+    }
+);
+
+
+
+export {
+    getJobs,
+    JobPosts,
+    getJobPostById,
+    updateJobPostById,
+    deleteJobPostById,
+};

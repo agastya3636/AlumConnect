@@ -105,7 +105,32 @@ const collageProfileUpdate = asyncHandeller(
     }
 );
 
+const getCollageById = asyncHandeller(
+    async (req, res) => {
+        const collage = await Collage.findById(req.params.id);
+        res.status(200).json({
+            success: true,
+            collage: collage,
+            message: "Collage fetched successfully",
+        });
+    }
+);
+
+const deleteCollage = asyncHandeller(
+    async (req, res) => {
+        const collage = await Collage.findByIdAndDelete(req.params.id);
+        res.status(200).json({
+            success: true,
+            collage: collage,
+            message: "Collage deleted successfully",
+        });
+    }
+);
 export {
-    collageRegister, collageLogin, collageProfileUpdate
+    collageRegister,
+    collageLogin,
+    collageProfileUpdate,
+    getCollageById,
+    deleteCollage
 };
 

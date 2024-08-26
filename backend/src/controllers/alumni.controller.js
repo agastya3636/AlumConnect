@@ -125,6 +125,28 @@ const alumniUpdateProfile = asyncHandeller(
     }
 );
 
+const alumniDeleteProfile = asyncHandeller(
+    async (req, res) => {
+        const { _id } = req.user;
+        await Alumni.findByIdAndDelete(_id);
+        res.status(200).json({
+            success: true,
+            message: "Alumni Delete Profile endpoint hit"
+        });
+    }
+);
+
+const getAlumni = asyncHandeller(
+    async (req, res) => {
+        const alumniList = await Alumni.find();
+        res.status(200).json({
+            success: true,
+            alumni: alumniList,
+            message: "Alumni fetched successfully",
+        });
+    }
+);
+
 
 
 export {
@@ -132,4 +154,6 @@ export {
     alumniLogin,
     alumniProfile,
     alumniUpdateProfile,
+    alumniDeleteProfile,
+    getAlumni,
 }
