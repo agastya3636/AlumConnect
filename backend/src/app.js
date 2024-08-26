@@ -27,7 +27,16 @@ app.use("/collage", routerCollage);
 
 app.get("/",
     (req, res) => {
-        res.send("Hello World")
+        res.send({
+            message: "Welcome to the Alumni API",
+            routes: [
+                "/alumni",
+                "/jobs",
+                "/events",
+                "/collage"
+            ]
+            
+        })
     }
 )
 
