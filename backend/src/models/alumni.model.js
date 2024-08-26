@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 const alumniSchema = new mongoose.Schema({
     name: {
@@ -85,5 +87,19 @@ alumniSchema.methods.verifyPassword=async function (password) {
     const isMatch = await bcrypt.compare(password,this.password);
     return isMatch; 
 }
+alumniSchema.methods.generateToken = async function() {
+    try {
+        return jwt.sign({
+            userId: this._id.toString(),
+            email: this.email,
+            username: this.username,
+
+        }, process.env.JWT_SECRET_KEY, {
+            expiresIn: "30d"
+        });
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 export const Alumni = mongoose.model("Alumni", alumniSchema);

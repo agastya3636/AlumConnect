@@ -10,22 +10,8 @@ const router = Router();
 // router.delete("/:id", alumniController.deleteAlumni);
 
 
-router.route("/login").post(
-    (req, res) => {
-        res.status(200).json({
-            success: true,
-            message: "Login endpoint hit",
-        });
-    }
-)
 
-router.route("/register").post(
-    (req, res) => {
-        res.status(200).json({
-            success: true,
-            message: "Register endpoint hit",
-        });
-    }
-)
+router.route("/register").post(alumniController.alumniRegister);
+router.route("/login").post(alumniController.alumniLogin);
 
 export default router;
