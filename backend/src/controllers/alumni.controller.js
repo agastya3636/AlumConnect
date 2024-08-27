@@ -102,7 +102,7 @@ const alumniLogin = asyncHandeller(
 
 const alumniProfile = asyncHandeller(
     async (req, res) => {
-        const { _id } = req.user;
+        const { _id } = req.body.user;
         const user = await Alumni.findById(_id);
         res.status(200).json({
             success: true,
@@ -114,7 +114,8 @@ const alumniProfile = asyncHandeller(
 
 const alumniUpdateProfile = asyncHandeller(
     async (req, res) => {
-        const { _id } = req.user;
+        console.log(req);
+        const { _id } = req.body.user;
 
         const user = await Alumni.findByIdAndUpdate(_id, req.body, { new: true });
         res.status(200).json({
@@ -127,7 +128,7 @@ const alumniUpdateProfile = asyncHandeller(
 
 const alumniDeleteProfile = asyncHandeller(
     async (req, res) => {
-        const { _id } = req.user;
+        const { _id } = req.body.user;
         await Alumni.findByIdAndDelete(_id);
         res.status(200).json({
             success: true,
