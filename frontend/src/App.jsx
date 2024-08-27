@@ -12,6 +12,8 @@ import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
 import BatchDetails from "./features/alumnidirectory/BatchDetails";
 import ProgramDetails from "./features/mentorship/ProgramDetails";
+import ForumQuestions from "./features/forums/ForumsQuestions";
+import QuestionDiscussion from "./features/forums/QuestionDiscussion";
 const App = () => {
   return (
     <BrowserRouter>
@@ -27,6 +29,14 @@ const App = () => {
           <Route path="placement" element={<Placement />} />
           <Route path="profile" element={<Profile />} />
           <Route path="discussionforums" element={<DiscussionForums />} />
+          <Route
+            path="/discussionforums/:forumId"
+            element={<ForumQuestions />}
+          />
+          <Route
+            path="/discussionforums/:forumId/questions/:questionId"
+            element={<QuestionDiscussion />}
+          />
         </Route>
         <Route path="login" element={<Login />} />
 

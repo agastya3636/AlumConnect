@@ -1,10 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { mentorshipPrograms } from "../../../utils/MockData"; // Adjust the import path accordingly
+import { mentorshipPrograms } from "../../utils/MockData"; // Adjust the import path accordingly
 
 const MentorshipLayout = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-8">
+    <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8">
       <h1 className="text-4xl font-bold text-center text-white mb-8">
         Mentorship Programs
       </h1>

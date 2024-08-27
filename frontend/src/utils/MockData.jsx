@@ -3181,3 +3181,218 @@ export const mentorshipPrograms = {
     },
   ],
 };
+export const forums = {
+  forums: [
+    {
+      id: 1,
+      title: "Web Development",
+      description:
+        "Discuss the latest trends, frameworks, and technologies in web development. Share your projects, get feedback, and collaborate with others.",
+      topicsCount: 120,
+      postsCount: 450,
+      lastActivity: "2 hours ago",
+      questions: [
+        {
+          id: 1,
+          title: "How to learn React?",
+          author: "John Doe",
+          date: "2023-10-01",
+        },
+        {
+          id: 2,
+          title: "Best practices for CSS?",
+          author: "Jane Smith",
+          date: "2023-10-02",
+        },
+        {
+          id: 3,
+          title: "What is the difference between HTML and HTML5?",
+          author: "Alice Brown",
+          date: "2023-10-03",
+        },
+        {
+          id: 4,
+          title: "How to optimize website performance?",
+          author: "Bob White",
+          date: "2023-10-04",
+        },
+      ],
+    },
+    {
+      id: 2,
+      title: "Data Science",
+      description:
+        "Share insights and ask questions about data analysis, machine learning, AI, and big data. Learn from experts and improve your skills.",
+      topicsCount: 95,
+      postsCount: 300,
+      lastActivity: "1 day ago",
+      questions: [
+        {
+          id: 1,
+          title: "What is a neural network?",
+          author: "Alice Johnson",
+          date: "2023-10-03",
+        },
+        {
+          id: 2,
+          title: "How to handle missing data?",
+          author: "Bob Brown",
+          date: "2023-10-04",
+        },
+        {
+          id: 3,
+          title:
+            "What is the difference between supervised and unsupervised learning?",
+          author: "Charlie Davis",
+          date: "2023-10-05",
+        },
+        {
+          id: 4,
+          title: "How to choose the right algorithm for a dataset?",
+          author: "Dana Lee",
+          date: "2023-10-06",
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: "Mobile Development",
+      description:
+        "Talk about mobile app development for iOS and Android. Discuss native and cross-platform development, tools, and best practices.",
+      topicsCount: 80,
+      postsCount: 220,
+      lastActivity: "3 hours ago",
+      questions: [
+        {
+          id: 1,
+          title: "How to start with Flutter?",
+          author: "Charlie Davis",
+          date: "2023-10-05",
+        },
+        {
+          id: 2,
+          title: "React Native vs Native development?",
+          author: "Dana Lee",
+          date: "2023-10-06",
+        },
+        {
+          id: 3,
+          title: "How to optimize mobile app performance?",
+          author: "Evan Green",
+          date: "2023-10-07",
+        },
+        {
+          id: 4,
+          title: "What are the best practices for mobile UI/UX design?",
+          author: "Fiona White",
+          date: "2023-10-08",
+        },
+      ],
+    },
+    {
+      id: 4,
+      title: "DevOps",
+      description:
+        "Explore the world of DevOps. Discuss CI/CD, automation, containerization, orchestration, and other DevOps practices and tools.",
+      topicsCount: 60,
+      postsCount: 150,
+      lastActivity: "5 hours ago",
+      questions: [
+        {
+          id: 1,
+          title: "Best CI/CD tools?",
+          author: "Evan Green",
+          date: "2023-10-07",
+        },
+        {
+          id: 2,
+          title: "How to use Docker?",
+          author: "Fiona White",
+          date: "2023-10-08",
+        },
+        {
+          id: 3,
+          title: "What is Kubernetes?",
+          author: "George Black",
+          date: "2023-10-09",
+        },
+        {
+          id: 4,
+          title: "How to implement infrastructure as code?",
+          author: "Hannah Brown",
+          date: "2023-10-10",
+        },
+      ],
+    },
+    {
+      id: 5,
+      title: "Cybersecurity",
+      description:
+        "Discuss the latest in cybersecurity. Share knowledge on threat detection, prevention, and response. Learn about new vulnerabilities and how to protect against them.",
+      topicsCount: 70,
+      postsCount: 180,
+      lastActivity: "2 days ago",
+      questions: [
+        {
+          id: 1,
+          title: "How to secure a web application?",
+          author: "George Black",
+          date: "2023-10-09",
+        },
+        {
+          id: 2,
+          title: "What is a zero-day exploit?",
+          author: "Hannah Brown",
+          date: "2023-10-10",
+        },
+        {
+          id: 3,
+          title: "How to protect against phishing attacks?",
+          author: "Ian Gray",
+          date: "2023-10-11",
+        },
+        {
+          id: 4,
+          title: "What are the best practices for password management?",
+          author: "Jack White",
+          date: "2023-10-12",
+        },
+      ],
+    },
+    {
+      id: 6,
+      title: "Cloud Computing",
+      description:
+        "Dive into cloud computing. Discuss cloud services, architecture, and deployment models. Share your experiences with AWS, Azure, Google Cloud, and more.",
+      topicsCount: 50,
+      postsCount: 130,
+      lastActivity: "4 hours ago",
+      questions: [
+        {
+          id: 1,
+          title: "AWS vs Azure?",
+          author: "Ian Gray",
+          date: "2023-10-11",
+        },
+        {
+          id: 2,
+          title: "How to deploy a web app on Google Cloud?",
+          author: "Jack White",
+          date: "2023-10-12",
+        },
+        {
+          id: 3,
+          title: "What is serverless computing?",
+          author: "Karen Black",
+          date: "2023-10-13",
+        },
+        {
+          id: 4,
+          title: "How to manage cloud costs?",
+          author: "Laura Green",
+          date: "2023-10-14",
+        },
+      ],
+    },
+  ],
+};

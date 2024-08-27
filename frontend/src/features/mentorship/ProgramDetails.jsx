@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { mentorshipPrograms } from "../../../utils/MockData";
+import { mentorshipPrograms } from "../../utils/MockData";
 
 const ProgramDetails = () => {
   const { id } = useParams();
@@ -13,7 +13,7 @@ const ProgramDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8">
       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6">
         <img
           src={program.mentor.image}
