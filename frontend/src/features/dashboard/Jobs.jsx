@@ -1,33 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-const jobs = [
-  {
-    id: 1,
-    title: "Frontend Developer",
-    company: "Tech Corp",
-    location: "Remote",
-    description:
-      "Looking for a skilled frontend developer with experience in React.",
-  },
-  {
-    id: 2,
-    title: "Backend Developer",
-    company: "Innovate Ltd",
-    location: "New York, NY",
-    description:
-      "Seeking a backend developer proficient in Node.js and Express.",
-  },
-  {
-    id: 3,
-    title: "Full Stack Developer",
-    company: "Web Solutions",
-    location: "San Francisco, CA",
-    description: "Hiring a full stack developer with expertise in MERN stack.",
-  },
-];
+import { useState, useEffect } from "react";
 
 const Jobs = () => {
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/jobs/?limit=2");
+        if (!response.ok) {
+          throw new Error("Failed to fetch jobs");
+        }
+        const data = await response.json();
+        setJobs(data.jobs);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
+  }, []);
+
+  if (loading) {
+    return <p className="text-gray-600">Loading jobs...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-500">Error: {error}</p>;
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-4 h-full">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">

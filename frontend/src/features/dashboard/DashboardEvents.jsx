@@ -2,30 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useEffect , useState} from "react";
 
-// const events = [
-//   {
-//     id: 1,
-//     title: "React Workshop",
-//     date: "2023-10-10",
-//     location: "Online",
-//     description: "A workshop to learn the basics of React.",
-//   },
-//   {
-//     id: 2,
-//     title: "JavaScript Conference",
-//     date: "2023-11-15",
-//     location: "San Francisco, CA",
-//     description: "A conference for JavaScript enthusiasts.",
-//   },
-//   {
-//     id: 3,
-//     title: "Tech Meetup",
-//     date: "2023-12-05",
-//     location: "New York, NY",
-//     description:
-//       "A meetup for tech professionals to network and share knowledge.",
-//   },
-// ];
 
 const DashboardEvents = () => {
 
@@ -60,7 +36,7 @@ const DashboardEvents = () => {
     return <p className="text-red-500">Error: {error}</p>;
   }
 
-  console.log(events);
+
   return (
 
     <div className="bg-white rounded-lg shadow-lg p-4 h-full">
