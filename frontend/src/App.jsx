@@ -11,6 +11,7 @@ import DiscussionForums from "./pages/DiscussionForums";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
 import BatchDetails from "./features/alumnidirectory/BatchDetails";
+import ProgramDetails from "./features/mentorship/ProgramDetails";
 const App = () => {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/alumnidirectory/:year" element={<BatchDetails />} />
           <Route path="events" element={<Events />} />
           <Route path="mentorship" element={<Mentorship />} />
+          <Route path="mentorship/:id" element={<ProgramDetails />} />
           <Route path="placement" element={<Placement />} />
           <Route path="profile" element={<Profile />} />
           <Route path="discussionforums" element={<DiscussionForums />} />

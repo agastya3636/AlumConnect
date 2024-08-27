@@ -2965,3 +2965,219 @@ export const alumnidata = {
     },
   ],
 };
+export const mentorshipPrograms = {
+  programs: [
+    {
+      id: 1,
+      title: "Full-Stack Web Development",
+      description:
+        "Learn to build modern web applications using HTML, CSS, JavaScript, React, and Node.js.",
+      mentor: {
+        name: "John Doe",
+        bio: "John has over 10 years of experience in full-stack development and has worked with top tech companies.",
+        image: "https://randomuser.me/api/portraits/men/1.jpg",
+      },
+      duration: "6 months",
+      benefits: [
+        "Hands-on projects to build a portfolio",
+        "Access to industry-standard tools and resources",
+        "Personalized feedback from the mentor",
+      ],
+      prerequisites: "Basic understanding of programming concepts.",
+      applicationProcess: "Apply via our website or contact us directly.",
+      fees: "Free",
+    },
+    {
+      id: 2,
+      title: "Data Science and Machine Learning",
+      description:
+        "Master data analysis, visualization, and machine learning with Python, R, and TensorFlow.",
+      mentor: {
+        name: "Jane Smith",
+        bio: "Jane is a data scientist with a Ph.D. in Machine Learning and has worked on numerous high-impact projects.",
+        image: "https://randomuser.me/api/portraits/women/2.jpg",
+      },
+      duration: "8 months",
+      benefits: [
+        "Real-world data analysis experience",
+        "Guidance on building machine learning models",
+        "Networking opportunities with industry experts",
+      ],
+      prerequisites: "Strong background in mathematics and statistics.",
+      applicationProcess:
+        "Submit your resume and a cover letter detailing your interest.",
+      fees: "$500",
+    },
+    {
+      id: 3,
+      title: "Mobile App Development",
+      description:
+        "Develop mobile applications for iOS and Android using Flutter and React Native.",
+      mentor: {
+        name: "Michael Johnson",
+        bio: "Michael is a mobile app developer with extensive experience in both iOS and Android platforms.",
+        image: "https://randomuser.me/api/portraits/men/3.jpg",
+      },
+      duration: "5 months",
+      benefits: [
+        "Create functional mobile apps from scratch",
+        "Learn to use popular frameworks like Flutter and React Native",
+        "Receive mentorship on app deployment and monetization",
+      ],
+      prerequisites: "Basic knowledge of programming and app development.",
+      applicationProcess: "Register online and attend a brief interview.",
+      fees: "Free",
+    },
+    {
+      id: 4,
+      title: "DevOps and Cloud Computing",
+      description:
+        "Learn about CI/CD, containerization, and cloud services like AWS, Azure, and Google Cloud.",
+      mentor: {
+        name: "Emily Davis",
+        bio: "Emily is a DevOps engineer with experience in implementing scalable and secure cloud solutions.",
+        image: "https://randomuser.me/api/portraits/women/4.jpg",
+      },
+      duration: "7 months",
+      benefits: [
+        "Hands-on experience with cloud platforms",
+        "Understanding of continuous integration and delivery pipelines",
+        "Exposure to containerization technologies",
+      ],
+      prerequisites:
+        "Familiarity with basic programming and system administration.",
+      applicationProcess:
+        "Apply through our portal and complete a technical assessment.",
+      fees: "$300",
+    },
+    {
+      id: 5,
+      title: "Cybersecurity",
+      description:
+        "Understand the fundamentals of cybersecurity, including network security, cryptography, and ethical hacking.",
+      mentor: {
+        name: "Robert Brown",
+        bio: "Robert is a cybersecurity expert with a background in ethical hacking and security audits.",
+        image: "https://randomuser.me/api/portraits/men/5.jpg",
+      },
+      duration: "6 months",
+      benefits: [
+        "Learn to identify and mitigate security threats",
+        "Gain hands-on experience with security tools",
+        "Access to real-world case studies and scenarios",
+      ],
+      prerequisites:
+        "Basic knowledge of computer networks and security concepts.",
+      applicationProcess:
+        "Submit an application form and complete a background check.",
+      fees: "Free",
+    },
+    {
+      id: 6,
+      title: "Artificial Intelligence",
+      description:
+        "Explore AI concepts and applications, including neural networks, NLP, and computer vision.",
+      mentor: {
+        name: "Laura Wilson",
+        bio: "Laura has a deep background in AI research and has worked on several high-profile AI projects.",
+        image: "https://randomuser.me/api/portraits/women/6.jpg",
+      },
+      duration: "9 months",
+      benefits: [
+        "Build and train AI models",
+        "Learn about state-of-the-art AI techniques",
+        "Collaborate on research-oriented projects",
+      ],
+      prerequisites: "Strong mathematical and programming skills.",
+      applicationProcess:
+        "Send your academic records and a statement of purpose.",
+      fees: "$700",
+    },
+    {
+      id: 7,
+      title: "Blockchain Development",
+      description:
+        "Learn to develop decentralized applications and smart contracts using blockchain technology.",
+      mentor: {
+        name: "David Lee",
+        bio: "David is a blockchain developer with experience in building smart contracts and decentralized apps.",
+        image: "https://randomuser.me/api/portraits/men/7.jpg",
+      },
+      duration: "6 months",
+      benefits: [
+        "Understand blockchain architecture and smart contract development",
+        "Work on live blockchain projects",
+        "Gain insights into the future of decentralized technologies",
+      ],
+      prerequisites:
+        "Basic programming knowledge and interest in blockchain technology.",
+      applicationProcess:
+        "Register online and complete a short technical quiz.",
+      fees: "$400",
+    },
+    {
+      id: 8,
+      title: "UI/UX Design",
+      description:
+        "Master the principles of user interface and user experience design with practical projects.",
+      mentor: {
+        name: "Sophia Martinez",
+        bio: "Sophia is a UI/UX designer with extensive experience in creating user-friendly and visually appealing designs.",
+        image: "https://randomuser.me/api/portraits/women/8.jpg",
+      },
+      duration: "4 months",
+      benefits: [
+        "Learn design principles and tools",
+        "Work on real-world design projects",
+        "Get feedback from industry professionals",
+      ],
+      prerequisites: "Basic understanding of design principles and tools.",
+      applicationProcess:
+        "Apply via our website and provide a portfolio of your previous work.",
+      fees: "Free",
+    },
+    {
+      id: 9,
+      title: "Software Testing and QA",
+      description:
+        "Learn about software testing methodologies, automation tools, and quality assurance practices.",
+      mentor: {
+        name: "James Anderson",
+        bio: "James is a software testing expert with a focus on QA methodologies and automation techniques.",
+        image: "https://randomuser.me/api/portraits/men/9.jpg",
+      },
+      duration: "5 months",
+      benefits: [
+        "Understand various testing methodologies and tools",
+        "Hands-on experience with automated testing frameworks",
+        "Learn about best practices in software quality assurance",
+      ],
+      prerequisites:
+        "Basic knowledge of software development and testing concepts.",
+      applicationProcess:
+        "Submit an application and take a short screening test.",
+      fees: "$250",
+    },
+    {
+      id: 10,
+      title: "Project Management",
+      description:
+        "Develop project management skills, including Agile, Scrum, and Kanban methodologies.",
+      mentor: {
+        name: "Olivia Thomas",
+        bio: "Olivia is a project management professional with extensive experience in Agile and Scrum frameworks.",
+        image: "https://randomuser.me/api/portraits/women/10.jpg",
+      },
+      duration: "6 months",
+      benefits: [
+        "Gain proficiency in project management tools and techniques",
+        "Learn how to manage and lead teams effectively",
+        "Receive mentorship on real-world project challenges",
+      ],
+      prerequisites:
+        "No specific prerequisites, but familiarity with project management concepts is helpful.",
+      applicationProcess: "Apply online and attend a brief interview.",
+      fees: "$300",
+    },
+  ],
+};
