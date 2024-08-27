@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import DiscussionForums from "./pages/DiscussionForums";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
+import BatchDetails from "./features/alumnidirectory/BatchDetails";
 const App = () => {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ const App = () => {
           <Route index element={<Navigate replace to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="alumnidirectory" element={<AlumniDirectory />} />
+          <Route path="/alumnidirectory/:year" element={<BatchDetails />} />
           <Route path="events" element={<Events />} />
           <Route path="mentorship" element={<Mentorship />} />
           <Route path="placement" element={<Placement />} />
