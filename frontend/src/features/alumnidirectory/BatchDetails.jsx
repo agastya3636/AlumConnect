@@ -1,21 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { alumnidata } from "../../../utils/MockData";
+import { alumnidata } from "../../utils/MockData";
 
 const BatchDetails = () => {
   const { year } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
+  const [batch, setBatch] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const batch = alumnidata.alumni.find(
-    (batch) => batch.year === parseInt(year)
-  );
+  useEffect(() => {
+    const fetchBatch = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/alumni?batch=${year}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch batch");
+        }
+        const data = await response.json();
+        setBatch(data.alumni);
+      }
+      catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchBatch();
+
+  });
+
+  if (loading) {
+    return <p className="text-gray-600">Loading batch...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-500">Error: {error}</p>;
+  }
+
+  
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredStudents = batch.students.filter((student) =>
-    student.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredStudents = batch.filter((student) =>
+    student.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -47,7 +77,7 @@ const BatchDetails = () => {
                   <h2 className="text-white text-2xl font-bold mb-2">
                     {student.name}
                   </h2>
-                  <p className="text-white text-sm mb-1">{student.degree}</p>
+                  <p className="text-white text-sm mb-1">{student.department}</p>
                   <p className="text-white text-sm mb-1">
                     {student.current_position}
                   </p>
@@ -55,7 +85,7 @@ const BatchDetails = () => {
                     {student.career_path}
                   </p>
                   <a
-                    href={student.linkedin}
+                    href={student.linkedinlink}
                     className="text-yellow-300 hover:underline"
                   >
                     LinkedIn

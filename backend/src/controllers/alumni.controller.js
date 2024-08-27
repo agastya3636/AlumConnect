@@ -139,7 +139,9 @@ const alumniDeleteProfile = asyncHandeller(
 
 const getAlumni = asyncHandeller(
     async (req, res) => {
-        const alumniList = await Alumni.find();
+        const batch = req.query.batch;
+       const alumniList = await Alumni.find({ yearofpassing: batch });
+
         res.status(200).json({
             success: true,
             alumni: alumniList,

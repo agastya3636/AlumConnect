@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { alumnidata } from "../../../utils/MockData";
+import { alumnidata } from "../../utils/MockData.jsx"
 const AlumniBatch = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-8">

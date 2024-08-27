@@ -126,11 +126,24 @@ const deleteCollage = asyncHandeller(
         });
     }
 );
+
+const getCollage = asyncHandeller(
+    async (req, res) => {
+        const collages = await Collage.find();
+        res.status(200).json({
+            success: true,
+            collages: collages,
+            message: "Collages fetched successfully",
+        });
+    }
+);
+
 export {
     collageRegister,
     collageLogin,
     collageProfileUpdate,
     getCollageById,
-    deleteCollage
+    deleteCollage,
+    getCollage
 };
 

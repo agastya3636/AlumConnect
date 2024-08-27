@@ -7,7 +7,7 @@ const studentSchema = new mongoose.Schema({
         unique: true,
         trim: true,
     },
-    fullname: {
+    name: {
         type: String,
         required: [true, "Fullname is required"],
         trim: true,
