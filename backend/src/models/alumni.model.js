@@ -26,16 +26,16 @@ const alumniSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ["alumni", "student","collage"],
+        enum: ["alumni", "student","college"],
         default: "alumni",
     },
     created_at: {
         type: Date,
         default: Date.now,
     },
-    collage: {
+    college: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Collage",
+        ref: "College",
     },
     department: {
         type: String,

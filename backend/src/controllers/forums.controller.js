@@ -1,77 +1,121 @@
-import forums from '../models/forums.model.js'
+import Forum from '../models/forums.model.js'
 import asyncHandeller from '../utils/asyncHandeller.js'
 
 const createForum = asyncHandeller(async (req, res) => {
     try {
-        const { title, description, tags, createdBy } = req.body;
-        if (!title || !description || !tags || !createdBy) {
-            return res.status(400).json({ message: 'Title is required, Description is required, Tags is required, CreatedBy is required' });
+        const { category, description, thread } = req.body;
+        if (!category || !description || !thread) {
+            return res.status(400).json({ message: 'Category, description and thread is required' });
         }
-        const newForum = new forums({
-            title,
+        const newForum = new Forum({
+            category,
             description,
-            tags,
-            createdBy,
+            thread
         });
 
-        const forumCreated = await newForum.save();
+        const savedForum = await newForum.save();
 
-        res.status(200).json({
+        res.status(201).json({
             success: true,
-            forum: forumCreated,
+            forum: savedForum,
             message: "Forum created successfully",
         });
     }
     catch (error) {
         console.error("Forum creation error:", error);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ message: "Internal server error", error: error.message });
     }
 }
-
 );
 
 const getForums = asyncHandeller(
     async (req, res) => {
-        const forumsList = await forums.find();
-        res.status(200).json({
-            success: true,
-            forums: forumsList,
-            message: "Forums fetched successfully",
-        });
+        try {
+            const forumsList = await Forum.find();
+            res.status(200).json({
+                success: true,
+                forums: forumsList,
+                message: "Forums fetched successfully",
+            });
+        }
+        catch (error){
+            console.error('Error retrieving forums:', error);
+            res.status(500).json({
+                message: 'Internal Server Error.',
+                error: error.message
+            });
+        }
     }
 );
 
 const getForumById = asyncHandeller(
     async (req, res) => {
-        const forum = await forums.findById(req.params.id);
-        res.status(200).json({
-            success: true,
-            forum: forum,
-            message: "Forum fetched successfully",
-        });
+        try {
+            const forum = await Forum.findById(req.params.id);
+            if (!forum) {
+                return res.status(404).json({ message: 'Forum not found'});
+            }
+            res.status(200).json({
+                success: true,
+                forum: forum,
+                message: "Forum fetched successfully",
+            });
+        }
+        catch (error){
+            console.error('Error retrieving forum:', error);
+            res.status(500).json({
+                message: 'Internal Server Error',
+                error: error.message
+            });
+        }
     }
 );
 
 const updateForum = asyncHandeller(
     async (req, res) => {
-        const forum = await forums.findByIdAndUpdate
-            (req.params.id, req.body, { new: true });
-        res.status(200).json({
-            success: true,
-            forum: forum,
-            message: "Forum updated successfully",
-        });
+        try {
+            const forum = await Forum.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+            if (!forum){
+                return res.status(404).json({
+                    message: 'Forum not found'
+                });
+            }
+            res.status(200).json({
+                success: true,
+                forum: forum,
+                message: "Forum updated successfully",
+            });
+        }
+        catch (error){
+            console.error('Error updating forum: ', error);
+            res.status(500).json({
+                message: 'Internal Server Error',
+                error: error.message
+            });
+        }
     }
 );
 
 const deleteForum = asyncHandeller(
     async (req, res) => {
-        const forum = await forums.findByIdAndDelete(req.params.id);
-        res.status(200).json({
-            success: true,
-            forum: forum,
-            message: "Forum deleted successfully",
-        });
+        try {
+            const forum = await Forum.findByIdAndDelete(req.params.id);
+            if (!forum){
+                return res.status(404).json({ message: 'Forum not found'})
+            }
+            res.status(200).json({
+                success: true,
+                forum: forum,
+                message: "Forum deleted successfully",
+            });
+        }
+        catch (error){
+            console.error('Error deleting forum: ', error);
+            res.status(500).json({
+                message: 'Internal Server Error',
+                error: error.message
+            })
+        }
     }
 );
 

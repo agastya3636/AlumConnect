@@ -31,12 +31,12 @@ const eventSchema = new mongoose.Schema({
     },
     // posted_by: {
     //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Collage",
+    //     ref: "College",
     // },
-    // collage:
+    // college:
     // {
     //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Collage",
+    //     ref: "College",
     // },
 });
 
