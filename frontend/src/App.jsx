@@ -14,6 +14,7 @@ import BatchDetails from "./features/alumnidirectory/BatchDetails";
 import ProgramDetails from "./features/mentorship/ProgramDetails";
 import ForumQuestions from "./features/forums/ForumsQuestions";
 import QuestionDiscussion from "./features/forums/QuestionDiscussion";
+import JobDetails from "./features/jobs/JobDetails";
 const App = () => {
   return (
     <BrowserRouter>
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="mentorship" element={<Mentorship />} />
           <Route path="mentorship/:id" element={<ProgramDetails />} />
           <Route path="placement" element={<Placement />} />
+          <Route path="placement/:id" element={<JobDetails />} />
           <Route path="profile" element={<Profile />} />
           <Route path="discussionforums" element={<DiscussionForums />} />
           <Route
