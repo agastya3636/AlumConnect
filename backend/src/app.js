@@ -5,8 +5,7 @@ import dotenv from 'dotenv'
 import routerAlumni from './routes/alumni.routes.js'
 import routerJobs from './routes/jobs.routes.js'
 import routerEvent from './routes/events.router.js'
-import routerCollage from './routes/collage.routes.js'
-import routerStudent from './routes/student.routes.js'
+import routerCollege from './routes/college.routes.js'
 
 
 dotenv.config();
@@ -23,8 +22,7 @@ app.use(express.static("public"));
 app.use("/alumni", routerAlumni);
 app.use("/jobs", routerJobs);
 app.use("/events", routerEvent);
-app.use("/collage", routerCollage);
-app.use("/student", routerStudent);
+app.use("/college", routerCollege);
 
 
 app.get("/",
@@ -35,8 +33,7 @@ app.get("/",
                 "/alumni",
                 "/jobs",
                 "/events",
-                "/collage",
-                "/student"
+                "/college"
             ]
             
         })

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-const collageSchema = new mongoose.Schema({
+const collegeSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Name is required"],
@@ -26,8 +26,8 @@ const collageSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ["alumni", "student", "collage"],
-        default: "collage",
+        enum: ["alumni", "student", "college"],
+        default: "college",
     },
     created_at: {
         type: Date,
@@ -40,27 +40,27 @@ const collageSchema = new mongoose.Schema({
 });
 
 
-collageSchema.pre("save", async function(next) {
-    const collage = this;
-    if (!collage.isModified("password")) {
+collegeSchema.pre("save", async function(next) {
+    const college = this;
+    if (!college.isModified("password")) {
         return next();
     }
     try {
         const saltRound = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(collage.password, saltRound);
-        collage.password = hashPassword;
+        const hashPassword = await bcrypt.hash(college.password, saltRound);
+        college.password = hashPassword;
         next();
     } catch (error) {
         next(error);
     }
 });
-collageSchema.methods.verifyPassword=async function (password) {
+collegeSchema.methods.verifyPassword=async function (password) {
    
     const isMatch = await bcrypt.compare(password,this.password);
     return isMatch; 
 }
 
-collageSchema.methods.generateToken = async function() {
+collegeSchema.methods.generateToken = async function() {
     try {
         return jwt.sign({
             userId: this._id.toString(),
@@ -74,4 +74,4 @@ collageSchema.methods.generateToken = async function() {
     }
 };
 
-export const Collage = mongoose.model("Collage", collageSchema);
+export const College = mongoose.model("College", collegeSchema);

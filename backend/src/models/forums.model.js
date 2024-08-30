@@ -1,16 +1,12 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
-const forumSchema = new mongoose.Schema({
+const threadSchema = new mongoose.Schema({
     title: {
         type: String,
         required: [true, "Title is required"],
         trim: true,
     },
-    description: {
-        type: String,
-        required: [true, "Description is required"],
-        trim: true,
-    },
+    replies: [],
     created_at: {
         type: Date,
         default: Date.now,
@@ -23,11 +19,19 @@ const forumSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    collage:
-    {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Collage",
-    },
-});
+}, { _id: false });
 
-export const Forum = mongoose.model("Forum", forumSchema);
+const forumSchema = new mongoose.Schema({
+    category: {
+        type: String,
+        enum: ['Web Technology', 'Data Science', 'Data Analytics', 'Machine Learning', 'Cybersecurity', 'Blockchain'],
+        required: true
+    },
+    description: {
+        type: String,
+        required: [true, "Description is required"]
+    },
+    thread: threadSchema
+}, { timestamps: true });
+
+module.exports = mongoose.model('Forum', forumSchema);
