@@ -163,7 +163,7 @@ const getAlumni = asyncHandeller(
         const yearofpassing = req.query.yearofpassing;
 
         // Find alumni by year of passing
-        const alumniList = await Alumni.find({ yearofpassing: yearofpassing });
+        const alumniList = await Alumni.find();
     
         if (alumniList.length === 0) {
             return res.status(404).json({
