@@ -22,7 +22,7 @@ const createForum = asyncHandeller(async (req, res) => {
         });
     }
     catch (error) {
-        console.error("Forum creation error:", error);
+        
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
 }
@@ -39,7 +39,7 @@ const getForums = asyncHandeller(
             });
         }
         catch (error){
-            console.error('Error retrieving forums:', error);
+           
             res.status(500).json({
                 message: 'Internal Server Error.',
                 error: error.message
@@ -61,8 +61,8 @@ const getForumById = asyncHandeller(
                 message: "Forum fetched successfully",
             });
         }
-        catch (error){
-            console.error('Error retrieving forum:', error);
+        catch (error) {
+            
             res.status(500).json({
                 message: 'Internal Server Error',
                 error: error.message
@@ -87,7 +87,7 @@ const updateForum = asyncHandeller(
             });
         }
         catch (error){
-            console.error('Error updating forum: ', error);
+          
             res.status(500).json({
                 message: 'Internal Server Error',
                 error: error.message
@@ -110,7 +110,7 @@ const deleteForum = asyncHandeller(
             });
         }
         catch (error){
-            console.error('Error deleting forum: ', error);
+            
             res.status(500).json({
                 message: 'Internal Server Error',
                 error: error.message

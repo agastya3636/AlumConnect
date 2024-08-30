@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import { Mongoose } from "mongoose";
 
 const threadSchema = new mongoose.Schema({
     title: {
@@ -34,4 +34,4 @@ const forumSchema = new mongoose.Schema({
     thread: threadSchema
 }, { timestamps: true });
 
-module.exports = mongoose.model('Forum', forumSchema);
+export const Forum = mongoose.model("Forum", forumSchema);
