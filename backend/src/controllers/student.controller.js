@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 
 const studentRegister = asyncHandeller(async (req, res) => {
     try {
-        const { rollno, name, email, username, password, collage, department, batch } = req.body;
+        const { rollno, fullname, email, username, password, college, department, batch } = req.body;
        
         if(!rollno|| rollno.trim()===""){
 
@@ -47,7 +47,7 @@ const studentRegister = asyncHandeller(async (req, res) => {
             });
         }
 
-        if(!collage|| collage.trim() === ""){
+        if(!college|| college.trim() === ""){
 
             return res.status(400).json({
                 success: false,
@@ -84,7 +84,7 @@ const studentRegister = asyncHandeller(async (req, res) => {
             email,
             username,
             password,
-            collage,
+            college,
             department,
             batch
         });
@@ -154,10 +154,10 @@ const studentProfile = asyncHandeller(
     async (req, res) => {
         const { userId } = req.user;
         const user = await Student
-            .findById(userId)
-            .populate("collage")
-            // .populate("department")
-            // .populate("batch");
+            .findById(_id)
+            .populate("college")
+            .populate("department")
+            .populate("batch");
         res.status(200).json({
             success: true,
             user: user,

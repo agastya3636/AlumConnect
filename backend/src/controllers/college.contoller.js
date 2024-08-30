@@ -1,8 +1,8 @@
 // import { Router } from "express";
-import { Collage } from "../models/collage.model.js";
+import { College } from "../models/college.model.js";
 import { asyncHandeller } from "../utils/asyncHandeller.js";
 
-const collageRegister = asyncHandeller(async (req, res) => {
+const collegeRegister = asyncHandeller(async (req, res) => {
     try{
     const { name,email,username,password,role } = req.body;
     if (!name||name.trim()==="") {
@@ -17,20 +17,20 @@ const collageRegister = asyncHandeller(async (req, res) => {
     if (!role||role.trim()==="") {
         return res.status(400).json({ message: 'Role is required' });
     }
-    const userExist1 = await Collage.findOne({ email });
-    const userExist2 = await Collage.findOne({ username });
+    const userExist1 = await College.findOne({ email });
+    const userExist2 = await College.findOne({ username });
     if (userExist1 || userExist2) {
         return res.status(400).json({ message: "Email or username already exists" });
     }
-    const newCollage = new Collage({
+    const newCollege = new College({
         name,
         email,
         username,
         password,
-        role:"collage"
+        role:"college"
     });
 
-    const userCreated = await newCollage.save();
+    const userCreated = await newCollege.save();
 
     const token = await userCreated.generateToken();
    
@@ -41,7 +41,7 @@ const collageRegister = asyncHandeller(async (req, res) => {
         email: userCreated.email,
         username: userCreated.username,
         password:userCreated.password,
-        message: "Collage Register endpoint hit",
+        message: "College Register endpoint hit",
     });
 }
     catch (error) {
@@ -50,7 +50,7 @@ const collageRegister = asyncHandeller(async (req, res) => {
     }
 });
 
-const collageLogin = asyncHandeller(
+const collegeLogin = asyncHandeller(
     async (req, res) => {
         try {
             const { username, password } = req.body;
@@ -61,7 +61,7 @@ const collageLogin = asyncHandeller(
             if (!password||password.trim()==='') {
                 return res.status(400).json({ message: " password are required" });
             }
-            const userExist = await Collage.findOne({ username });
+            const userExist = await College.findOne({ username });
     
             if (!userExist) {
                 return res.status(400).json({ message: "Invalid credentials" });
@@ -84,7 +84,7 @@ const collageLogin = asyncHandeller(
             // Send token
             res.status(200).cookie("token", token, options).json({
                 success: true,
-                message: "Collage Login endpoint hit",
+                message: "College Login endpoint hit",
                 token: token,
                 userId: userExist._id.toString(),
                 username: userExist.username,
@@ -96,54 +96,41 @@ const collageLogin = asyncHandeller(
     }
 );
 
-const collageProfileUpdate = asyncHandeller(
+const collegeProfileUpdate = asyncHandeller(
     async (req, res) => {
         res.status(200).json({
             success: true,
-            message: "Collage Profile endpoint hit",
+            message: "College Profile endpoint hit",
         });
     }
 );
 
-const getCollageById = asyncHandeller(
+const getCollegeById = asyncHandeller(
     async (req, res) => {
-        const collage = await Collage.findById(req.params.id);
+        const college = await College.findById(req.params.id);
         res.status(200).json({
             success: true,
-            collage: collage,
-            message: "Collage fetched successfully",
+            college: college,
+            message: "College fetched successfully",
         });
     }
 );
 
-const deleteCollage = asyncHandeller(
+const deleteCollege = asyncHandeller(
     async (req, res) => {
-        const collage = await Collage.findByIdAndDelete(req.params.id);
+        const college = await College.findByIdAndDelete(req.params.id);
         res.status(200).json({
             success: true,
-            collage: collage,
-            message: "Collage deleted successfully",
+            college: college,
+            message: "College deleted successfully",
         });
     }
 );
-
-const getCollage = asyncHandeller(
-    async (req, res) => {
-        const collages = await Collage.find();
-        res.status(200).json({
-            success: true,
-            collages: collages,
-            message: "Collages fetched successfully",
-        });
-    }
-);
-
 export {
-    collageRegister,
-    collageLogin,
-    collageProfileUpdate,
-    getCollageById,
-    deleteCollage,
-    getCollage
+    collegeRegister,
+    collegeLogin,
+    collegeProfileUpdate,
+    getCollegeById,
+    deleteCollege
 };
 

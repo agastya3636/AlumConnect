@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 const alumniRegister = asyncHandeller(
     async (req, res) => {
         
-        const { name, email, username, password,role, collage, department, batch, linkedinlink, twitterlink, githublink, yearofpassing } = req.body;
+        const { name, email, username, password,role, college, department, batch, linkedinlink, twitterlink, githublink, yearofpassing } = req.body;
 
         if (!name || name.trim()==="") {
             return res.status(400).json({ message: "name is required" });
@@ -38,7 +38,7 @@ const alumniRegister = asyncHandeller(
             email,
             username,
             password,
-            collage,
+            college,
             department,
             batch,
             linkedinlink,
@@ -59,7 +59,7 @@ const alumniRegister = asyncHandeller(
             email: alumni.email,
             username: alumni.username,
             role: alumni.role,
-            collage:alumni.collage,
+            college:alumni.college,
             department:alumni.department,
             batch:alumni.batch,
             message: "Alumni registered successfully",

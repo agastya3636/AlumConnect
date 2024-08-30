@@ -25,7 +25,7 @@ const EventPosts = asyncHandeller(
             // posted_by,
             date,
             
-            // collage
+            // college
         } = req.body;
 
         if(!title || title.trim() === ""){
