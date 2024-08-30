@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+
 
 const studentSchema = new mongoose.Schema({
     rollno:{
@@ -7,7 +10,7 @@ const studentSchema = new mongoose.Schema({
         unique: true,
         trim: true,
     },
-    fullname: {
+    name: {
         type: String,
         required: [true, "Fullname is required"],
         trim: true,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const forumPosts = [
@@ -29,6 +29,30 @@ const forumPosts = [
 ];
 
 const DashboardForums = () => {
+
+  // const [forumPosts, setforumPosts] = useEffect([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchforumPosts = async () => {
+  //     try {
+  //       const response = await fetch("http://127.0.0.1:8000/events/?limit=2");
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch forumPosts");
+  //       }
+  //       const data = await response.json();
+  //       setforumPosts(data.forumPosts);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchforumPosts();  
+  // }, []);
+
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 h-full">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Forums</h2>

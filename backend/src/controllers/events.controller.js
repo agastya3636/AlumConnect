@@ -7,7 +7,8 @@ const router = Router();
 
 const getEvents = asyncHandeller(
     async (req, res) => {
-        const events = await Event.find();
+        const limit = req.query.limit || 10;
+        const events = await Event.find().sort({date: -1}).limit(parseInt(limit));
         res.status(200).json({
             success: true,
             events,

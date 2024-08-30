@@ -1,42 +1,53 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useEffect , useState} from "react";
 
-const events = [
-  {
-    id: 1,
-    title: "React Workshop",
-    date: "2023-10-10",
-    location: "Online",
-    description: "A workshop to learn the basics of React.",
-  },
-  {
-    id: 2,
-    title: "JavaScript Conference",
-    date: "2023-11-15",
-    location: "San Francisco, CA",
-    description: "A conference for JavaScript enthusiasts.",
-  },
-  {
-    id: 3,
-    title: "Tech Meetup",
-    date: "2023-12-05",
-    location: "New York, NY",
-    description:
-      "A meetup for tech professionals to network and share knowledge.",
-  },
-];
 
 const DashboardEvents = () => {
+
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/events/?limit=2");
+        if (!response.ok) {
+          throw new Error("Failed to fetch events");
+        }
+        const data = await response.json();
+        setEvents(data.events);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  if (loading) {
+    return <p className="text-gray-600">Loading events...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-500">Error: {error}</p>;
+  }
+
+
   return (
+
     <div className="bg-white rounded-lg shadow-lg p-4 h-full">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Upcoming Events</h2>
       {events.length > 0 ? (
         <div className="space-y-4">
           {events.map((event) => (
-            <div key={event.id} className="border-b pb-4">
+            <div key={event._id} className="border-b pb-4">
               <h3 className="text-xl font-semibold text-gray-800">
                 <Link
-                  to={`/events/${event.id}`}
+                  to={`/events/${event._id}`}
                   className="text-blue-500 hover:underline"
                 >
                   {event.title}

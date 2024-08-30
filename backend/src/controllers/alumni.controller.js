@@ -1,5 +1,6 @@
 import { asyncHandeller } from "../utils/asyncHandeller.js"
 import { Alumni } from "../models/alumni.model.js";
+import bcrypt from "bcryptjs";
 
 
 const alumniRegister = asyncHandeller(
@@ -102,22 +103,31 @@ const alumniLogin = asyncHandeller(
 
 const alumniProfile = asyncHandeller(
     async (req, res) => {
-        const { _id } = req.body.user;
-        const user = await Alumni.findById(_id);
+        const { userId } = req.user;
+        const user = await Alumni
+            .findById(userId)
         res.status(200).json({
             success: true,
             user: user,
-            message: "Alumni Profile endpoint hit"
+            message: "Alumini Profile endpoint hit",
         });
     }
 );
 
 const alumniUpdateProfile = asyncHandeller(
     async (req, res) => {
-        console.log(req);
-        const { _id } = req.body.user;
-
-        const user = await Alumni.findByIdAndUpdate(_id, req.body, { new: true });
+        const { userId } = req.user;
+        const updateData = { ...req.body };
+    
+       
+        if (updateData.password) {
+            const salt = await bcrypt.genSalt(10);
+            updateData.password = await bcrypt.hash(updateData.password, salt);
+        }
+    
+       
+        const user = await Alumni.findByIdAndUpdate(userId, updateData, { new: true });
+    
         res.status(200).json({
             success: true,
             user: user,
@@ -128,8 +138,17 @@ const alumniUpdateProfile = asyncHandeller(
 
 const alumniDeleteProfile = asyncHandeller(
     async (req, res) => {
-        const { _id } = req.body.user;
-        await Alumni.findByIdAndDelete(_id);
+        const { userId } = req.user;
+
+        // Find and delete the user profile
+        const deletedUser = await Alumni.findByIdAndDelete(userId);
+    
+        if (!deletedUser) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found',
+            });
+        }
         res.status(200).json({
             success: true,
             message: "Alumni Delete Profile endpoint hit"
@@ -139,7 +158,20 @@ const alumniDeleteProfile = asyncHandeller(
 
 const getAlumni = asyncHandeller(
     async (req, res) => {
-        const alumniList = await Alumni.find();
+         const batch = req.query.batch;
+      
+        const yearofpassing = req.query.yearofpassing;
+
+        // Find alumni by year of passing
+        const alumniList = await Alumni.find({ yearofpassing: yearofpassing });
+    
+        if (alumniList.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No alumni found for the given year of passing",
+            });
+        }
+    
         res.status(200).json({
             success: true,
             alumni: alumniList,

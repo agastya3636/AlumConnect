@@ -1,5 +1,7 @@
 import { Student } from "../models/student.model.js";
-import { asyncHandeller } from "../utils/asyncHandeller";
+import { asyncHandeller } from "../utils/asyncHandeller.js";
+import bcrypt from "bcryptjs";
+
 
 const studentRegister = asyncHandeller(async (req, res) => {
     try {
@@ -13,7 +15,7 @@ const studentRegister = asyncHandeller(async (req, res) => {
             });
         }
 
-        if(!fullname|| fullname.trim() === ""){
+        if(!name|| name.trim() === ""){
 
             return res.status(400).json({
                 success: false,
@@ -78,13 +80,13 @@ const studentRegister = asyncHandeller(async (req, res) => {
         }
         const newStudent = new Student({
             rollno,
-            fullname,
+            name,
             email,
             username,
             password,
             college,
             department,
-            batch,
+            batch
         });
 
         const userCreated = await newStudent.save();
@@ -98,7 +100,10 @@ const studentRegister = asyncHandeller(async (req, res) => {
             email: userCreated.email,
             username: userCreated.username,
             password: userCreated.password,
-            message: "Student Register endpoint hit",
+            collage:userCreated.collage,
+            batch:userCreated.batch,
+            department:userCreated.department,
+            message: "Student Register endpoint hit"
         });
     }
     catch (error) {
@@ -136,7 +141,7 @@ const studentLogin = asyncHandeller(
                 email: userExist.email,
                 username: userExist.username,
                 role: userExist.role,
-                message: "Student Login endpoint hit",
+                message: "Student Login endpoint hit"
             });
         } catch (error) {
             console.error("Login error:", error);
@@ -147,7 +152,7 @@ const studentLogin = asyncHandeller(
 
 const studentProfile = asyncHandeller(
     async (req, res) => {
-        const { _id } = req.user;
+        const { userId } = req.user;
         const user = await Student
             .findById(_id)
             .populate("college")
@@ -162,16 +167,24 @@ const studentProfile = asyncHandeller(
 );
 
 
-const studentUpdateProfile = asyncHandeller(
-    async (req, res) => {
-        const { _id } = req.user;
-        const user = await Student.findByIdAndUpdate(_id, req.body, { new: true });
-        res.status(200).json({
-            success: true,
-            user: user,
-            message: "Student Update Profile endpoint hit",
-        });
+const studentUpdateProfile = asyncHandeller(async (req, res) => {
+    const { userId } = req.user;
+    const updateData = { ...req.body };
+
+   
+    if (updateData.password) {
+        const salt = await bcrypt.genSalt(10);
+        updateData.password = await bcrypt.hash(updateData.password, salt);
     }
-);
+
+   
+    const user = await Student.findByIdAndUpdate(userId, updateData, { new: true });
+
+    res.status(200).json({
+        success: true,
+        user: user,
+        message: "Student Update Profile endpoint hit",
+    });
+});
 
 export { studentRegister, studentLogin, studentProfile, studentUpdateProfile };

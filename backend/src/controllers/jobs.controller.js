@@ -4,7 +4,8 @@ import { Job } from "../models/jobs.model.js";
 
 const getJobs = asyncHandeller(
     async (req, res) => {
-        const jobs = await Job.find();
+        const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
+        const jobs = await Job.find().limit(parseInt(limit));
         res.status(200).json({
             success: true,
             jobs,
