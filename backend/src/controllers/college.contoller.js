@@ -126,11 +126,24 @@ const deleteCollege = asyncHandeller(
         });
     }
 );
+
+const getCollege = asyncHandeller(
+    async (req, res) => {
+        const colleges = await College.find();
+        res.status(200).json({
+            success: true,
+            collages: collages,
+            message: "Collages fetched successfully",
+        });
+    }
+);
+
 export {
     collegeRegister,
     collegeLogin,
     collegeProfileUpdate,
     getCollegeById,
-    deleteCollege
+    deleteCollege,
+    getCollege
 };
 
