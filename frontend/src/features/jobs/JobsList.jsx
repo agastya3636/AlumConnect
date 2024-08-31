@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { jobs } from "../../utils/MockData";
+
 const JobsList = () => {
   // Sample data for jobs
 
@@ -8,6 +8,39 @@ const JobsList = () => {
   const [filterType, setFilterType] = useState("");
   const [filterLocation, setFilterLocation] = useState("");
   const [filterTechStack, setFilterTechStack] = useState("");
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/jobs");
+        if (!response.ok) {
+          throw new Error("Failed to fetch jobs");
+        }
+        const data = await response.json();
+        setJobs(data.jobs);
+      }
+      catch (error) {
+        setError(error.message);
+      }
+      finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
+  }, []);
+
+  if (loading)
+  {
+    return <p className="text-gray-600">Loading jobs...</p>;
+  }
+  
+  if (error)
+  {
+    return <p className="text-red-500">Error: {error}</p>;
+  }
 
   const filteredJobs = jobs.filter((job) => {
     return (
@@ -71,10 +104,10 @@ const JobsList = () => {
                 {job.title}
               </h2>
               <p className="text-gray-600 mb-2">
-                <strong>Posted by:</strong> {job.postedBy}
+                <strong>Posted by:</strong> {job.posted_by}
               </p>
               <p className="text-gray-600 mb-2">
-                <strong>Posted on:</strong> {job.postedWhen}
+                <strong>Posted on:</strong> {job.created_at}
               </p>
               <p className="text-gray-600 mb-2">
                 <strong>Company:</strong> {job.company}

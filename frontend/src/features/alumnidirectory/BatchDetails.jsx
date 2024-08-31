@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { alumnidata } from "../../utils/MockData";
 
 const BatchDetails = () => {
   const { year } = useParams();
