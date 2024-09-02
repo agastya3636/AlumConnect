@@ -15,36 +15,40 @@ import ProgramDetails from "./features/mentorship/ProgramDetails";
 import ForumQuestions from "./features/forums/ForumsQuestions";
 import QuestionDiscussion from "./features/forums/QuestionDiscussion";
 import JobDetails from "./features/jobs/JobDetails";
+import { Provider } from "react-redux";
+import store from "./store";
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route index element={<Navigate replace to="dashboard" />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="alumnidirectory" element={<AlumniDirectory />} />
-          <Route path="/alumnidirectory/:year" element={<BatchDetails />} />
-          <Route path="events" element={<Events />} />
-          <Route path="mentorship" element={<Mentorship />} />
-          <Route path="mentorship/:id" element={<ProgramDetails />} />
-          <Route path="placement" element={<Placement />} />
-          <Route path="placement/:id" element={<JobDetails />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="discussionforums" element={<DiscussionForums />} />
-          <Route
-            path="/discussionforums/:forumId"
-            element={<ForumQuestions />}
-          />
-          <Route
-            path="/discussionforums/:forumId/questions/:questionId"
-            element={<QuestionDiscussion />}
-          />
-        </Route>
-        <Route path="login" element={<Login />} />
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route index element={<Navigate replace to="dashboard" />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="alumnidirectory" element={<AlumniDirectory />} />
+            <Route path="/alumnidirectory/:year" element={<BatchDetails />} />
+            <Route path="events" element={<Events />} />
+            <Route path="mentorship" element={<Mentorship />} />
+            <Route path="mentorship/:id" element={<ProgramDetails />} />
+            <Route path="placement" element={<Placement />} />
+            <Route path="placement/:id" element={<JobDetails />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="discussionforums" element={<DiscussionForums />} />
+            <Route
+              path="/discussionforums/:forumId"
+              element={<ForumQuestions />}
+            />
+            <Route
+              path="/discussionforums/:forumId/questions/:questionId"
+              element={<QuestionDiscussion />}
+            />
+          </Route>
+          <Route path="login" element={<Login />} />
 
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 };
 
