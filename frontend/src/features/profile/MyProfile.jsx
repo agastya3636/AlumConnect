@@ -1,164 +1,226 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateProfile } from "./profileSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { updateProfile } from "../profile/profileSlice"; // Correct import path
 
-const MyProfile = () => {
-  const dispatch = useDispatch();
+const MyProfilePage = () => {
   const profile = useSelector((state) => state.profile);
-  const [user, setUser] = useState(profile);
+  const dispatch = useDispatch();
+
+  const [profileData, setProfileData] = useState(profile);
+  const [customSkill, setCustomSkill] = useState("");
+  const [customInterest, setCustomInterest] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
+    setProfileData({ ...profileData, [name]: value });
+  };
+
+  const handleSocialLinkChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData((prevData) => ({
+      ...prevData,
+      socialLinks: { ...prevData.socialLinks, [name]: value },
     }));
   };
 
-  const handleSkillsChange = (e) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      skills: e.target.value.split(",").map((skill) => skill.trim()),
-    }));
+  const handleSkillChange = (e) => {
+    setCustomSkill(e.target.value);
   };
 
-  const handleInterestsChange = (e) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      interests: e.target.value.split(",").map((interest) => interest.trim()),
-    }));
+  const handleInterestChange = (e) => {
+    setCustomInterest(e.target.value);
+  };
+
+  const addSkill = () => {
+    if (customSkill) {
+      setProfileData((prevData) => ({
+        ...prevData,
+        skills: [...prevData.skills, customSkill],
+      }));
+      setCustomSkill("");
+    }
+  };
+
+  const addInterest = () => {
+    if (customInterest) {
+      setProfileData((prevData) => ({
+        ...prevData,
+        interests: [...prevData.interests, customInterest],
+      }));
+      setCustomInterest("");
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProfile(user));
+    dispatch(updateProfile(profileData));
+    // Optionally, show a success message or redirect
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-6xl mx-auto">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Edit Profile
+    <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8 flex items-center justify-center">
+      <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl w-full">
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+          My Profile
         </h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
             <label className="block text-gray-700">Name</label>
             <input
               type="text"
               name="name"
-              value={user.name}
+              value={profileData.name}
               onChange={handleChange}
               className="w-full p-2 border rounded-lg"
+              required
             />
           </div>
-          <div className="mb-4">
+          <div>
             <label className="block text-gray-700">Email</label>
             <input
               type="email"
               name="email"
-              value={user.email}
+              value={profileData.email}
               onChange={handleChange}
               className="w-full p-2 border rounded-lg"
+              required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Bio</label>
-            <textarea
-              name="bio"
-              value={user.bio}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Education</label>
-            <input
-              type="text"
-              name="education"
-              value={user.education}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">
-              Skills (comma separated)
-            </label>
-            <input
-              type="text"
-              name="skills"
-              value={user.skills.join(", ")}
-              onChange={handleSkillsChange}
-              className="w-full p-2 border rounded-lg"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">
-              Interests (comma separated)
-            </label>
-            <input
-              type="text"
-              name="interests"
-              value={user.interests.join(", ")}
-              onChange={handleInterestsChange}
-              className="w-full p-2 border rounded-lg"
-            />
-          </div>
-          <div className="mb-4">
+          <div>
             <label className="block text-gray-700">Batch</label>
             <input
               type="text"
               name="batch"
-              value={user.batch}
+              value={profileData.batch}
               onChange={handleChange}
               className="w-full p-2 border rounded-lg"
+              required
             />
           </div>
-          <div className="mb-4">
+
+          <div>
             <label className="block text-gray-700">Profile Picture URL</label>
             <input
               type="text"
-              name="profilePicture"
-              value={user.profilePicture}
+              name="image"
+              value={profileData.image}
               onChange={handleChange}
               className="w-full p-2 border rounded-lg"
+              required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">GitHub URL</label>
+          <div>
+            <label className="block text-gray-700">Education</label>
             <input
               type="text"
-              name="github"
-              value={user.github}
+              name="education"
+              value={profileData.education}
               onChange={handleChange}
               className="w-full p-2 border rounded-lg"
+              required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">LinkedIn URL</label>
+          <div>
+            <label className="block text-gray-700">Bio</label>
+            <textarea
+              name="bio"
+              value={profileData.bio}
+              onChange={handleChange}
+              className="w-full p-2 border rounded-lg"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700">LinkedIn</label>
             <input
               type="text"
               name="linkedin"
-              value={user.linkedin}
-              onChange={handleChange}
+              value={profileData.socialLinks.linkedin}
+              onChange={handleSocialLinkChange}
               className="w-full p-2 border rounded-lg"
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Twitter URL</label>
+          <div>
+            <label className="block text-gray-700">GitHub</label>
+            <input
+              type="text"
+              name="github"
+              value={profileData.socialLinks.github}
+              onChange={handleSocialLinkChange}
+              className="w-full p-2 border rounded-lg"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700">Twitter</label>
             <input
               type="text"
               name="twitter"
-              value={user.twitter}
-              onChange={handleChange}
+              value={profileData.socialLinks.twitter}
+              onChange={handleSocialLinkChange}
               className="w-full p-2 border rounded-lg"
             />
           </div>
+          <div>
+            <label className="block text-gray-700">Skills</label>
+            <input
+              type="text"
+              name="customSkill"
+              value={customSkill}
+              onChange={handleSkillChange}
+              className="w-full p-2 border rounded-lg"
+              placeholder="Enter a skill"
+            />
+            <button
+              type="button"
+              onClick={addSkill}
+              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+            >
+              Add Skill
+            </button>
+            <div className="mt-2">
+              {profileData.skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div>
+            <label className="block text-gray-700">Interests</label>
+            <input
+              type="text"
+              name="customInterest"
+              value={customInterest}
+              onChange={handleInterestChange}
+              className="w-full p-2 border rounded-lg"
+              placeholder="Enter an interest"
+            />
+            <button
+              type="button"
+              onClick={addInterest}
+              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+            >
+              Add Interest
+            </button>
+            <div className="mt-2">
+              {profileData.interests.map((interest, index) => (
+                <span
+                  key={index}
+                  className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                >
+                  {interest}
+                </span>
+              ))}
+            </div>
+          </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
           >
-            Save
+            Save Changes
           </button>
         </form>
       </div>
@@ -166,4 +228,4 @@ const MyProfile = () => {
   );
 };
 
-export default MyProfile;
+export default MyProfilePage;

@@ -4,15 +4,14 @@ import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const ProfileCard = () => {
   const profile = useSelector((state) => state.profile);
-  const animePlaceholder =
-    "https://avatars.githubusercontent.com/u/124435030?v=4"; // Replace with a valid anime image URL
+  // Replace with a valid anime image URL
 
   return (
     <div className="bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg shadow-lg p-8 max-w-7xl mx-auto text-white flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-14">
       {/* Profile Picture */}
       <div className="flex-shrink-0">
         <img
-          src={profile.profilePicture || animePlaceholder}
+          src={profile?.image}
           alt="Profile"
           className="w-64 h-64 rounded-full border-4 border-white shadow-lg"
         />
@@ -25,12 +24,12 @@ const ProfileCard = () => {
           <p className="text-lg">{profile.email}</p>
           <span
             className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${
-              profile.isStudent
+              profile.role
                 ? "bg-green-200 text-green-800"
                 : "bg-blue-200 text-blue-800"
             }`}
           >
-            {profile.isStudent ? "Student" : "Alumnus"}
+            {profile.role ? "Student" : "Alumnus"}
           </span>
         </div>
 
@@ -82,18 +81,30 @@ const ProfileCard = () => {
 
       {/* Social Links */}
       <div className="flex flex-col items-center space-y-4">
-        {profile.github && (
-          <a href={profile.github} target="_blank" rel="noopener noreferrer">
+        {profile.socialLinks.github && (
+          <a
+            href={profile.socialLinks.github}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaGithub className="text-3xl hover:text-gray-300" />
           </a>
         )}
-        {profile.linkedin && (
-          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+        {profile.socialLinks.linkedin && (
+          <a
+            href={profile.socialLinks.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaLinkedin className="text-3xl hover:text-gray-300" />
           </a>
         )}
-        {profile.twitter && (
-          <a href={profile.twitter} target="_blank" rel="noopener noreferrer">
+        {profile.socialLinks.twitter && (
+          <a
+            href={profile.socialLinks.twitter}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaTwitter className="text-3xl hover:text-gray-300" />
           </a>
         )}
