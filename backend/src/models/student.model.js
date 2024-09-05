@@ -4,38 +4,66 @@ import bcrypt from "bcryptjs";
 
 
 const studentSchema = new mongoose.Schema({
-    rollno:{
-        type: String,
-        required: [true, "rollno is required"],
-        unique: true,
-        trim: true,
-    },
     name: {
         type: String,
         required: [true, "Fullname is required"],
         trim: true,
-    },
-    email: {
+      },
+      email: {
         type: String,
         required: [true, "Email is required"],
         trim: true,
         unique: true,
-    },
-    username: {
-        type: String,
-        required: [true, "Username is required"],
-        trim: true,
-        unique: true,
-    },
-    password: {
+      },
+      password: {
         type: String,
         required: [true, "Password is required"],
-    },
-    role: {
+      },
+      batch: {
         type: String,
-        enum: ["alumni", "student","college"],
-        default: "student",
-    },
+      },
+      role: {
+        type: String,
+        enum: ["alumni", "student", "college"],
+        default: "alumni",
+      },
+      image: {
+        type: String,
+        required: [true, "Image URL is required"],
+      },
+      education: {
+        type: String,
+        required: [true, "Education is required"],
+      },
+      skills: {
+        type: [String], // Array of strings to store multiple skills
+      },
+      interests: {
+        type: [String], // Array of strings to store multiple interests
+      },
+      bio: {
+        type: String,
+      },
+      socialLinks: {
+        linkedin: {
+          type: String,
+          trim: true,
+        },
+        github: {
+          type: String,
+          trim: true,
+        },
+        twitter: {
+          type: String,
+          trim: true,
+        },
+      },
+      customSkill: {
+        type: String,
+      },
+      customInterest: {
+        type: String,
+      },
     created_at: {
         type: Date,
         default: Date.now,
@@ -49,13 +77,10 @@ const studentSchema = new mongoose.Schema({
         ref: "College",
     },
     department: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Department",
-    },
-    batch: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Batch",
-    },
+      type:String,
+      required: [true, "Department is required"],
+    }
+    
 });
 
 studentSchema.pre("save", async function(next) {
