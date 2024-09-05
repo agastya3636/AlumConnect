@@ -1,25 +1,67 @@
-import { Server } from 'socket.io'
+import { Server } from 'socket.io';
 
 const setupSocketIO = (server) => {
     const io = new Server(server, {
         cors: {
-            origin: 'http://localhost:8000',
-            methods: ['GET', 'POST']
+            origin: 'http://localhost:5173',
+            methods: ['GET', 'POST'],
         },
     });
 
-    io.on('connection', (socket) => {
-        console.log(`User connected: $(socket.id)`);
-    
+    const CHAT_BOT = 'ChatBot';
+    let chatRoom = '';
+    let allUsers = [];
 
-    socket.on('message', (msg) => {
-        console.log('Message received:', msg);
+    io.on('connection', (socket) => {
+        console.log(`User connected: ${socket.id}`);
+
+        socket.on('check_rooms', ({ alumniUsername }) => {
+            const rooms = Array.from(io.sockets.adapter.rooms.keys()).filter(room => room.includes(alumniUsername));
+            rooms.forEach(room => {
+                console.log(`${alumniUsername} joined the room: ${room}`);
+                socket.emit('join_chat', { room });
+                io.to(room).emit('alumni_joined', { room, alumniUsername });
+                io.to(room).emit('join_room', { alumniUsername, room });
+            });
+        });
+
+        socket.on('join_room', (data) => {
+            const { studentUsername, room } = data;
+            socket.join(room);
+
+            let __createdtime__ = Date.now();
+            socket.to(room).emit('receive_message', {
+                message: `${studentUsername} has joined the chat!`,
+                sender: CHAT_BOT,
+                __createdtime__
+            });
+            socket.emit('receive_message', {
+                message: `Welcome ${studentUsername}`,
+                sender: CHAT_BOT,
+                __createdtime__
+            }); 
+
+            socket.emit('join_chat', { room: room });
+            console.log(`${studentUsername} joined room: ${room}`);
+            
+            io.to(room).emit('notification', { message: `${studentUsername} has joined the chat`});
+        });
+
+        socket.on('send_message', (data) => {
+            const { room, message, username, __createdtime__ } = data;
+
+            io.in(room).emit('receive_message', {
+                message,
+                sender: username,
+                __createdtime__
+            });
+        });
+
+        socket.on('disconnect', () => {
+            console.log(`User disconnected: ${socket.id}`);
+        });
     });
-    socket.on('disconnect', () => {
-        console.log(`User disconnected: $(socket.id)`);
-    });
-});
-    return io;
+
 };
 
 export default setupSocketIO;
