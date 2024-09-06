@@ -70,15 +70,8 @@ const alumniSchema = new mongoose.Schema({
  department: {
       type:String,
       required: [true, "Department is required"],
-    },
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now,
-},
+    }}, { 
+      timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
 alumniSchema.pre("save", async function(next) {

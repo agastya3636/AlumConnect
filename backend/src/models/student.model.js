@@ -64,14 +64,6 @@ const studentSchema = new mongoose.Schema({
       customInterest: {
         type: String,
       },
-    created_at: {
-        type: Date,
-        default: Date.now,
-    },
-    updated_at: {
-        type: Date,
-        default: Date.now,
-    },
     college: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "College",
@@ -79,7 +71,8 @@ const studentSchema = new mongoose.Schema({
     department: {
       type:String,
       required: [true, "Department is required"],
-    }
+    }}, { 
+      timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
     
 });
 

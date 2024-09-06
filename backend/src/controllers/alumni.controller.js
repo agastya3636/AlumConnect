@@ -121,10 +121,9 @@ const alumniRegister = asyncHandeller(
                 });
             }
             // Check if user already exists
-        const userExist1 = await Alumni.findOne({ email });
-        const userExist2 = await Alumni.findOne({ image });
-        if (userExist1 || userExist2) {
-            return res.status(400).json({ message: "Email or image already exists" });
+        const userExist = await Alumni.findOne({ email });
+        if (userExist) {
+            return res.status(400).json({ message: "Email already exists" });
         }
         const alumni = new Alumni({
             name,

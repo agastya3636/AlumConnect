@@ -119,10 +119,10 @@ const studentRegister = asyncHandeller(async (req, res) => {
             });
         }
         // Check if user already exists
-        const userExist1 = await Student.findOne({ email });
-        const userExist2 = await Student.findOne({ image });
-        if (userExist1 || userExist2) {
-            return res.status(400).json({ message: "Email or image URL already exists" });
+        const userExist= await Student.findOne({ email });
+       
+        if (userExist) {
+            return res.status(400).json({ message: "Email already exists" });
         }
 
         // Create new student
