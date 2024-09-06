@@ -1,6 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import http from 'http'
+import setupSocketIO from './sockets/index.js'
 
 import routerAlumni from './routes/alumni.routes.js'
 import routerJobs from './routes/jobs.routes.js'
@@ -14,7 +16,7 @@ const app = express();
 app.use(cors({
     origin: process.env.CLIENT_URL,
     credentials: true
-}))
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -24,6 +26,8 @@ app.use("/jobs", routerJobs);
 app.use("/events", routerEvent);
 app.use("/college", routerCollege);
 
+const server = http.createServer(app);
+const io = setupSocketIO(server);
 
 app.get("/",
     (req, res) => {
@@ -40,4 +44,4 @@ app.get("/",
     }
 )
 
-export default app 
+export default server; 

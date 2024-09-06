@@ -15,7 +15,7 @@ const studentRegister = asyncHandeller(async (req, res) => {
             });
         }
 
-        if(!name|| name.trim() === ""){
+        if(!fullname|| fullname.trim() === ""){
 
             return res.status(400).json({
                 success: false,
