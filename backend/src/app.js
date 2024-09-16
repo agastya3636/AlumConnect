@@ -6,6 +6,7 @@ import routerAlumni from './routes/alumni.routes.js'
 import routerJobs from './routes/jobs.routes.js'
 import routerEvent from './routes/events.router.js'
 import routerCollege from './routes/college.routes.js'
+import routerForums from './routes/forums.routes.js'
 
 
 dotenv.config();
@@ -23,6 +24,7 @@ app.use("/alumni", routerAlumni);
 app.use("/jobs", routerJobs);
 app.use("/events", routerEvent);
 app.use("/college", routerCollege);
+app.use("/forums", routerForums);
 
 
 app.get("/",
