@@ -5,45 +5,102 @@ import bcrypt from "bcryptjs";
 
 const studentRegister = asyncHandeller(async (req, res) => {
     try {
-        const { rollno, fullname, email, username, password, college, department, batch } = req.body;
-       
-        if(!rollno|| rollno.trim()===""){
+        const {
+            name, email, password, batch, role, image, education,
+            skills, interests, bio, socialLinks, customSkill, customInterest,
+            college, department
+        } = req.body;
 
+        // Validate required fields
+        if (!name || name.trim() === "") {
             return res.status(400).json({
                 success: false,
-                message:"Roll No is required"
+                message: "Fullname is required"
             });
         }
 
-        if(!name|| name.trim() === ""){
 
+        if (!email || email.trim() === "") {
             return res.status(400).json({
                 success: false,
-                message:"Fullname is required"
+                message: "Email is required"
             });
         }
 
-        if(!email || email.trim() === ""){
-
+        if (!password || password.trim() === "") {
             return res.status(400).json({
                 success: false,
-                message:"Email is required"
+                message: "Password is required"
             });
         }
 
-        if(!username || username.trim() === ""){
-
+        if (!batch || batch.trim() === "") {
             return res.status(400).json({
                 success: false,
-                message:"User name is required"
+                message: "Batch is required"
             });
         }
 
-        if(!password ){
-
+        if (!role || role.trim() === "") {
             return res.status(400).json({
                 success: false,
-                message:"Password is required"
+                message: "Role is required"
+            });
+        }
+
+        if (!image || image.trim() === "") {
+            return res.status(400).json({
+                success: false,
+                message: "Image URL is required"
+            });
+        }
+
+        if (!education || education.trim() === "") {
+            return res.status(400).json({
+                success: false,
+                message: "Education is required"
+            });
+        }
+
+        if (!skills || !Array.isArray(skills) || skills.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Skills are required"
+            });
+        }
+
+        if (!interests || !Array.isArray(interests) || interests.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Interests are required"
+            });
+        }
+
+        if (!bio || bio.trim() === "") {
+            return res.status(400).json({
+                success: false,
+                message: "Bio is required"
+            });
+        }
+
+        if (!socialLinks || typeof socialLinks !== 'object' || !socialLinks.linkedin || !socialLinks.github || !socialLinks.twitter) {
+            return res.status(400).json({
+                success: false,
+                message: "Social links are required"
+            });
+        }
+
+        if (!customSkill || customSkill.trim() === "") {
+            return res.status(400).json({
+                success: false,
+                message: "Custom skill is required"
+            });
+        }
+
+        if (!customInterest || customInterest.trim() === "") {
+            return res.status(400).json({
+                success: false,
+                message: "Custom interest is required"
             });
         }
 
@@ -62,67 +119,68 @@ const studentRegister = asyncHandeller(async (req, res) => {
                 message:"Department is required"
             });
         }
-
-        if(!batch || batch.trim() === ""){
-
-            return res.status(400).json({
-                success: false,
-                message:"Batch is required"
-            });
+        // Check if user already exists
+        const userExist= await Student.findOne({ email });
+       
+        if (userExist) {
+            return res.status(400).json({ message: "Email already exists" });
         }
-      
 
-
-        const userExist1 = await Student.findOne({ email });
-        const userExist2 = await Student.findOne({ username });
-        if (userExist1 || userExist2) {
-            return res.status(400).json({ message: "Email or username already exists" });
-        }
+        // Create new student
         const newStudent = new Student({
-            rollno,
             name,
             email,
-            username,
             password,
+            batch,
+            role,
+            image,
+            education,
+            skills,
+            interests,
+            bio,
+            socialLinks,
+            customSkill,
+            customInterest,
             college,
-            department,
-            batch
+            department
         });
 
         const userCreated = await newStudent.save();
 
+        // Generate token
         const token = await userCreated.generateToken();
 
-        res.status(200).json({
+             // Store cookies
+             const options = {
+                expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+                httpOnly: true,
+            };
+
+            res.status(200).cookie("token", token, options).json({
             success: true,
             token: token,
             userId: userCreated._id.toString(),
             email: userCreated.email,
-            username: userCreated.username,
+            image: userCreated.image,
             password: userCreated.password,
-            collage:userCreated.collage,
-            batch:userCreated.batch,
-            department:userCreated.department,
-            message: "Student Register endpoint hit"
+            batch: userCreated.batch,
+            department: userCreated.department,
+            message: "Student registered successfully"
         });
-    }
-    catch (error) {
+    } catch (error) {
         console.error("Registration error:", error);
         res.status(500).json({ message: "Internal server error" });
     }
-}
-
-);
-
+});
 const studentLogin = asyncHandeller(
     async (req, res) => {
         try {
-            const { username, password } = req.body;
+            const { email, password ,role} = req.body;
 
-            if (!username || !password) {
-                return res.status(400).json({ message: "Username and password are required" });
+            if (!email|| !password||!role) {
+                return res.status(400).json({ message: "email,password and role are required" });
             }
-            const userExist = await Student.findOne({ username });
+            const userExist = await Student.findOne({ email});
 
             if (!userExist) {
                 return res.status(400).json({ message: "Invalid credentials" });
@@ -130,16 +188,23 @@ const studentLogin = asyncHandeller(
 
             const isMatch = await userExist.verifyPassword(password);
             if (!isMatch) {
-                return res.status(401).json({ message: "Username or password is incorrect" });
+                return res.status(401).json({ message: "email or password is incorrect" });
             }
 
             const token = await userExist.generateToken();
-            res.status(200).json({
+
+             // Store cookies
+         const options = {
+            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+        };
+
+        res.status(200).cookie("token", token, options).json({
                 success: true,
                 token: token,
                 userId: userExist._id.toString(),
                 email: userExist.email,
-                username: userExist.username,
+                password:userExist.password,
                 role: userExist.role,
                 message: "Student Login endpoint hit"
             });
@@ -154,10 +219,8 @@ const studentProfile = asyncHandeller(
     async (req, res) => {
         const { userId } = req.user;
         const user = await Student
-            .findById(_id)
+            .findById(userId)
             .populate("college")
-            .populate("department")
-            .populate("batch");
         res.status(200).json({
             success: true,
             user: user,
