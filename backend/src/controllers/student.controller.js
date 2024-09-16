@@ -19,6 +19,7 @@ const studentRegister = asyncHandeller(async (req, res) => {
             });
         }
 
+
         if (!email || email.trim() === "") {
             return res.status(400).json({
                 success: false,

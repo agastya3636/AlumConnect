@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
-const BatchDetails = () => {
+const BatchDetails = ({ username, setUsername, room, setRoom, socket }) => {
   const { year } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [batch, setBatch] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBatch = async () => {
@@ -26,8 +28,20 @@ const BatchDetails = () => {
       }
     }
     fetchBatch();
+  }, [year]);
 
-  });
+  const handleChat = (student) => {
+    const roomName = `${username}-${student.username}`;
+    setRoom(roomName);
+    socket.emit('join_room', { studentUsername: username, room: roomName });
+    navigate(`/chat/${roomName}`);
+  };
+
+  useEffect(()=>{
+    socket.on('notification', ({ message }) => {
+      alert(message);
+    });
+  }, [socket]);
 
   if (loading) {
     return <p className="text-gray-600">Loading batch...</p>;
@@ -89,6 +103,12 @@ const BatchDetails = () => {
                   >
                     LinkedIn
                   </a>
+                  <button
+                    onClick={() => handleChat(student)}
+                    className="text-yellow-300 hover:underline ml-4"
+                  >
+                    Chat
+                  </button>
                 </div>
               </div>
             ))}

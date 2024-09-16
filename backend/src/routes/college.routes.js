@@ -6,7 +6,7 @@ const router = Router();
 
 router.route("/register").post(collegeController.collegeRegister);
 router.route("/login").post(collegeController.collegeLogin);
-router.route("/", collegeController.getCollege);
+router.route("/").get(collegeController.getCollege);
 router.route("/:id").get(collegeController.getCollegeById);
 router.route("/:id").put(collegeController.collegeProfileUpdate);
 router.route("/:id").delete(collegeController.deleteCollege);
