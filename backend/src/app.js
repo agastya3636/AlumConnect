@@ -29,9 +29,6 @@ app.use("/college", routerCollege);
 app.use("/forums", routerForums);
 
 
-const server = http.createServer(app);
-const io = setupSocketIO(server);
-
 app.get("/",
     (req, res) => {
         res.send({
