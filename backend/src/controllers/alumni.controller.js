@@ -6,75 +6,181 @@ import bcrypt from "bcryptjs";
 const alumniRegister = asyncHandeller(
     async (req, res) => {
         
-        const { name, email, username, password,role, college, department, batch, linkedinlink, twitterlink, githublink, yearofpassing } = req.body;
-
-        if (!name || name.trim()==="") {
-            return res.status(400).json({ message: "name is required" });
-        }
-        if ( !email || email.trim()==="") {
-            return res.status(400).json({ message: "email is required" });
-        }
-        if (!username || username.trim()==="") {
-            return res.status(400).json({ message: "username is required" });
-        }
-        if ( !password || password.trim()==="") {
-            return res.status(400).json({ message: "password is required" });
-        }
-        if ( !role || role.trim()==="") {
-            return res.status(400).json({ message: "role is required" });
-        }
-        if ( !yearofpassing) {
-            return res.status(400).json({ message: "year of passing  is required" });
-        }
-       
-
-        const userExist1 = await Alumni.findOne({ email });
-        const userExist2 = await Alumni.findOne({ username });
-        if (userExist1 || userExist2) {
-            return res.status(400).json({ message: "Email or username already exists" });
+        try {
+            const {
+                name, email, password, batch, role, image, education,
+                skills, interests, bio, socialLinks, customSkill, customInterest,
+                college, department
+            } = req.body;
+    
+            // Validate required fields
+            if (!name || name.trim() === "") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Fullname is required"
+                });
+            }
+    
+            if (!email || email.trim() === "") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Email is required"
+                });
+            }
+    
+            if (!password || password.trim() === "") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Password is required"
+                });
+            }
+    
+            if (!batch || batch.trim() === "") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Batch is required"
+                });
+            }
+    
+            if (!role || role.trim() === "") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Role is required"
+                });
+            }
+    
+            if (!image || image.trim() === "") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Image URL is required"
+                });
+            }
+    
+            if (!education || education.trim() === "") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Education is required"
+                });
+            }
+    
+            if (!skills || !Array.isArray(skills) || skills.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Skills are required"
+                });
+            }
+    
+            if (!interests || !Array.isArray(interests) || interests.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Interests are required"
+                });
+            }
+    
+            if (!bio || bio.trim() === "") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Bio is required"
+                });
+            }
+    
+            if (!socialLinks || typeof socialLinks !== 'object' || !socialLinks.linkedin || !socialLinks.github || !socialLinks.twitter) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Social links are required"
+                });
+            }
+    
+            if (!customSkill || customSkill.trim() === "") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Custom skill is required"
+                });
+            }
+    
+            if (!customInterest || customInterest.trim() === "") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Custom interest is required"
+                });
+            }
+    
+            if(!college|| college.trim() === ""){
+    
+                return res.status(400).json({
+                    success: false,
+                    message:"College is required"
+                });
+            }
+    
+            if(!department|| department.trim() === ""){
+    
+                return res.status(400).json({
+                    success: false,
+                    message:"Department is required"
+                });
+            }
+            // Check if user already exists
+        const userExist = await Alumni.findOne({ email });
+        if (userExist) {
+            return res.status(400).json({ message: "Email already exists" });
         }
         const alumni = new Alumni({
             name,
             email,
-            username,
             password,
-            college,
-            department,
             batch,
-            linkedinlink,
-            twitterlink,
-            githublink,
-            yearofpassing,
+            role,
+            image,
+            education,
+            skills,
+            interests,
+            bio,
+            socialLinks,
+            customSkill,
+            customInterest,
+            college,
+            department
         });
 
         await alumni.save();
 
         const token = await alumni.generateToken();
 
-        res.status(201).json({
+         // Store cookies
+         const options = {
+            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+        };
+        res.status(200).cookie("token", token, options).json({
             success: true,
             token: token,
             userId: alumni._id.toString(),
             password:alumni.password,
             email: alumni.email,
-            username: alumni.username,
             role: alumni.role,
             college:alumni.college,
             department:alumni.department,
             batch:alumni.batch,
             message: "Alumni registered successfully",
         });
-    }
-)
+      }  catch (error) {
+            console.error("Registration error:", error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+});
 
 const alumniLogin = asyncHandeller(
     async (req, res) => {
-        const { email, password } = req.body;
+        const { email, password,role } = req.body;
         if (!email||email.trim()==="" ) {
             return res.status(400).json({ message: "Email are required" });
         }
         if ( !password||password.trim()==="") {
             return res.status(400).json({ message: "password are required" });
+        }
+        if ( !role||role.trim()==="") {
+            return res.status(400).json({ message: "role are required" });
         }
         const userExist = await Alumni
             .findOne({ email })
@@ -87,7 +193,14 @@ const alumniLogin = asyncHandeller(
             return res.status(401).json({ message: "Email or password is incorrect" });
         }
         const token = await userExist.generateToken();
-        res.status(200).json({
+
+         // Store cookies
+         const options = {
+            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+        };
+
+        res.status(200).cookie("token", token, options).json({
             success: true,
             token: token,
             userId: userExist._id.toString(),
@@ -106,6 +219,7 @@ const alumniProfile = asyncHandeller(
         const { userId } = req.user;
         const user = await Alumni
             .findById(userId)
+            .populate("college")
         res.status(200).json({
             success: true,
             user: user,
