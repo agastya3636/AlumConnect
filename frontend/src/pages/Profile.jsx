@@ -1,12 +1,7 @@
 import React from "react";
-import MyProfile from "../features/profile/MyProfile";
 
 const Profile = () => {
-  return (
-    <div>
-      <MyProfile />
-    </div>
-  );
+  return <div>Profile</div>;
 };
 
 export default Profile;
