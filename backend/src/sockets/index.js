@@ -1,4 +1,6 @@
 import { Server } from 'socket.io';
+import {SaveMessage} from '../controllers/message.controller.js';
+import {GetMessage} from '../controllers/message.controller.js';
 
 const setupSocketIO = (server) => {
     const io = new Server(server, {
@@ -25,9 +27,12 @@ const setupSocketIO = (server) => {
             });
         });
 
-        socket.on('join_room', (data) => {
+        socket.on('join_room', async (data) => {
             const { studentUsername, room } = data;
+            const chatHistory = await GetMessage(room);
             socket.join(room);
+
+            socket.emit('chat_history', chatHistory);
 
             let __createdtime__ = Date.now();
             socket.to(room).emit('receive_message', {
@@ -47,7 +52,7 @@ const setupSocketIO = (server) => {
             io.to(room).emit('notification', { message: `${studentUsername} has joined the chat`});
         });
 
-        socket.on('send_message', (data) => {
+        socket.on('send_message', async (data) => {
             const { room, message, username, __createdtime__ } = data;
 
             io.in(room).emit('receive_message', {
@@ -55,6 +60,8 @@ const setupSocketIO = (server) => {
                 sender: username,
                 __createdtime__
             });
+
+            await SaveMessage(message, username, room);
         });
 
         socket.on('disconnect', () => {

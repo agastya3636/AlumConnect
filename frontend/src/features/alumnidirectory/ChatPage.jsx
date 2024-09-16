@@ -7,6 +7,11 @@ const ChatPage = ({ socket, username }) => {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
+
+        socket.on('chat_history', (history) => {
+            setMessages(history);
+        });
+
         socket.on('receive_message', (data) => {
             console.log(data);
             setMessages((state) => [...state,{
@@ -17,6 +22,7 @@ const ChatPage = ({ socket, username }) => {
         });
 
         return () => {
+            socket.off('chat_history');
             socket.off('receive_message');
         };
     }, [socket]);
