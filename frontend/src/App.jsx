@@ -38,11 +38,11 @@ const App = () => {
     socket.on('join_chat', ({ room }) => {
         setRoom(room);
         console.log(`Joined chat room: ${room}`);
-        showNotification(`You joined chat room: ${room}`);
+        // showNotification(`You joined chat room: ${room}`);
     });
 
     socket.on('alumni_joined', ({ room, alumniUsername }) => {
-        showNotification(`${alumniUsername} has joined the chat in room: ${room}`);
+        // showNotification(`${alumniUsername} has joined the chat in room: ${room}`);
     });
 
     return () => {
@@ -51,9 +51,9 @@ const App = () => {
     };
 }, [socket, username, userRole]);
 
-const showNotification = (message) => {
-    alert(message);
-};
+// const showNotification = (message) => {
+//     alert(message);
+// };
 
 
   return (

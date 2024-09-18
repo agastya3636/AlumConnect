@@ -37,11 +37,11 @@ const BatchDetails = ({ username, setUsername, room, setRoom, socket }) => {
     navigate(`/chat/${roomName}`);
   };
 
-  useEffect(()=>{
-    socket.on('notification', ({ message }) => {
-      alert(message);
-    });
-  }, [socket]);
+  // useEffect(()=>{
+  //   socket.on('notification', ({ message }) => {
+  //     alert(message);
+  //   });
+  // }, [socket]);
 
   if (loading) {
     return <p className="text-gray-600">Loading batch...</p>;
