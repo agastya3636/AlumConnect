@@ -17,6 +17,9 @@ import QuestionDiscussion from "./features/forums/QuestionDiscussion";
 import JobDetails from "./features/jobs/JobDetails";
 import { Provider } from "react-redux";
 import store from "./store";
+import Donation from "./pages/Donation";
+import OpenSource from "./pages/OpenSource";
+import ProjectDetails from "./features/opensource/ProjectDetails";
 const App = () => {
   return (
     <Provider store={store}>
@@ -33,6 +36,9 @@ const App = () => {
             <Route path="placement" element={<Placement />} />
             <Route path="placement/:id" element={<JobDetails />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="donation" element={<Donation />} />
+            <Route path="opensource" element={<OpenSource />} />
+            <Route path="/opensource/:id" element={<ProjectDetails />} />
             <Route path="discussionforums" element={<DiscussionForums />} />
             <Route
               path="/discussionforums/:forumId"

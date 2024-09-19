@@ -8,6 +8,8 @@ import {
   AiOutlineCalendar,
   AiOutlineContainer,
   AiOutlineNodeIndex,
+  AiOutlineCreditCard,
+  AiOutlineAppstoreAdd,
 } from "react-icons/ai";
 
 const MainNav = () => {
@@ -61,11 +63,29 @@ const MainNav = () => {
         </li>
         <li className="hover:bg-gray-200 ">
           <NavLink
+            to="opensource"
+            className="flex items-center gap-4 px-8 navlinks  py-2"
+          >
+            <AiOutlineAppstoreAdd />
+            OpenSource
+          </NavLink>
+        </li>
+        <li className="hover:bg-gray-200 ">
+          <NavLink
             to="placement"
             className="flex items-center gap-4 px-8 navlinks  py-2"
           >
             <AiOutlineNodeIndex />
             <span>Placement</span>
+          </NavLink>
+        </li>
+        <li className="hover:bg-gray-200 ">
+          <NavLink
+            to="donation"
+            className="flex items-center gap-4 px-8 navlinks  py-2"
+          >
+            <AiOutlineCreditCard />
+            <span>Donation</span>
           </NavLink>
         </li>
         <li className="hover:bg-gray-200 ">
