@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { jobs } from "../../utils/MockData";
 const JobDetails = () => {
   const { id } = useParams();
+  console.log(id)
   const job = jobs.find((job) => job.id === parseInt(id));
 
   if (!job) {

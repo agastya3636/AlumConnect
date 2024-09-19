@@ -3,62 +3,75 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
 const alumniSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, "Fullname is required"],
-        trim: true,
+   name: {
+    type: String,
+    required: [true, "Fullname is required"],
+    trim: true,
+  },
+  email: {
+    type: String,
+    required: [true, "Email is required"],
+    trim: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: [true, "Password is required"],
+  },
+  batch: {
+    type: String,
+  },
+  role: {
+    type: String,
+    enum: ["alumni", "student", "college"],
+    default: "alumni",
+  },
+  image: {
+    type: String,
+    required: [true, "Image URL is required"],
+  },
+  education: {
+    type: String,
+    required: [true, "Education is required"],
+  },
+  skills: {
+    type: [String], // Array of strings to store multiple skills
+  },
+  interests: {
+    type: [String], // Array of strings to store multiple interests
+  },
+  bio: {
+    type: String,
+  },
+  socialLinks: {
+    linkedin: {
+      type: String,
+      trim: true,
     },
-    email: {
-        type: String,
-        required: [true, "Email is required"],
-        trim: true,
-        unique: true,
+    github: {
+      type: String,
+      trim: true,
     },
-    username: {
-        type: String,
-        required: [true, "Username is required"],
-        trim: true,
-        unique: true,
+    twitter: {
+      type: String,
+      trim: true,
     },
-    password: {
-        type: String,
-        required: [true, "Password is required"],
-    },
-    role: {
-        type: String,
-        enum: ["alumni", "student","college"],
-        default: "alumni",
-    },
-    created_at: {
-        type: Date,
-        default: Date.now,
-    },
-    college: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "College",
-    },
-    department: {
-        type: String,
-    },
-    batch: {
-        type:String,
-    },
-    linkedinlink: {
-        type: String,
-        trim: true,
-    },
-    twitterlink: {
-        type: String,
-        trim: true,
-    },
-    githublink: {
-        type: String,
-        trim: true,
-    },
-    yearofpassing: {
-        type: Number,
-        required:true,
-    },
+  },
+  customSkill: {
+    type: String,
+  },
+  customInterest: {
+    type: String,
+  },
+  college: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "College",
+  },
+ department: {
+      type:String,
+      required: [true, "Department is required"],
+    }}, { 
+      timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
 alumniSchema.pre("save", async function(next) {
@@ -86,7 +99,7 @@ alumniSchema.methods.generateToken = async function() {
         return jwt.sign({
             userId: this._id.toString(),
             email: this.email,
-            username: this.username,
+            name: this.name,
 
         }, process.env.JWT_SECRET_KEY, {
             expiresIn: "30d"

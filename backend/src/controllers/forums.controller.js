@@ -1,5 +1,6 @@
-import Forum from '../models/forums.model.js'
-import asyncHandeller from '../utils/asyncHandeller.js'
+import { Forum } from '../models/forums.model.js'
+import { asyncHandeller } from '../utils/asyncHandeller.js'
+import { mongoose } from 'mongoose';
 
 const createForum = asyncHandeller(async (req, res) => {
     try {

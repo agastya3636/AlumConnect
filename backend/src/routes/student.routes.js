@@ -5,10 +5,10 @@ import { authenticateJWT } from '../middlewares/authenticateJWT.js';
 
 const router = Router();
 
-router.route("/register").post(studentController.studentRegister);
+router.route("/register").post(authenticateJWT,studentController.studentRegister);
 router.route("/login").post(studentController.studentLogin);
-router.route("/:id").get(studentController.studentProfile);
-router.route("/:id").put(studentController.studentUpdateProfile);
+router.route("/:id").get(authenticateJWT,studentController.studentProfile);
+router.route("/:id").put(authenticateJWT,studentController.studentUpdateProfile);
 
 
 export default router;

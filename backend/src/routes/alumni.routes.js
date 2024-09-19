@@ -8,8 +8,8 @@ const router = Router();
 router.route("/register").post(alumniController.alumniRegister);
 router.route("/login").post(alumniController.alumniLogin);
 router.route("/").get( alumniController.getAlumni);
-router.route("/:id").get(alumniController.alumniProfile);
-router.route("/:id").put( alumniController.alumniUpdateProfile);
-router.route("/:id").delete( alumniController.alumniDeleteProfile);
+router.route("/:id").get(authenticateJWT,alumniController.alumniProfile);
+router.route("/:id").put(authenticateJWT, alumniController.alumniUpdateProfile);
+router.route("/:id").delete(authenticateJWT, alumniController.alumniDeleteProfile);
 
 export default router;
