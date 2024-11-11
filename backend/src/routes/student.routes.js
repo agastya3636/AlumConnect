@@ -7,7 +7,7 @@ const router = Router();
 
 router.route("/register").post(authenticateJWT,studentController.studentRegister);
 router.route("/login").post(studentController.studentLogin);
-router.route("/:id").get(authenticateJWT,studentController.studentProfile);
+router.route("/").get(studentController.studentProfile);
 router.route("/:id").put(authenticateJWT,studentController.studentUpdateProfile);
 
 
