@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["db.json"]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://api.example.com/$1"
+    },
+    {
+      "src": "/resize/:width/:height",
+      "dest": "/api/sharp"
+    },
+    {
+      "src": "/about",
+      "dest": "/about-our-company.html"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/old-path",
+      "destination": "/new-path"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/me",
+      "destination": "/profile.html",
+      "permanent": true
+    }
+  ],
+  
+}
