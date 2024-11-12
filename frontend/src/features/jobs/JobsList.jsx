@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const JobsList = () => {
-  // Sample data for jobs
-
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("");
   const [filterLocation, setFilterLocation] = useState("");
@@ -11,6 +10,7 @@ const JobsList = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Hook to navigate programmatically
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -21,24 +21,20 @@ const JobsList = () => {
         }
         const data = await response.json();
         setJobs(data.jobs);
-      }
-      catch (error) {
+      } catch (error) {
         setError(error.message);
-      }
-      finally {
+      } finally {
         setLoading(false);
       }
     };
     fetchJobs();
   }, []);
 
-  if (loading)
-  {
+  if (loading) {
     return <p className="text-gray-600">Loading jobs...</p>;
   }
-  
-  if (error)
-  {
+
+  if (error) {
     return <p className="text-red-500">Error: {error}</p>;
   }
 
@@ -51,11 +47,24 @@ const JobsList = () => {
     );
   });
 
+  const handleAddJob = () => {
+    // Navigate to the job creation page
+    navigate("/add-job");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8">
-      <h1 className="text-4xl font-bold text-center text-white mb-8">
-        Job Listings
-      </h1>
+      <h1 className="text-4xl font-bold text-center text-white mb-8">Job Listings</h1>
+{/* 
+      {userRole === "alumni" && (
+        <button
+          onClick={handleAddJob}
+          className="bg-green-500 text-white px-4 py-2 rounded mb-8"
+        >
+          Add Job
+        </button>
+      )} */}
+
       <div className="mb-8">
         <input
           type="text"
@@ -92,6 +101,7 @@ const JobsList = () => {
           />
         </div>
       </div>
+
       <div className="grid grid-cols-1 gap-8">
         {filteredJobs.map((job) => (
           <NavLink

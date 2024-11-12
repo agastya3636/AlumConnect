@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateProfile } from "../profile/profileSlice"; // Correct import path
+import { updateProfile } from "../profile/profileSlice";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,7 +12,7 @@ const LoginPage = () => {
     email: "",
     password: "",
     batch: "",
-    role: "student", // default role
+    role: "student", 
     image: "",
     education: "",
     skills: [],
@@ -63,24 +64,45 @@ const LoginPage = () => {
     navigate("/dashboard");
   };
 
-  const handleRegisterSubmit = (e) => {
-    e.preventDefault();
-    // Handle registration logic here
-    const finalRegisterData = {
-      ...registerData,
-      skills: registerData.customSkill
-        ? [...registerData.skills, registerData.customSkill]
-        : registerData.skills,
-      interests: registerData.customInterest
-        ? [...registerData.interests, registerData.customInterest]
-        : registerData.interests,
-    };
-    console.log("Register Data:", finalRegisterData);
-    // Update profile in Redux store
-    dispatch(updateProfile(finalRegisterData));
-    // Redirect to dashboard after registration
-    navigate("/dashboard");
+  const handleRegisterSubmit = async (e) => {
+  e.preventDefault();
+
+  // Prepare the final register data
+  const finalRegisterData = {
+    ...registerData,
+    skills: registerData.customSkill
+      ? [...registerData.skills, registerData.customSkill]
+      : registerData.skills,
+    interests: registerData.customInterest
+      ? [...registerData.interests, registerData.customInterest]
+      : registerData.interests,
   };
+
+  console.log("Register Data:", finalRegisterData);
+
+  // Send the registration data to the backend API
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/alumni/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(finalRegisterData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to register user");
+    }
+    console.log("Register Data", response.json());
+    // If registration is successful, dispatch the profile data and redirect to the dashboard
+    dispatch(updateProfile(finalRegisterData));
+    navigate("/dashboard");
+  } catch (error) {
+    console.error("Error during registration:", error);
+    // You can show an error message here
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8 flex items-center justify-center">
