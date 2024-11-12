@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const EventsCard = () => {
   // Dummy data for events
@@ -23,9 +24,9 @@ const EventsCard = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch(`/api/events/?limit=20`);
+        const response = await fetch(`${API_BASE_URL}/api/events/?limit=20`);
         if (!response.ok) {
-          throw new Error("Failed to fetch events");
+          throw new Error("Failed to fetch events"+response);
         }
         const data = await response.json();
         setEvents(data.events);

@@ -14,7 +14,7 @@ const BatchDetails = ({ username, setUsername, room, setRoom, socket }) => {
     const fetchBatch = async () => {
       try {
         const response = await fetch(
-          `/alumni?batch=${year}`);
+          `/api/alumni?batch=${year}`);
         if (!response.ok) {
           throw new Error("Failed to fetch batch");
         }
@@ -36,12 +36,6 @@ const BatchDetails = ({ username, setUsername, room, setRoom, socket }) => {
     socket.emit('join_room', { studentUsername: username, room: roomName });
     navigate(`/chat/${roomName}`);
   };
-
-  // useEffect(()=>{
-  //   socket.on('notification', ({ message }) => {
-  //     alert(message);
-  //   });
-  // }, [socket]);
 
   if (loading) {
     return <p className="text-gray-600">Loading batch...</p>;
