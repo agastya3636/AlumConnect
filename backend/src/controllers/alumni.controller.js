@@ -91,35 +91,35 @@ const alumniRegister = asyncHandeller(
                 });
             }
     
-            if (!customSkill || customSkill.trim() === "") {
-                return res.status(400).json({
-                    success: false,
-                    message: "Custom skill is required"
-                });
-            }
+            // if (!customSkill || customSkill.trim() === "") {
+            //     return res.status(400).json({
+            //         success: false,
+            //         message: "Custom skill is required"
+            //     });
+            // }
     
-            if (!customInterest || customInterest.trim() === "") {
-                return res.status(400).json({
-                    success: false,
-                    message: "Custom interest is required"
-                });
-            }
+            // if (!customInterest || customInterest.trim() === "") {
+            //     return res.status(400).json({
+            //         success: false,
+            //         message: "Custom interest is required"
+            //     });
+            // }
     
-            if(!college|| college.trim() === ""){
+            // if(!college|| college.trim() === ""){
     
-                return res.status(400).json({
-                    success: false,
-                    message:"College is required"
-                });
-            }
+            //     return res.status(400).json({
+            //         success: false,
+            //         message:"College is required"
+            //     });
+            // }
     
-            if(!department|| department.trim() === ""){
+            // if(!department|| department.trim() === ""){
     
-                return res.status(400).json({
-                    success: false,
-                    message:"Department is required"
-                });
-            }
+            //     return res.status(400).json({
+            //         success: false,
+            //         message:"Department is required"
+            //     });
+            // }
             // Check if user already exists
         const userExist = await Alumni.findOne({ email });
         if (userExist) {
