@@ -64,7 +64,8 @@ const alumniSchema = new mongoose.Schema({
     type: String,
   },
   college: {
-    type: mongoose.Schema.Types.ObjectId,
+    // type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "College",
   },
  department: {
