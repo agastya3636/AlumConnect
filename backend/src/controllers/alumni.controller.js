@@ -137,10 +137,10 @@ const alumniRegister = asyncHandeller(
             interests,
             bio,
             socialLinks,
-            customSkill,
-            customInterest,
-            college,
-            department
+            // customSkill,
+            // customInterest,
+            // college,
+            // department
         });
 
         await alumni.save();
