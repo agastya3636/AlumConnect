@@ -23,7 +23,7 @@ const EventsCard = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/events/?limit=20");
+        const response = await fetch(`/api/events/?limit=20`);
         if (!response.ok) {
           throw new Error("Failed to fetch events");
         }

@@ -23,12 +23,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-app.use("/alumni", routerAlumni);
-app.use("/jobs", routerJobs);
-app.use("/events", routerEvent);
-app.use("/college", routerCollege);
-app.use("/forums", routerForums);
-app.use("/student", routerStudent);
+app.use("/api/alumni", routerAlumni);
+app.use("/api/jobs", routerJobs);
+app.use("/api/events", routerEvent);
+app.use("/api/college", routerCollege);
+app.use("/api/forums", routerForums);
+app.use("/api/student", routerStudent);
 
 const server = http.createServer(app);
 const io = setupSocketIO(server);

@@ -14,7 +14,7 @@ const BatchDetails = ({ username, setUsername, room, setRoom, socket }) => {
     const fetchBatch = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/alumni?batch=${year}`);
+          `/alumni?batch=${year}`);
         if (!response.ok) {
           throw new Error("Failed to fetch batch");
         }
