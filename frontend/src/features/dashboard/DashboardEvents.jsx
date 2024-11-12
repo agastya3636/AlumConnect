@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useEffect , useState} from "react";
+import { useEffect, useState } from "react";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 
 const DashboardEvents = () => {
@@ -12,7 +13,7 @@ const DashboardEvents = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("/api/events/?limit=2");
+        const response = await fetch(`${API_BASE_URL}/api/events/?limit=2`);
         if (!response.ok) {
           throw new Error("Failed to fetch events");
         }

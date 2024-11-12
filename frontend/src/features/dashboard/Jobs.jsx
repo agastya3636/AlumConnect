@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -10,7 +11,7 @@ const Jobs = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("/api/jobs/?limit=2");
+        const response = await fetch(`${API_BASE_URL}/api/jobs/?limit=2`);
         if (!response.ok) {
           throw new Error("Failed to fetch jobs");
         }
