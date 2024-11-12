@@ -23,7 +23,7 @@ import OpenSource from "./pages/OpenSource";
 import ProjectDetails from "./features/opensource/ProjectDetails";
 import Chat from "./pages/Chat";
 
-const socket = io.connect("http://localhost:8000");
+const socket = io.connect("https://sih2024-iif3.onrender.com/");
 
 const App = () => {
   const [username, setUsername] = useState("agastya");

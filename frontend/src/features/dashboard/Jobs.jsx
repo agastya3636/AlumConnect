@@ -10,7 +10,7 @@ const Jobs = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("http://localhost:8000/jobs/?limit=2");
+        const response = await fetch("/api/jobs/?limit=2");
         if (!response.ok) {
           throw new Error("Failed to fetch jobs");
         }

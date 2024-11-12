@@ -12,7 +12,7 @@ const DashboardEvents = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/events/?limit=2");
+        const response = await fetch("/api/events/?limit=2");
         if (!response.ok) {
           throw new Error("Failed to fetch events");
         }
