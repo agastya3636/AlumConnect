@@ -1,12 +1,12 @@
 import React from "react";
 import { FiLogOut, FiUser } from "react-icons/fi";
-
-
+import { useNavigate } from 'react-router-dom';
+const Navigate = useNavigate();
 function handleLogout () {
   alert("Logging out");
   localStorage.removeItem("token");
   sessionStorage.removeItem("token");
-  window.location.href = "/login";
+  Navigate('/login');
 };
 const Header = () => {
   return (
