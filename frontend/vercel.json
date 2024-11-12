@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)", // Capture all routes
+      "destination": "/"  // Redirect them to the root index.html
+    }
+  ]
+}
