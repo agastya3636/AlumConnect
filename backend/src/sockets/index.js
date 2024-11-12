@@ -5,8 +5,9 @@ import {GetMessage} from '../controllers/message.controller.js';
 const setupSocketIO = (server) => {
     const io = new Server(server, {
         cors: {
-            origin: 'http://localhost:5173',
+            origin: 'https://sih-2024-7ben.vercel.app',
             methods: ['GET', 'POST'],
+            credentials: true,
         },
     });
 
