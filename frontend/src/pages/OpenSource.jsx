@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const projects = [
   {
@@ -37,6 +37,13 @@ const projects = [
 ];
 
 const OpenSource = () => {
+  const navigate = useNavigate(); // Hook to navigate to the Add Project page
+
+  // Function to handle the Add Project button click
+  const handleAddProject = () => {
+    navigate("/addproject"); // Navigate to the Add Project page
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-6xl w-full">
@@ -58,6 +65,16 @@ const OpenSource = () => {
               </Link>
             </div>
           ))}
+        </div>
+
+        {/* Add Project Button */}
+        <div className="mt-6 text-center">
+          <button
+            onClick={handleAddProject}
+            className="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-700"
+          >
+            Add New Project
+          </button>
         </div>
       </div>
     </div>
