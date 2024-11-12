@@ -166,7 +166,10 @@ const alumniRegister = asyncHandeller(
         });
       }  catch (error) {
             console.error("Registration error:", error);
-            res.status(500).json({ message: "Internal server error" });
+            res.status(500).json({
+                message: "Internal server error",
+                'eat':error
+             });
         }
 });
 
