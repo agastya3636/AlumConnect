@@ -205,7 +205,7 @@ const alumniLogin = asyncHandeller(
             token: token,
             userId: userExist._id.toString(),
             email: userExist.email,
-            username: userExist.username,
+            // username: userExist.username,
             role: userExist.role,
             message: "Alumni Login endpoint hit"
         });
