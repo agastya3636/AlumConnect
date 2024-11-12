@@ -22,6 +22,7 @@ import Donation from "./pages/Donation";
 import OpenSource from "./pages/OpenSource";
 import ProjectDetails from "./features/opensource/ProjectDetails";
 import Chat from "./pages/Chat";
+import AddProjectForm from "./features/opensource/AddProject";
 
 const socket = io.connect("https://sih2024-iif3.onrender.com/");
 
@@ -88,6 +89,7 @@ const App = () => {
             <Route path="donation" element={<Donation />} />
             <Route path="opensource" element={<OpenSource />} />
             <Route path="/opensource/:id" element={<ProjectDetails />} />
+            <Route path="addproject" element={<AddProjectForm />} />
             <Route path="discussionforums" element={<DiscussionForums />} />
             <Route
               path="/discussionforums/:forumId"
