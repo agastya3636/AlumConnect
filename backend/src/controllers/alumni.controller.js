@@ -200,21 +200,24 @@ const alumniLogin = asyncHandeller(
         }
         const token = await userExist.generateToken();
 
-         // Store cookies
-         const options = {
-            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
-            httpOnly: true,
-        };
+        const options = {
+            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),  // Expires in 1 day
+            httpOnly: true,  // Prevent access to cookie via JavaScript
+            secure: process.env.NODE_ENV === 'production',  // Only secure cookies in production
+            sameSite: 'None',  // Allow cross-origin cookies
+            };
 
-        res.status(200).cookie("token", token, options).json({
-            success: true,
-            token: token,
-            userId: userExist._id.toString(),
-            email: userExist.email,
-            // username: userExist.username,
-            role: userExist.role,
-            message: "Alumni Login endpoint hit"
-        });
+            res.status(200)
+            .cookie("token", token, options)
+            .json({
+                success: true,
+                token: token,
+                userId: userExist._id.toString(),
+                email: userExist.email,
+                role: userExist.role,
+                message: "Alumni Login endpoint hit"
+            });
+
         
         
     }
