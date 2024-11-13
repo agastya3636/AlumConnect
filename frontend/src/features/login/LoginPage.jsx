@@ -60,8 +60,8 @@ const LoginPage = () => {
   e.preventDefault();
 
   const loginData = {
-    email: loginEmail,  // email from your state or form input
-    password: loginPassword,  // password from your state or form input
+    email: email,  // email from your state or form input
+    password: password,  // password from your state or form input
   };
 
   try {
