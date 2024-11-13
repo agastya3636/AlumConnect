@@ -59,10 +59,6 @@ const LoginPage = () => {
  const handleLoginSubmit = async (e) => {
   e.preventDefault();
 
-  const loginData = {
-    email: email,  // email from your state or form input
-    password: password,  // password from your state or form input
-  };
 
   try {
     const response = await fetch(`${API_BASE_URL}/api/alumni/login`, {
