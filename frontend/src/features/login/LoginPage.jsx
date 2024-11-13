@@ -56,15 +56,41 @@ const LoginPage = () => {
     setRegisterData({ ...registerData, customInterest: e.target.value });
   };
 
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    // Handle login logic here
-    console.log("Login Data:", loginData);
-    // On successful login, redirect to dashboard
-    navigate("/dashboard");
+ const handleLoginSubmit = async (e) => {
+  e.preventDefault();
+
+  const loginData = {
+    email: loginEmail,  // email from your state or form input
+    password: loginPassword,  // password from your state or form input
   };
 
-  const handleRegisterSubmit = async (e) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/alumni/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+      credentials: "include", // send the cookies with the request
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to login");
+    }
+
+    const data = await response.json();
+    console.log("Login Response:", data);
+
+    // If login is successful, dispatch profile data and redirect
+    dispatch(updateProfile(data));  // Assuming data contains user profile info
+    navigate("/dashboard");
+  } catch (error) {
+    console.error("Error during login:", error);
+    // Show an error message here, such as setting an error state
+  }
+};
+
+const handleRegisterSubmit = async (e) => {
   e.preventDefault();
 
   // Prepare the final register data
@@ -88,20 +114,25 @@ const LoginPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(finalRegisterData),
+      credentials: "include", // send the cookies with the request
     });
 
     if (!response.ok) {
       throw new Error("Failed to register user");
     }
-    console.log("Register Data", response.json());
-    // If registration is successful, dispatch the profile data and redirect to the dashboard
-    dispatch(updateProfile(finalRegisterData));
+
+    const data = await response.json();
+    console.log("Register Response:", data);
+
+    // If registration is successful, dispatch the profile data and redirect
+    dispatch(updateProfile(data));  // Assuming data contains user profile info
     navigate("/dashboard");
   } catch (error) {
     console.error("Error during registration:", error);
-    // You can show an error message here
+    // Show an error message here, such as setting an error state
   }
 };
+
 
 
   return (
