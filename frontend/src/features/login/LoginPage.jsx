@@ -76,6 +76,11 @@ const LoginPage = () => {
 
     const data = await response.json();
     console.log("Login Response:", data);
+        const token = data.token;
+
+        // Store the token in cookies
+        document.cookie = `token=${token}; path=/; Secure; SameSite=None`;
+
 
     // If login is successful, dispatch profile data and redirect
     dispatch(updateProfile(data));  // Assuming data contains user profile info
