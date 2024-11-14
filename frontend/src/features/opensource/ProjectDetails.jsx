@@ -1,45 +1,46 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const projects = [
-  {
-    id: 1,
-    title: "React",
-    description: "A JavaScript library for building user interfaces.",
-    githubLink: "https://github.com/facebook/react",
-  },
-  {
-    id: 2,
-    title: "Vue.js",
-    description: "The Progressive JavaScript Framework.",
-    githubLink: "https://github.com/vuejs/vue",
-  },
-  {
-    id: 3,
-    title: "Angular",
-    description: "One framework. Mobile & desktop.",
-    githubLink: "https://github.com/angular/angular",
-  },
-  {
-    id: 4,
-    title: "Django",
-    description: "The Web framework for perfectionists with deadlines.",
-    githubLink: "https://github.com/django/django",
-  },
-  {
-    id: 5,
-    title: "Flask",
-    description:
-      "A microframework for Python based on Werkzeug, Jinja2, and good intentions.",
-    githubLink: "https://github.com/pallets/flask",
-  },
-  // Add more projects as needed
-];
 
 const ProjectDetails = () => {
-  const { id } = useParams();
-  const project = projects.find((project) => project.id === parseInt(id));
+  const { _id } = useParams();
+  const [project, setProject] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/project/${_id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch project" + response);
+        }
+        const data = await response.json();
+        setProject(data.data);
+      }
+      catch (error) {
+        setError(error.message);
+      }
+      finally {
+        setLoading(false);
+      }
+    };
+    fetchProject();
+  }
+    , [_id]);
+  if (loading) {
+    return <p className="text-gray-600">Loading project...</p>;
+  }
+  if (error) {
+    return <p className="text-red-600">{error}</p>;
+  }
 
   if (!project) {
     return <div>Project not found</div>;

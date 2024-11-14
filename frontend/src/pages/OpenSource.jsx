@@ -35,7 +35,7 @@ const OpenSource = () => {
   const handleAddProject = () => {
     navigate("/addproject");
   };
-  console.log("Projects", projects)
+  
   return (
     
     <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8 flex items-center justify-center">
@@ -45,13 +45,13 @@ const OpenSource = () => {
         </h2>
         <div className="space-y-4">
           {projects.map((project) => (
-            <div key={project.id} className="bg-gray-100 p-4 rounded-lg shadow">
+            <div key={project._id} className="bg-gray-100 p-4 rounded-lg shadow">
               <h3 className="text-xl font-semibold text-gray-800">
                 {project.title}
               </h3>
               <p className="text-gray-600">{project.description}</p>
               <Link
-                to={`/opensource/${project.id}`}
+                to={`/opensource/${project._id}`}
                 className="text-blue-500 hover:underline"
               >
                 View Details
