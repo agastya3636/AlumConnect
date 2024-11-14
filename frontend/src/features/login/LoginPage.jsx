@@ -67,7 +67,7 @@ const LoginPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(loginData),
-      credentials: "include", // send the cookies with the request
+      credentials:'include',
     });
 
     if (!response.ok) {

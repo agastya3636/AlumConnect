@@ -34,11 +34,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use("/api/alumni", routerAlumni);
-app.use("/api/jobs", authenticateJWT, routerJobs);
-app.use("/api/events", authenticateJWT, routerEvent);
-app.use("/api/college", authenticateJWT, routerCollege);
-app.use("/api/forums", authenticateJWT, routerForums);
-app.use("/api/student", authenticateJWT, routerStudent);
+app.use("/api/jobs", routerJobs);
+app.use("/api/events", routerEvent);
+app.use("/api/college", routerCollege);
+app.use("/api/forums", routerForums);
+app.use("/api/student",  routerStudent);
 
 const server = http.createServer(app);
 const io = setupSocketIO(server);
