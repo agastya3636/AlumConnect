@@ -11,7 +11,13 @@ const Jobs = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/jobs/?limit=2`);
+        const response = await fetch(`${API_BASE_URL}/api/jobs/?limit=2`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch jobs");
         }

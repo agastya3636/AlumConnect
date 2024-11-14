@@ -13,7 +13,13 @@ const DashboardEvents = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/events/?limit=2`);
+        const response = await fetch(`${API_BASE_URL}/api/events/?limit=2`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", 
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch events");
         }

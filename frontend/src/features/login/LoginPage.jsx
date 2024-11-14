@@ -76,10 +76,11 @@ const LoginPage = () => {
 
     const data = await response.json();
     console.log("Login Response:", data);
-        const token = data.token;
+    const token = data.token;
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; 
+    const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
+    document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
 
-        // Store the token in cookies
-        document.cookie = `token=${token}; path=/; Secure; SameSite=None`;
 
 
     // If login is successful, dispatch profile data and redirect
