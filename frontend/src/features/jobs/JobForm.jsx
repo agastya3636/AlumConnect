@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const JobPostForm = ({ userRole }) => {
   const [jobDetails, setJobDetails] = useState({
     title: "",
@@ -12,7 +12,7 @@ const JobPostForm = ({ userRole }) => {
     perks: "",
     requirements: "",
     description: "",
-    applyLink: "",
+    link: "",
   });
 
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const JobPostForm = ({ userRole }) => {
   //   return <div>You do not have permission to post a job.</div>;
   // }
 
-  // Handle form submission
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setJobDetails({
@@ -31,12 +31,25 @@ const JobPostForm = ({ userRole }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    
-
-    
-    navigate("/jobs");  
+    try {
+      const response = await fetch(`${API_BASE_URL}/jobs/jobpost`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jobDetails),
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to post job");
+      }
+      navigate("/placement");
+    } catch (error) {
+      console.error("Failed to post job", error);
+    }    
+    navigate("/placement");  
   };
 
   return (
@@ -104,7 +117,9 @@ const JobPostForm = ({ userRole }) => {
               />
             </div>
             <div>
-              <label className="block text-gray-700">Tech Stack (comma separated)</label>
+              <label className="block text-gray-700">
+                Tech Stack (comma separated)
+              </label>
               <input
                 type="text"
                 name="techStack"
@@ -149,7 +164,7 @@ const JobPostForm = ({ userRole }) => {
               <input
                 type="url"
                 name="applyLink"
-                value={jobDetails.applyLink}
+                value={jobDetails.link}
                 onChange={handleChange}
                 required
                 className="w-full p-2 border border-gray-300 rounded"

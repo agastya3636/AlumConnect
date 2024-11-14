@@ -65,6 +65,7 @@ const EventsCard = () => {
           className="p-2 px-4 pr-6 rounded-lg"
         />
       </div>
+      
       <div className="w-full max-w-6xl">
         {filteredEvents.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
