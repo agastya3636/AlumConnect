@@ -55,7 +55,7 @@ const JobsList = () => {
 
   const handleAddJob = () => {
     // Navigate to the job creation page
-    navigate("/add-job");
+    navigate("/addplacement");
   };
 
   return (
