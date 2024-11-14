@@ -6,7 +6,7 @@ const AddProjectForm = () => {
   const [description, setDescription] = useState("");
   const [githublink, setGithubLink] = useState("");
   const navigate = useNavigate();
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newProject = {
@@ -23,12 +23,10 @@ const AddProjectForm = () => {
         body: JSON.stringify(newProject),
         credentials: "include",
       });
-
       if (!response.ok) {
         throw new Error("Failed to register user");
       }
-      console.log(response.body);
-      navigate("/projects");
+      navigate("/opensource");
     } catch (error) {
       console.error("Failed to add project", error);
     }
