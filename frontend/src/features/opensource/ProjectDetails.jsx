@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 
 const ProjectDetails = () => {
-  const { _id } = useParams();
+  const { id } = useParams();
   const [project, setProject] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ const ProjectDetails = () => {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/project/${_id}`, {
+        const response = await fetch(`${API_BASE_URL}/api/project/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
