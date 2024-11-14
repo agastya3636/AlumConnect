@@ -34,7 +34,7 @@ const JobPostForm = ({ userRole }) => {
   const handleSubmit =async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_BASE_URL}/jobs/jobpost`, {
+      const response = await fetch(`${API_BASE_URL}/api/jobs/jobpost`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
