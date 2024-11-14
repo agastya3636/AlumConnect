@@ -23,7 +23,7 @@ import OpenSource from "./pages/OpenSource";
 import ProjectDetails from "./features/opensource/ProjectDetails";
 import Chat from "./pages/Chat";
 import AddProjectForm from "./features/opensource/AddProject";
-import AddJob from "./features/jobs/AddJob";
+import AddJob from "./features/jobs/JobForm";
 
 const socket = io.connect("https://sih2024-iif3.onrender.com/");
 
