@@ -21,7 +21,8 @@ const OpenSource = () => {
           throw new Error("Failed to fetch events" + response);
         }
         const data = await response.json();
-        setProjects(data.events);
+        console.log("d"+data);
+        setProjects(data.data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -34,8 +35,9 @@ const OpenSource = () => {
   const handleAddProject = () => {
     navigate("/addproject");
   };
-
+  console.log("Projects", projects)
   return (
+    
     <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-6xl w-full">
         <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
