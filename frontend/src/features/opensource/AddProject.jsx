@@ -4,7 +4,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const AddProjectForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [githubLink, setGithubLink] = useState("");
+  const [githublink, setGithubLink] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -12,7 +12,7 @@ const AddProjectForm = () => {
     const newProject = {
       title,
       description,
-      githubLink,
+      githublink,
     };
     try {
       const response = await fetch(`${API_BASE_URL}/api/project`, {
@@ -75,7 +75,7 @@ const AddProjectForm = () => {
             <input
               type="url"
               id="githubLink"
-              value={githubLink}
+              value={githublink}
               onChange={(e) => setGithubLink(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg"
               placeholder="Enter project GitHub link"
