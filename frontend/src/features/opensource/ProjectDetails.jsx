@@ -34,7 +34,7 @@ const ProjectDetails = () => {
     };
     fetchProject();
   }
-    , [_id]);
+    , [id]);
   if (loading) {
     return <p className="text-gray-600">Loading project...</p>;
   }
