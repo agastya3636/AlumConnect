@@ -16,12 +16,12 @@ const JobsList = () => {
     const fetchJobs = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/jobs`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',  // This will include cookies with the request
-      });
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch jobs");
         }
@@ -61,15 +61,15 @@ const JobsList = () => {
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8">
       <h1 className="text-4xl font-bold text-center text-white mb-8">Job Listings</h1>
-{/* 
-      {userRole === "alumni" && (
+
+      {/* {userRole === "alumni" && ( */}
         <button
           onClick={handleAddJob}
           className="bg-green-500 text-white px-4 py-2 rounded mb-8"
         >
           Add Job
         </button>
-      )} */}
+      {/* )} */}
 
       <div className="mb-8">
         <input

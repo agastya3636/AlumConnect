@@ -80,11 +80,7 @@ const LoginPage = () => {
     const oneDayInMilliseconds = 24 * 60 * 60 * 1000; 
     const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
     document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
-
-
-
-    // If login is successful, dispatch profile data and redirect
-    dispatch(updateProfile(data));  // Assuming data contains user profile info
+    dispatch(updateProfile(data));  
     navigate("/dashboard");
   } catch (error) {
     console.error("Error during login:", error);
@@ -125,10 +121,13 @@ const handleRegisterSubmit = async (e) => {
 
     const data = await response.json();
     console.log("Register Response:", data);
-
-    // If registration is successful, dispatch the profile data and redirect
-    dispatch(updateProfile(data));  // Assuming data contains user profile info
+    const token = data.token;
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; 
+    const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
+    document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
+    dispatch(updateProfile(data));  
     navigate("/dashboard");
+
   } catch (error) {
     console.error("Error during registration:", error);
     // Show an error message here, such as setting an error state

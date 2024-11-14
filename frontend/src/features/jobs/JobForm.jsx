@@ -33,10 +33,10 @@ const JobPostForm = ({ userRole }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic to save the job details (e.g., call an API or save to state)
+    
 
-    // After form submission, navigate to the job listing or confirmation page
-    navigate("/jobs");  // Redirect to the jobs page after submission
+    
+    navigate("/jobs");  
   };
 
   return (
