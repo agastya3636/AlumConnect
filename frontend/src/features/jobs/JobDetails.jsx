@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useState ,useEffect} from "react";
 import { useParams } from "react-router-dom";
-import { jobs } from "../../utils/MockData";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const JobDetails = () => {
   const { id } = useParams();
-  console.log(id)
-  const job = jobs.find((job) => job.id === parseInt(id));
+  const [job, setJob] = useState([]);
+  
+  useEffect(() => {
+    const fetchjob = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/jobs/jobpost/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+        const data = await response.json();
+        setJob(data);
+      }
+      catch (e) {
+        console.error("Failed to fetch job", e);
+      }
+    };
+    fetchjob();
+  }, [id]);
+
 
   if (!job) {
     return <div>Job not found</div>;

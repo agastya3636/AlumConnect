@@ -55,7 +55,7 @@ const ProjectDetails = () => {
         </h2>
         <p className="text-gray-600 mb-4">{project.description}</p>
         <a
-          href={project.githubLink}
+          href={project.githublink}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-500 hover:underline"
