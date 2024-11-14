@@ -20,14 +20,14 @@ const AddProjectForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(finalRegisterData),
+        body: JSON.stringify(newProject),
         credentials: "include",
       });
 
       if (!response.ok) {
         throw new Error("Failed to register user");
       }
-      console.log(newProject);
+      console.log(response.body);
       navigate("/projects");
     } catch (error) {
       console.error("Failed to add project", error);
