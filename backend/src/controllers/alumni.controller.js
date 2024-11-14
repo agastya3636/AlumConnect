@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 
 const alumniRegister = asyncHandeller(
     async (req, res) => {
+        console.log(req);
         
         try {
             const {
@@ -178,6 +179,7 @@ const alumniRegister = asyncHandeller(
 
 const alumniLogin = asyncHandeller(
     async (req, res) => {
+        console.log(req);
         const { email, password,role } = req.body;
         if (!email||email.trim()==="" ) {
             return res.status(400).json({ message: "Email are required" });
