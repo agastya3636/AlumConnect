@@ -45,7 +45,7 @@ const ProjectDetails = () => {
   if (!project) {
     return <div>Project not found</div>;
   }
-
+  console.log(project);
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl w-full">
