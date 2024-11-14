@@ -163,7 +163,7 @@ const JobPostForm = ({ userRole }) => {
               <label className="block text-gray-700">Apply Link</label>
               <input
                 type="url"
-                name="applyLink"
+                name="link"
                 value={jobDetails.link}
                 onChange={handleChange}
                 required
