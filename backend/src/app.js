@@ -10,6 +10,7 @@ import routerEvent from './routes/events.router.js'
 import routerCollege from './routes/college.routes.js'
 import routerForums from './routes/forums.routes.js'
 import routerStudent from './routes/student.routes.js'
+import routerProject from './routes/project.routes.js'
 import { authenticateJWT } from './middlewares/authenticateJWT.js'
 
 dotenv.config();
@@ -38,7 +39,8 @@ app.use("/api/jobs", routerJobs);
 app.use("/api/events", routerEvent);
 app.use("/api/college", routerCollege);
 app.use("/api/forums", routerForums);
-app.use("/api/student",  routerStudent);
+app.use("/api/student", routerStudent);
+app.use("/api/project", routerProject);
 
 const server = http.createServer(app);
 const io = setupSocketIO(server);

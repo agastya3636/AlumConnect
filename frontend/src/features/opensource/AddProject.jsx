@@ -7,20 +7,31 @@ const AddProjectForm = () => {
   const [githubLink, setGithubLink] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Simulate adding a new project (You can handle this with an API call in a real scenario)
     const newProject = {
-      id: Date.now(), // Generate a unique ID based on timestamp
       title,
       description,
       githubLink,
     };
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/project`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(finalRegisterData),
+        credentials: "include",
+      });
 
-    
-    console.log(newProject);
-    navigate("/projects"); // Navigate to projects page after submission
+      if (!response.ok) {
+        throw new Error("Failed to register user");
+      }
+      console.log(newProject);
+      navigate("/projects");
+    } catch (error) {
+      console.error("Failed to add project", error);
+    }
   };
 
   return (

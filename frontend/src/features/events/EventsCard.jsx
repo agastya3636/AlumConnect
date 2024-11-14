@@ -2,20 +2,6 @@ import React, { useEffect, useState } from "react";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const EventsCard = () => {
-  // Dummy data for events
-  // const events = [
-  //   {
-  //     id: 1,
-  //     name: "Tech Talk: Future of AI",
-  //     date: "2023-10-01",
-  //     description:
-  //       "Join us for an insightful discussion on the future of artificial intelligence and its impact on various industries.",
-  //     googleMeetLink: "https://meet.google.com/tech-talk-ai",
-  //     author: "Dr. John Doe",
-  //     keywords: ["AI", "Technology", "Future"],
-  //   },
-
-
   const [searchTerm, setSearchTerm] = useState("");
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);

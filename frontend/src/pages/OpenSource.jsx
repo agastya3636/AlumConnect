@@ -1,47 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-const projects = [
-  {
-    id: 1,
-    title: "React",
-    description: "A JavaScript library for building user interfaces.",
-    githubLink: "https://github.com/facebook/react",
-  },
-  {
-    id: 2,
-    title: "Vue.js",
-    description: "The Progressive JavaScript Framework.",
-    githubLink: "https://github.com/vuejs/vue",
-  },
-  {
-    id: 3,
-    title: "Angular",
-    description: "One framework. Mobile & desktop.",
-    githubLink: "https://github.com/angular/angular",
-  },
-  {
-    id: 4,
-    title: "Django",
-    description: "The Web framework for perfectionists with deadlines.",
-    githubLink: "https://github.com/django/django",
-  },
-  {
-    id: 5,
-    title: "Flask",
-    description:
-      "A microframework for Python based on Werkzeug, Jinja2, and good intentions.",
-    githubLink: "https://github.com/pallets/flask",
-  },
-  // Add more projects as needed
-];
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const OpenSource = () => {
-  const navigate = useNavigate(); // Hook to navigate to the Add Project page
+  const navigate = useNavigate(); 
+  const [projects, setProjects] = useState([]);
+  
 
-  // Function to handle the Add Project button click
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/project`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch events" + response);
+        }
+        const data = await response.json();
+        setProjects(data.events);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchEvents();
+  }, []);
+  
   const handleAddProject = () => {
-    navigate("/addproject"); // Navigate to the Add Project page
+    navigate("/addproject");
   };
 
   return (
