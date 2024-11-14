@@ -18,9 +18,9 @@ const JobPostForm = ({ userRole }) => {
   const navigate = useNavigate();
 
   // Check if the user is allowed to access the form
-  if (userRole !== "alumni" && userRole !== "college") {
-    return <div>You do not have permission to post a job.</div>;
-  }
+  // if (userRole !== "alumni" && userRole !== "college") {
+  //   return <div>You do not have permission to post a job.</div>;
+  // }
 
   // Handle form submission
   const handleChange = (e) => {
