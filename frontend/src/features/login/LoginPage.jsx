@@ -62,7 +62,7 @@ const LoginPage = () => {
 
   try {
     const response = await fetch(
-      `${API_BASE_URL}/api/${role.toLowerCase()}/login`,
+      `${API_BASE_URL}/api/${registerData.role.toLowerCase()}/login`,
       {
         method: "POST",
         headers: {
@@ -110,7 +110,7 @@ const handleRegisterSubmit = async (e) => {
 
   try {
     const response = await fetch(
-      `${API_BASE_URL}/api/${role.toLowerCase()}/register`,
+      `${API_BASE_URL}/api/${registerData.role.toLowerCase()}/register`,
       {
         method: "POST",
         headers: {
