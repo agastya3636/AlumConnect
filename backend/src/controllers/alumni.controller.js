@@ -293,10 +293,12 @@ const getAlumni = asyncHandeller(
     async (req, res) => {
          const batch = req.query.batch;
       
-        const yearofpassing = req.query.yearofpassing;
+        // const yearofpassing = req.query.yearofpassing;
 
         // Find alumni by year of passing
-        const alumniList = await Alumni.find();
+        const alumniList = await Alumni.find({
+            batch: batch
+        });
     
         if (alumniList.length === 0) {
             return res.status(404).json({

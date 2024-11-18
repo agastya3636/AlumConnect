@@ -62,7 +62,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
-            <Route index element={<Navigate replace to="dashboard" />} />
+            <Route index element={<Navigate replace to="login" />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="alumnidirectory" element={<AlumniDirectory />} />
             <Route

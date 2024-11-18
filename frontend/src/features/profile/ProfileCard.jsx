@@ -155,7 +155,7 @@ const ProfileCard = () => {
   // Replace with a valid anime image URL
 
   return (
-    <div className="bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg shadow-lg p-8 max-w-7xl mx-auto text-white flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-14">
+    <div className="bg-gradient-to-r from-blue-400 to-blue-400 rounded-lg shadow-lg p-8 max-w-7xl mx-auto text-white flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-14">
       {/* Profile Picture */}
       <div className="flex-shrink-0">
         <img
