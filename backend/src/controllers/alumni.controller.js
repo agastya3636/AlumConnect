@@ -212,10 +212,14 @@ const alumniLogin = asyncHandeller(
             res.status(200).cookie("token", token, options).json({
               success: true,
               token: token,
-
-              userId: userExist._id.toString(),
-              email: userExist.email,
-              role: userExist.role,
+                userId: userExist._id.toString(),
+                name: userExist.name,
+                image: userExist.image,
+                bio: userExist.bio,
+                education: userExist.education,
+                email: userExist.email,
+                role: userExist.role,
+                socialLinks: userExist.socialLinks,
                 batch: userExist.batch,
                 interests: userExist.interests,
                 skills: userExist.skills,
