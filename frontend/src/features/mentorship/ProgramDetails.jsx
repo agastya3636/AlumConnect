@@ -13,8 +13,8 @@ const ProgramDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6">
+    <div className="min-h-full bg-gradient-to-r from-blue-400 via-blue-300 to-blue-400 p-8">
+      <div className="max-w-12xl mx-auto bg-white rounded-lg shadow-lg p-6">
         <img
           src={program.mentor.image}
           alt={program.title}

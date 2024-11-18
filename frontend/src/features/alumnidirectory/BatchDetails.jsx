@@ -64,7 +64,7 @@ const BatchDetails = ({ username, setUsername, room, setRoom, socket }) => {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-8">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-300 to-blue-400 p-8">
       <div className="flex items-center justify-between w-full max-w-6xl mb-8">
         <h1 className="text-white text-3xl font-bold">Batch of {year}</h1>
         <input

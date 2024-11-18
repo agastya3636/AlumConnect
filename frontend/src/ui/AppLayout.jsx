@@ -38,7 +38,7 @@ const AppLayout = () => {
     <div className="grid applayout h-screen">
       <Header />
       <Sidebar />
-      <main className="bg-gray-200 pt-10 px-12 pb-12 overflow-y-scroll relative">
+      <main className="bg-blue-100 pt-2 px-2 pb-2 overflow-y-scroll relative">
         <Outlet />
         <button
           className="fixed bottom-10 right-10 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition duration-200"

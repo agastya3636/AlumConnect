@@ -33,9 +33,9 @@ const AddProjectForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8 flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl w-full">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+    <div className="min-h-full bg-gradient-to-r from-blue-300 via-blue-400 to-blue-300 p-8 flex items-center justify-center">
+      <div className="bg-white rounded-lg shadow-lg p-6 max-w-6xl w-full">
+        <h2 className="text-4xl font-semibold text-gray-800 mb-6 text-center">
           Add New Project
         </h2>
         <form onSubmit={handleSubmit}>

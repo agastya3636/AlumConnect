@@ -38,12 +38,12 @@ const OpenSource = () => {
   
   return (
     
-    <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-8 flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-6xl w-full">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+    <div className="min-h-full bg-gradient-to-r from-blue-300 via-blue-400 to-blue-300 p-8 flex items-center justify-center">
+      <div className="bg-white rounded-lg shadow-lg p-6 max-w-12xl w-full">
+        <h2 className="text-4xl font-semibold text-gray-800 mb-6 text-center">
           Open Source Projects
         </h2>
-        <div className="space-y-4">
+        <div className="space-y-4 ">
           {projects.map((project) => (
             <div key={project._id} className="bg-gray-100 p-4 rounded-lg shadow">
               <h3 className="text-xl font-semibold text-gray-800">
@@ -64,7 +64,7 @@ const OpenSource = () => {
         <div className="mt-6 text-center">
           <button
             onClick={handleAddProject}
-            className="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-700"
+            className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-700"
           >
             Add New Project
           </button>
