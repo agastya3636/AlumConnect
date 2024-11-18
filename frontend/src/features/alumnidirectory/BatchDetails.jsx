@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const BatchDetails = ({ username, setUsername, room, setRoom, socket }) => {
   const { year } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,7 +14,15 @@ const BatchDetails = ({ username, setUsername, room, setRoom, socket }) => {
     const fetchBatch = async () => {
       try {
         const response = await fetch(
-          `/api/alumni?batch=${year}`);
+          `${API_BASE_URL}/api/alumni?batch=${year}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials:"include",
+          }
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch batch");
         }
