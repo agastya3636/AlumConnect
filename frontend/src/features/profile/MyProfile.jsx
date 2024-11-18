@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateProfile } from "../profile/profileSlice"; // Correct import path
+import { updateProfile } from "../profile/profileSlice"; 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const MyProfilePage = () => {
@@ -9,7 +9,7 @@ const MyProfilePage = () => {
 
   const [profileData, setProfileData] = useState({
     ...profile,
-    socialLinks: profile.socialLinks || {}, // Initialize if undefined
+    socialLinks: profile.socialLinks || {}, 
     skills: profile.skills || [],
     interests: profile.interests || [],
   });
@@ -61,7 +61,7 @@ const MyProfilePage = () => {
     e.preventDefault();
     try {
       const updateProfileResponse = await fetch(
-        `${API_BASE_URL}/api/alumni/update`,
+        `${API_BASE_URL}/api/${profileData.role}/update`,
         {
           method: "PUT",
           headers: {
