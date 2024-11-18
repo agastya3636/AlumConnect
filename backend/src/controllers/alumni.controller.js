@@ -160,7 +160,8 @@ const alumniRegister = asyncHandeller(
             success: true,
             token: token,
             userId: alumni._id.toString(),
-            password:alumni.password,
+            password: alumni.password,
+            
             email: alumni.email,
             role: alumni.role,
             college:alumni.college,
@@ -223,7 +224,8 @@ const alumniLogin = asyncHandeller(
                 batch: userExist.batch,
                 interests: userExist.interests,
                 skills: userExist.skills,
-              message: "Alumni Login endpoint hit",
+                password: userExist.password,
+                message: "Alumni Login endpoint hit",
             });
 
         
@@ -251,10 +253,10 @@ const alumniUpdateProfile = asyncHandeller(
         const updateData = { ...req.body };
     
        
-        if (updateData.password) {
-            const salt = await bcrypt.genSalt(10);
-            updateData.password = await bcrypt.hash(updateData.password, salt);
-        }
+        // if (updateData.password) {
+        //     const salt = await bcrypt.genSalt(10);
+        //     updateData.password = await bcrypt.hash(updateData.password, salt);
+        // }
     
        
         const user = await Alumni.findByIdAndUpdate(userId, updateData, { new: true });

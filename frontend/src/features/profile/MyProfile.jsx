@@ -60,6 +60,7 @@ const MyProfilePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // console.log("dete p:" + JSON.stringify(profileData));
       const updateProfileResponse = await fetch(
         `${API_BASE_URL}/api/${profileData.role}/update`,
         {
