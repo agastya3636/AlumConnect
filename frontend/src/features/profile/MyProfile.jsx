@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateProfile } from "../profile/profileSlice"; // Correct import path
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const MyProfilePage = () => {
   const profile = useSelector((state) => state.profile);
   const dispatch = useDispatch();
 
-  const [profileData, setProfileData] = useState(profile);
+  const [profileData, setProfileData] = useState({
+    ...profile,
+    socialLinks: profile.socialLinks || {}, // Initialize if undefined
+    skills: profile.skills || [],
+    interests: profile.interests || [],
+  });
   const [customSkill, setCustomSkill] = useState("");
   const [customInterest, setCustomInterest] = useState("");
 
@@ -51,10 +57,28 @@ const MyProfilePage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(updateProfile(profileData));
-    // Optionally, show a success message or redirect
+    try {
+      const updateProfileResponse = await fetch(
+        `${API_BASE_URL}/api/alumni/update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(profileData),
+          credentials: "include",
+        }
+      );
+      if (!updateProfileResponse.ok) {
+        throw new Error("Failed to update profile");
+      }
+      console.log("Profile updated successfully");
+      dispatch(updateProfile(profileData));
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
@@ -97,7 +121,6 @@ const MyProfilePage = () => {
               required
             />
           </div>
-
           <div>
             <label className="block text-gray-700">Profile Picture URL</label>
             <input
@@ -135,7 +158,7 @@ const MyProfilePage = () => {
             <input
               type="text"
               name="linkedin"
-              value={profileData.socialLinks.linkedin}
+              value={profileData.socialLinks.linkedin || ""}
               onChange={handleSocialLinkChange}
               className="w-full p-2 border rounded-lg"
             />
@@ -145,7 +168,7 @@ const MyProfilePage = () => {
             <input
               type="text"
               name="github"
-              value={profileData.socialLinks.github}
+              value={profileData.socialLinks.github || ""}
               onChange={handleSocialLinkChange}
               className="w-full p-2 border rounded-lg"
             />
@@ -155,7 +178,7 @@ const MyProfilePage = () => {
             <input
               type="text"
               name="twitter"
-              value={profileData.socialLinks.twitter}
+              value={profileData.socialLinks.twitter || ""}
               onChange={handleSocialLinkChange}
               className="w-full p-2 border rounded-lg"
             />
