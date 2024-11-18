@@ -61,14 +61,17 @@ const LoginPage = () => {
 
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/alumni/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginData),
-      credentials:'include',
-    });
+    const response = await fetch(
+      `${API_BASE_URL}/api/${role.toLowerCase()}/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+        credentials: "include",
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to login");
@@ -104,16 +107,19 @@ const handleRegisterSubmit = async (e) => {
 
   console.log("Register Data:", finalRegisterData);
 
-  // Send the registration data to the backend API
+
   try {
-    const response = await fetch(`${API_BASE_URL}/api/alumni/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(finalRegisterData),
-      credentials: "include", // send the cookies with the request
-    });
+    const response = await fetch(
+      `${API_BASE_URL}/api/${role.toLowerCase()}/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(finalRegisterData),
+        credentials: "include",
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to register user");

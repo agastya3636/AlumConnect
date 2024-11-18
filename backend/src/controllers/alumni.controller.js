@@ -209,15 +209,17 @@ const alumniLogin = asyncHandeller(
             sameSite: 'None',  // Allow cross-origin cookies
             };
 
-            res.status(200)
-            .cookie("token", token, options)
-            .json({
-                success: true,
-                token: token,
-                userId: userExist._id.toString(),
-                email: userExist.email,
-                role: userExist.role,
-                message: "Alumni Login endpoint hit"
+            res.status(200).cookie("token", token, options).json({
+              success: true,
+              token: token,
+
+              userId: userExist._id.toString(),
+              email: userExist.email,
+              role: userExist.role,
+                batch: userExist.batch,
+                interests: userExist.interests,
+                skills: userExist.skills,
+              message: "Alumni Login endpoint hit",
             });
 
         
