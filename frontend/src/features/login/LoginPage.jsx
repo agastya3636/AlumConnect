@@ -6,7 +6,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [loginData, setLoginData] = useState({ email: "", password: "" ,role:""});
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
@@ -29,6 +29,7 @@ const LoginPage = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +63,7 @@ const LoginPage = () => {
 
   try {
     const response = await fetch(
-      `${API_BASE_URL}/api/${registerData.role.toLowerCase()}/login`,
+      `${API_BASE_URL}/api/${loginData.role.toLowerCase()}/login`,
       {
         method: "POST",
         headers: {
