@@ -9,8 +9,7 @@ function App() {
     console.log("loading")
     const response =await axios({
 
-      url :"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDQz5dgbtryYd3MG_sDxfdFBPtL9JeBIPU" ,
-      method : "post" ,
+     
       data : {"contents":[{"parts":[{"text":"can u give the roadmap of dsa"+"give within 200 words"}]}]} // input of the user
     }) ;
     console.log(response['data']['candidates'][0]['content']['parts'][0]['text']); // output of the user
