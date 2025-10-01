@@ -24,6 +24,19 @@ AlumConnect enables alumni to stay engaged with their institution through featur
 
 ---
 
+
+🧑‍💼 Dummy Accounts for Testing
+
+To make testing easier, here are some pre-seeded dummy accounts you can use after setting up:
+
+{
+  "email": "alumni@example.com",
+  "password": "alumni123",
+  "name": "John Doe",
+  "batch": "2018",
+  "role": "alumni"
+}
+
 ## 🛠️ Tech Stack
 
 ### Frontend
