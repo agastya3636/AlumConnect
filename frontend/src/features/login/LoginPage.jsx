@@ -6,13 +6,13 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [loginData, setLoginData] = useState({ email: "", password: "" ,role:""});
+  const [loginData, setLoginData] = useState({ email: "", password: "", role: "student", remember: false });
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
     password: "",
     batch: "",
-    role: "student", 
+    role: "student",
     image: "",
     education: "",
     skills: [],
@@ -25,15 +25,22 @@ const LoginPage = () => {
     },
     customSkill: "",
     customInterest: "",
+    username: "", // for college/admin
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
 
   const handleLoginChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData({ ...loginData, [name]: value });
+    const { name, value, type, checked } = e.target;
+    setLoginData({
+      ...loginData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   const handleRegisterChange = (e) => {
@@ -57,91 +64,106 @@ const LoginPage = () => {
     setRegisterData({ ...registerData, customInterest: e.target.value });
   };
 
- const handleLoginSubmit = async (e) => {
-  e.preventDefault();
-
-
-  try {
-    const response = await fetch(
-      `${API_BASE_URL}/api/${loginData.role.toLowerCase()}/login`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginData),
-        credentials: "include",
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess("");
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/${loginData.role.toLowerCase()}/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loginData),
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to login");
       }
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to login");
+      const data = await response.json();
+      const token = data.token;
+      const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+      const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
+      document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
+      dispatch(updateProfile(data));
+      setSuccess("Login successful!");
+      setTimeout(() => navigate("/dashboard"), 1000);
+    } catch (error) {
+      setError("Error during login. Please check your credentials.");
+    } finally {
+      setLoading(false);
     }
-
-    const data = await response.json();
-    console.log("Login Response:", data);
-    const token = data.token;
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; 
-    const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
-    document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
-    dispatch(updateProfile(data));  
-    navigate("/dashboard");
-  } catch (error) {
-    console.error("Error during login:", error);
-    // Show an error message here, such as setting an error state
-  }
-};
-
-const handleRegisterSubmit = async (e) => {
-  e.preventDefault();
-
-  // Prepare the final register data
-  const finalRegisterData = {
-    ...registerData,
-    skills: registerData.customSkill
-      ? [...registerData.skills, registerData.customSkill]
-      : registerData.skills,
-    interests: registerData.customInterest
-      ? [...registerData.interests, registerData.customInterest]
-      : registerData.interests,
   };
 
-  console.log("Register Data:", finalRegisterData);
-
-
-  try {
-    const response = await fetch(
-      `${API_BASE_URL}/api/${registerData.role.toLowerCase()}/register`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(finalRegisterData),
-        credentials: "include",
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess("");
+    const finalRegisterData = {
+      ...registerData,
+      skills: registerData.customSkill
+        ? [...registerData.skills, registerData.customSkill]
+        : registerData.skills,
+      interests: registerData.customInterest
+        ? [...registerData.interests, registerData.customInterest]
+        : registerData.interests,
+    };
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/${registerData.role.toLowerCase()}/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(finalRegisterData),
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to register user");
       }
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to register user");
+      const data = await response.json();
+      const token = data.token;
+      const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+      const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
+      document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
+      dispatch(updateProfile(data));
+      setSuccess("Registration successful!");
+      setTimeout(() => navigate("/dashboard"), 1000);
+    } catch (error) {
+      setError("Error during registration. Please try again.");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const data = await response.json();
-    console.log("Register Response:", data);
-    const token = data.token;
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000; 
-    const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
-    document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
-    dispatch(updateProfile(data));  
-    navigate("/dashboard");
-
-  } catch (error) {
-    console.error("Error during registration:", error);
-    // Show an error message here, such as setting an error state
-  }
-};
-
-
+  // Dummy social login handlers
+  const handleGoogleLogin = () => {
+    setError("");
+    setSuccess("");
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess("Google login (demo) successful!");
+      setTimeout(() => navigate("/dashboard"), 1000);
+    }, 1200);
+  };
+  const handleLinkedInLogin = () => {
+    setError("");
+    setSuccess("");
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess("LinkedIn login (demo) successful!");
+      setTimeout(() => navigate("/dashboard"), 1000);
+    }, 1200);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 p-8 flex items-center justify-center">
@@ -150,49 +172,184 @@ const handleRegisterSubmit = async (e) => {
           {isLogin ? "Login" : "Register"}
         </h2>
         {isLogin ? (
-          <form onSubmit={handleLoginSubmit} className="space-y-4">
-            <div>
-              <label className="block text-gray-700">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={loginData.email}
-                onChange={handleLoginChange}
-                className="w-full p-2 border rounded-lg"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Password</label>
-              <input
-                type="password"
-                name="password"
-                value={loginData.password}
-                onChange={handleLoginChange}
-                className="w-full p-2 border rounded-lg"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Role</label>
-              <select
-                name="role"
-                value={loginData.role}
-                onChange={handleLoginChange}
-                className="w-full p-2 border rounded-lg"
-                required
+          <>
+            <form onSubmit={handleLoginSubmit} className="space-y-4">
+              <div>
+                <label className="block text-gray-700">Role</label>
+                <select
+                  name="role"
+                  value={loginData.role}
+                  onChange={handleLoginChange}
+                  className="w-full p-2 border rounded-lg"
+                  required
+                >
+                  <option value="student">Student</option>
+                  <option value="alumni">Alumni</option>
+                  <option value="college">College</option>
+                  <option value="admin">Admin</option>
+                   <option value="faculty">Faculty</option>
+                   <option value="recruiter">Recruiter</option>
+                   <option value="guest">Guest</option>
+                </select>
+              </div>
+              {loginData.role === "college" || loginData.role === "admin" ? (
+                <div>
+                  <label className="block text-gray-700">Username</label>
+                  <input
+                    type="text"
+                    name="username"
+                    value={loginData.username || ""}
+                    onChange={handleLoginChange}
+                    className="w-full p-2 border rounded-lg"
+                    required
+                  />
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <label className="block text-gray-700">Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={loginData.email}
+                      onChange={handleLoginChange}
+                      className="w-full p-2 border rounded-lg"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-700">Or Mobile Number</label>
+                    <input
+                      type="tel"
+                      name="mobile"
+                      value={loginData.mobile || ""}
+                      onChange={handleLoginChange}
+                      className="w-full p-2 border rounded-lg"
+                      placeholder="Enter mobile number"
+                    />
+                    <button
+                      type="button"
+                      className="mt-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200"
+                      onClick={() => setError("OTP login feature coming soon!")}
+                    >
+                      Login with OTP
+                    </button>
+                  </div>
+                </>
+              )}
+              <div>
+                <label className="block text-gray-700">Password
+                  <span className="ml-2 text-xs text-gray-500 cursor-pointer" title="Password must be at least 8 characters, include a number and a special character.">❓</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={loginData.password}
+                    onChange={handleLoginChange}
+                    className="w-full p-2 border rounded-lg"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-2 top-2 text-sm text-blue-500"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="remember"
+                  checked={loginData.remember}
+                  onChange={handleLoginChange}
+                  className="mr-2"
+                />
+                <label className="text-gray-700">Remember Me</label>
+                <button
+                  type="button"
+                  className="ml-auto text-blue-500 hover:underline text-sm"
+                  onClick={() => setError("Forgot password feature coming soon!")}
+                >
+                  Forgot Password?
+                </button>
+              </div>
+              <div className="flex items-center mt-2">
+                <span className="text-gray-700 mr-2">2FA Enabled</span>
+                <input type="checkbox" disabled checked className="accent-blue-500" />
+                <span className="ml-2 text-xs text-gray-400">(Demo)</span>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+                disabled={loading}
               >
-                <option value="student">Student</option>
-                <option value="alumni">Alumni</option>
-              </select>
+                {loading ? "Logging in..." : "Login"}
+              </button>
+              <button
+                type="button"
+                className="w-full bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-200 mt-2"
+                onClick={() => setSuccess("Continuing as guest...")}
+              >
+                Continue as Guest
+              </button>
+              <button
+                type="button"
+                className="w-full bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition duration-200 mt-2"
+                onClick={() => setError("Magic link feature coming soon!")}
+              >
+                Sign in with Magic Link
+              </button>
+              <button
+                type="button"
+                className="w-full bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition duration-200 mt-2"
+                onClick={() => setError("QR code login feature coming soon!")}
+              >
+                Login with QR Code
+              </button>
+            </form>
+            <div className="mt-4 flex flex-col gap-2">
+              <button
+                type="button"
+                className="w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 flex items-center justify-center"
+                onClick={handleGoogleLogin}
+                disabled={loading}
+              >
+                <span className="mr-2">🔴</span> Login with Google
+              </button>
+              <button
+                type="button"
+                className="w-full bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition duration-200 flex items-center justify-center"
+                onClick={handleLinkedInLogin}
+                disabled={loading}
+              >
+                <span className="mr-2">💼</span> Login with LinkedIn
+              </button>
+              <button
+                type="button"
+                className="w-full bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition duration-200 flex items-center justify-center"
+                onClick={() => setError("Facebook login feature coming soon!")}
+                disabled={loading}
+              >
+                <span className="mr-2">📘</span> Login with Facebook
+              </button>
+              <button
+                type="button"
+                className="w-full bg-cyan-500 text-white px-4 py-2 rounded-lg hover:bg-cyan-600 transition duration-200 flex items-center justify-center"
+                onClick={() => setError("Twitter login feature coming soon!")}
+                disabled={loading}
+              >
+                <span className="mr-2">🐦</span> Login with Twitter
+              </button>
             </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-            >
-              Login
-            </button>
-          </form>
+            <div className="mt-4 text-center">
+              <a href="mailto:support@alumconnect.com" className="text-blue-500 hover:underline">Contact Support</a>
+            </div>
+            {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
+            {success && <div className="mt-4 text-green-500 text-center">{success}</div>}
+          </>
         ) : (
           <form onSubmit={handleRegisterSubmit} className="space-y-4">
             <div>
@@ -219,14 +376,23 @@ const handleRegisterSubmit = async (e) => {
             </div>
             <div>
               <label className="block text-gray-700">Password</label>
-              <input
-                type="password"
-                name="password"
-                value={registerData.password}
-                onChange={handleRegisterChange}
-                className="w-full p-2 border rounded-lg"
-                required
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={registerData.password}
+                  onChange={handleRegisterChange}
+                  className="w-full p-2 border rounded-lg"
+                  required
+                />
+                <button
+                  type="button"
+                  className="absolute right-2 top-2 text-sm text-blue-500"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+              </div>
             </div>
             <div>
               <label className="block text-gray-700">Batch</label>
@@ -250,8 +416,26 @@ const handleRegisterSubmit = async (e) => {
               >
                 <option value="student">Student</option>
                 <option value="alumni">Alumni</option>
+                <option value="college">College</option>
+                <option value="admin">Admin</option>
+                 <option value="faculty">Faculty</option>
+                 <option value="recruiter">Recruiter</option>
+                 <option value="guest">Guest</option>
               </select>
             </div>
+            {(registerData.role === "college" || registerData.role === "admin") && (
+              <div>
+                <label className="block text-gray-700">Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  value={registerData.username}
+                  onChange={handleRegisterChange}
+                  className="w-full p-2 border rounded-lg"
+                  required
+                />
+              </div>
+            )}
             <div>
               <label className="block text-gray-700">Profile Picture URL</label>
               <input
@@ -392,9 +576,12 @@ const handleRegisterSubmit = async (e) => {
             <button
               type="submit"
               className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+              disabled={loading}
             >
-              Register
+              {loading ? "Registering..." : "Register"}
             </button>
+            {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
+            {success && <div className="mt-4 text-green-500 text-center">{success}</div>}
           </form>
         )}
         <p className="mt-4 text-center">

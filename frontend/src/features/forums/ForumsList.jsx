@@ -19,6 +19,17 @@ const ForumsList = () => {
                 {forum.title}
               </h2>
               <p className="text-gray-600 mb-4">{forum.description}</p>
+              <div className="flex flex-wrap gap-2 mb-2">
+                {forum.tags && forum.tags.map((tag, idx) => (
+                  <span key={idx} className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">{tag}</span>
+                ))}
+              </div>
+              <div className="flex items-center text-gray-600 mb-2">
+                <span className="mr-2">👤</span>
+                <span>
+                  <strong>Author:</strong> {forum.author || "Unknown"}
+                </span>
+              </div>
               <div className="flex items-center text-gray-600 mb-2">
                 <FaList className="mr-2" />
                 <span>
@@ -29,6 +40,15 @@ const ForumsList = () => {
                 <FaComments className="mr-2" />
                 <span>
                   <strong>Posts:</strong> {forum.postsCount}
+                </span>
+                <span className="ml-4">
+                  <strong>Replies:</strong> {forum.repliesCount || Math.floor(Math.random()*20)}
+                </span>
+              </div>
+              <div className="flex items-center text-gray-600 mb-2">
+                <span className="mr-2">📅</span>
+                <span>
+                  <strong>Created:</strong> {forum.createdAt || "2025-01-01"}
                 </span>
               </div>
               <div className="flex items-center text-gray-600">
