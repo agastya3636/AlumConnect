@@ -31,7 +31,6 @@ You'll be working on your own copy of the project.
 # Fork the repository on GitHub first, then clone your fork
 git clone [https://github.com/](https://github.com/)<your-username>/SIH2024.git
 cd SIH2024
-````
 
 ### 3\. Set Up Your Local Environment
 
