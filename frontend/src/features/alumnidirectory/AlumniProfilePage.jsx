@@ -20,6 +20,11 @@ const Welcome = () => {
           <p className="text-lg text-gray-600">Year of Graduation: 2026</p>
 
           <div className="pt-8 w-full">
+            <div className="mb-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded">
+              <span className="font-semibold text-yellow-800">Demo Alumni Account:</span><br/>
+              <span className="text-gray-700">Email: <span className="font-mono">alumni@example.com</span></span><br/>
+              <span className="text-gray-700">Password: <span className="font-mono">alumni123</span></span>
+            </div>
             <h3 className="text-lg font-semibold text-gray-800">Connect with me:</h3>
             <div className="flex space-x-4 mt-2">
               <Link to="https://linkedin.com/agastya" className="text-blue-600"><BsLinkedin size={32} /></Link>
