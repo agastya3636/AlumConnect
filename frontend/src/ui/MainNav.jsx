@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import {
   AiOutlineHome,
@@ -12,88 +11,97 @@ import {
   AiOutlineAppstoreAdd,
 } from "react-icons/ai";
 
-const MainNav = () => {
+const MainNav = ({ onLinkClick }) => {
   return (
-    <nav className="py-22">
-      <ul className="flex flex-col gap-3 text-xl font-semibold ">
-        <li className="  hover:bg-gray-200 rounded active:bg-purple-200   ">
+    <nav className="py-2 flex-1 overflow-y-auto">
+      <ul className="flex flex-col gap-1 text-base md:text-lg font-semibold">
+        <li className="hover:bg-gray-200 rounded active:bg-purple-200">
           <NavLink
             to="dashboard"
-            className="flex items-center gap-4 px-8 navlinks  py-2"
+            className="flex items-center gap-3 px-4 py-2 navlinks"
+            onClick={onLinkClick}
           >
-            <AiOutlineHome />
+            <AiOutlineHome className="flex-shrink-0 text-xl" />
             <span>Home</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 ">
+        <li className="hover:bg-gray-200 rounded">
           <NavLink
             to="alumnidirectory"
-            className="flex items-center gap-4 px-8 navlinks  py-2"
+            className="flex items-center gap-3 px-4 py-2 navlinks"
+            onClick={onLinkClick}
           >
-            <AiOutlineUsergroupAdd />
+            <AiOutlineUsergroupAdd className="flex-shrink-0 text-xl" />
             <span>Batches</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 ">
+        <li className="hover:bg-gray-200 rounded">
           <NavLink
             to="events"
-            className="flex items-center gap-4 px-8 navlinks  py-2"
+            className="flex items-center gap-3 px-4 py-2 navlinks"
+            onClick={onLinkClick}
           >
-            <AiOutlineCalendar />
+            <AiOutlineCalendar className="flex-shrink-0 text-xl" />
             <span>Events</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 ">
+        <li className="hover:bg-gray-200 rounded">
           <NavLink
             to="discussionforums"
-            className="flex items-center gap-4 px-8 navlinks  py-2"
+            className="flex items-center gap-3 px-4 py-2 navlinks"
+            onClick={onLinkClick}
           >
-            <AiOutlineRead />
+            <AiOutlineRead className="flex-shrink-0 text-xl" />
             <span>Forums</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 ">
+        <li className="hover:bg-gray-200 rounded">
           <NavLink
             to="mentorship"
-            className="flex items-center gap-4 px-8 navlinks  py-2"
+            className="flex items-center gap-3 px-4 py-2 navlinks"
+            onClick={onLinkClick}
           >
-            <AiOutlineContainer />
-            Mentorship
+            <AiOutlineContainer className="flex-shrink-0 text-xl" />
+            <span>Mentorship</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 ">
+        <li className="hover:bg-gray-200 rounded">
           <NavLink
             to="opensource"
-            className="flex items-center gap-4 px-8 navlinks  py-2"
+            className="flex items-center gap-3 px-4 py-2 navlinks"
+            onClick={onLinkClick}
           >
-            <AiOutlineAppstoreAdd />
-            OpenSource
+            <AiOutlineAppstoreAdd className="flex-shrink-0 text-xl" />
+            <span>OpenSource</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 ">
+        <li className="hover:bg-gray-200 rounded">
           <NavLink
             to="placement"
-            className="flex items-center gap-4 px-8 navlinks  py-2"
+            className="flex items-center gap-3 px-4 py-2 navlinks"
+            onClick={onLinkClick}
           >
-            <AiOutlineNodeIndex />
+            <AiOutlineNodeIndex className="flex-shrink-0 text-xl" />
             <span>Placement</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 ">
+        <li className="hover:bg-gray-200 rounded">
           <NavLink
             to="donation"
-            className="flex items-center gap-4 px-8 navlinks  py-2"
+            className="flex items-center gap-3 px-4 py-2 navlinks"
+            onClick={onLinkClick}
           >
-            <AiOutlineCreditCard />
+            <AiOutlineCreditCard className="flex-shrink-0 text-xl" />
             <span>Donation</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 ">
+        <li className="hover:bg-gray-200 rounded">
           <NavLink
             to="profile"
-            className="flex items-center gap-4 px-8 navlinks  py-2"
+            className="flex items-center gap-3 px-4 py-2 navlinks"
+            onClick={onLinkClick}
           >
-            <AiOutlineUser />
+            <AiOutlineUser className="flex-shrink-0 text-xl" />
             <span>My Profile</span>
           </NavLink>
         </li>

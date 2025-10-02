@@ -2,12 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fixed grid layout for proper desktop sidebar positioning */
 .applayout {
-  grid-template-columns: 260px 1fr;
+  display: grid;
+  grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
+  height: 100vh;
 }
-.sidebar {
-  grid-row: 1 / -1;
+
+@media (min-width: 768px) {
+  .applayout {
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: auto 1fr;
+  }
 }
 
 .navlinks:link {

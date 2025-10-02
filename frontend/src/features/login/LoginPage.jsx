@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateProfile } from "../profile/profileSlice";
@@ -6,7 +6,15 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
+
   const [loginData, setLoginData] = useState({ email: "", password: "", role: "student", remember: false });
+
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+    role: "",
+  });
+
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
@@ -66,9 +74,13 @@ const LoginPage = () => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+
     setLoading(true);
     setError("");
     setSuccess("");
+
+
+
     try {
       const response = await fetch(
         `${API_BASE_URL}/api/${loginData.role.toLowerCase()}/login`,
@@ -81,15 +93,26 @@ const LoginPage = () => {
           credentials: "include",
         }
       );
+
       if (!response.ok) {
         throw new Error("Failed to login");
       }
       const data = await response.json();
+
+
+      if (!response.ok) {
+        throw new Error("Failed to login");
+      }
+
+      const data = await response.json();
+      console.log("Login Response:", data);
+
       const token = data.token;
       const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
       const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
       document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
       dispatch(updateProfile(data));
+
       setSuccess("Login successful!");
       setTimeout(() => navigate("/dashboard"), 1000);
     } catch (error) {
@@ -113,6 +136,31 @@ const LoginPage = () => {
         ? [...registerData.interests, registerData.customInterest]
         : registerData.interests,
     };
+
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error during login:", error);
+      // Show an error message here, such as setting an error state
+    }
+  };
+
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+
+    // Prepare the final register data
+    const finalRegisterData = {
+      ...registerData,
+      skills: registerData.customSkill
+        ? [...registerData.skills, registerData.customSkill]
+        : registerData.skills,
+      interests: registerData.customInterest
+        ? [...registerData.interests, registerData.customInterest]
+        : registerData.interests,
+    };
+
+    console.log("Register Data:", finalRegisterData);
+
+
     try {
       const response = await fetch(
         `${API_BASE_URL}/api/${registerData.role.toLowerCase()}/register`,
@@ -125,15 +173,25 @@ const LoginPage = () => {
           credentials: "include",
         }
       );
+
       if (!response.ok) {
         throw new Error("Failed to register user");
       }
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Failed to register user");
+      }
+
+      const data = await response.json();
+      console.log("Register Response:", data);
+
       const token = data.token;
       const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
       const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
       document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
       dispatch(updateProfile(data));
+
       setSuccess("Registration successful!");
       setTimeout(() => navigate("/dashboard"), 1000);
     } catch (error) {
@@ -165,13 +223,22 @@ const LoginPage = () => {
     }, 1200);
   };
 
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error during registration:", error);
+      // Show an error message here, such as setting an error state
+    }
+  };
+
+
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 p-8 flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl w-full">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 p-4 md:p-8 flex items-center justify-center">
+      <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-4 md:mb-6 text-center">
           {isLogin ? "Login" : "Register"}
         </h2>
         {isLogin ? (
+
           <>
             <form onSubmit={handleLoginSubmit} className="space-y-4">
               <div>
@@ -285,6 +352,45 @@ const LoginPage = () => {
                 type="submit"
                 className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
                 disabled={loading}
+
+          <form onSubmit={handleLoginSubmit} className="space-y-3 md:space-y-4">
+            <div>
+              <label className="block text-gray-700 text-sm md:text-base">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={loginData.email}
+                onChange={handleLoginChange}
+                className="w-full p-2 border rounded-lg text-sm md:text-base"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 text-sm md:text-base">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                value={loginData.password}
+                onChange={handleLoginChange}
+                className="w-full p-2 border rounded-lg text-sm md:text-base"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 text-sm md:text-base">
+                Role
+              </label>
+              <select
+                name="role"
+                value={loginData.role}
+                onChange={handleLoginChange}
+                className="w-full p-2 border rounded-lg text-sm md:text-base"
+                required
+
               >
                 {loading ? "Logging in..." : "Login"}
               </button>
@@ -344,6 +450,7 @@ const LoginPage = () => {
                 <span className="mr-2">🐦</span> Login with Twitter
               </button>
             </div>
+
             <div className="mt-4 text-center">
               <a href="mailto:support@alumconnect.com" className="text-blue-500 hover:underline">Contact Support</a>
             </div>
@@ -392,26 +499,85 @@ const LoginPage = () => {
                 >
                   {showPassword ? "Hide" : "Show"}
                 </button>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-sm md:text-base"
+            >
+              Login
+            </button>
+          </form>
+        ) : (
+          <form
+            onSubmit={handleRegisterSubmit}
+            className="space-y-3 md:space-y-4"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+              <div>
+                <label className="block text-gray-700 text-sm md:text-base">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={registerData.name}
+                  onChange={handleRegisterChange}
+                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 text-sm md:text-base">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={registerData.email}
+                  onChange={handleRegisterChange}
+                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                  required
+                />
+
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+              <div>
+                <label className="block text-gray-700 text-sm md:text-base">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  value={registerData.password}
+                  onChange={handleRegisterChange}
+                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 text-sm md:text-base">
+                  Batch
+                </label>
+                <input
+                  type="text"
+                  name="batch"
+                  value={registerData.batch}
+                  onChange={handleRegisterChange}
+                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                  required
+                />
               </div>
             </div>
             <div>
-              <label className="block text-gray-700">Batch</label>
-              <input
-                type="text"
-                name="batch"
-                value={registerData.batch}
-                onChange={handleRegisterChange}
-                className="w-full p-2 border rounded-lg"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Role</label>
+              <label className="block text-gray-700 text-sm md:text-base">
+                Role
+              </label>
               <select
                 name="role"
                 value={registerData.role}
                 onChange={handleRegisterChange}
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 border rounded-lg text-sm md:text-base"
                 required
               >
                 <option value="student">Student</option>
@@ -437,97 +603,116 @@ const LoginPage = () => {
               </div>
             )}
             <div>
-              <label className="block text-gray-700">Profile Picture URL</label>
+              <label className="block text-gray-700 text-sm md:text-base">
+                Profile Picture URL
+              </label>
               <input
                 type="text"
                 name="image"
                 value={registerData.image}
                 onChange={handleRegisterChange}
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 border rounded-lg text-sm md:text-base"
                 required
               />
             </div>
             <div>
-              <label className="block text-gray-700">Education</label>
+              <label className="block text-gray-700 text-sm md:text-base">
+                Education
+              </label>
               <input
                 type="text"
                 name="education"
                 value={registerData.education}
                 onChange={handleRegisterChange}
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 border rounded-lg text-sm md:text-base"
                 required
               />
             </div>
             <div>
-              <label className="block text-gray-700">Bio</label>
+              <label className="block text-gray-700 text-sm md:text-base">
+                Bio
+              </label>
               <textarea
                 name="bio"
                 value={registerData.bio}
                 onChange={handleRegisterChange}
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 border rounded-lg text-sm md:text-base"
+                rows="3"
                 required
               />
             </div>
-            <div>
-              <label className="block text-gray-700">LinkedIn</label>
-              <input
-                type="text"
-                name="linkedin"
-                value={registerData.socialLinks.linkedin}
-                onChange={handleSocialLinkChange}
-                className="w-full p-2 border rounded-lg"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+              <div>
+                <label className="block text-gray-700 text-sm md:text-base">
+                  LinkedIn
+                </label>
+                <input
+                  type="text"
+                  name="linkedin"
+                  value={registerData.socialLinks.linkedin}
+                  onChange={handleSocialLinkChange}
+                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 text-sm md:text-base">
+                  GitHub
+                </label>
+                <input
+                  type="text"
+                  name="github"
+                  value={registerData.socialLinks.github}
+                  onChange={handleSocialLinkChange}
+                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 text-sm md:text-base">
+                  Twitter
+                </label>
+                <input
+                  type="text"
+                  name="twitter"
+                  value={registerData.socialLinks.twitter}
+                  onChange={handleSocialLinkChange}
+                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                />
+              </div>
             </div>
             <div>
-              <label className="block text-gray-700">GitHub</label>
-              <input
-                type="text"
-                name="github"
-                value={registerData.socialLinks.github}
-                onChange={handleSocialLinkChange}
-                className="w-full p-2 border rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Twitter</label>
-              <input
-                type="text"
-                name="twitter"
-                value={registerData.socialLinks.twitter}
-                onChange={handleSocialLinkChange}
-                className="w-full p-2 border rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Skills</label>
-              <input
-                type="text"
-                name="customSkill"
-                value={registerData.customSkill}
-                onChange={handleCustomSkillChange}
-                className="w-full p-2 border rounded-lg"
-                placeholder="Enter a skill"
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  if (registerData.customSkill) {
-                    setRegisterData((prevData) => ({
-                      ...prevData,
-                      skills: [...prevData.skills, registerData.customSkill],
-                      customSkill: "",
-                    }));
-                  }
-                }}
-                className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-              >
-                Add Skill
-              </button>
-              <div className="mt-2">
+              <label className="block text-gray-700 text-sm md:text-base">
+                Skills
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  name="customSkill"
+                  value={registerData.customSkill}
+                  onChange={handleCustomSkillChange}
+                  className="flex-1 p-2 border rounded-lg text-sm md:text-base"
+                  placeholder="Enter a skill"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (registerData.customSkill) {
+                      setRegisterData((prevData) => ({
+                        ...prevData,
+                        skills: [...prevData.skills, registerData.customSkill],
+                        customSkill: "",
+                      }));
+                    }
+                  }}
+                  className="bg-blue-500 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-sm md:text-base whitespace-nowrap"
+                >
+                  Add
+                </button>
+              </div>
+              <div className="mt-2 flex flex-wrap gap-2">
                 {registerData.skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs md:text-sm font-semibold text-gray-700"
                   >
                     {skill}
                   </span>
@@ -535,38 +720,42 @@ const LoginPage = () => {
               </div>
             </div>
             <div>
-              <label className="block text-gray-700">Interests</label>
-              <input
-                type="text"
-                name="customInterest"
-                value={registerData.customInterest}
-                onChange={handleCustomInterestChange}
-                className="w-full p-2 border rounded-lg"
-                placeholder="Enter an interest"
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  if (registerData.customInterest) {
-                    setRegisterData((prevData) => ({
-                      ...prevData,
-                      interests: [
-                        ...prevData.interests,
-                        registerData.customInterest,
-                      ],
-                      customInterest: "",
-                    }));
-                  }
-                }}
-                className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-              >
-                Add Interest
-              </button>
-              <div className="mt-2">
+              <label className="block text-gray-700 text-sm md:text-base">
+                Interests
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  name="customInterest"
+                  value={registerData.customInterest}
+                  onChange={handleCustomInterestChange}
+                  className="flex-1 p-2 border rounded-lg text-sm md:text-base"
+                  placeholder="Enter an interest"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (registerData.customInterest) {
+                      setRegisterData((prevData) => ({
+                        ...prevData,
+                        interests: [
+                          ...prevData.interests,
+                          registerData.customInterest,
+                        ],
+                        customInterest: "",
+                      }));
+                    }
+                  }}
+                  className="bg-blue-500 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-sm md:text-base whitespace-nowrap"
+                >
+                  Add
+                </button>
+              </div>
+              <div className="mt-2 flex flex-wrap gap-2">
                 {registerData.interests.map((interest, index) => (
                   <span
                     key={index}
-                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs md:text-sm font-semibold text-gray-700"
                   >
                     {interest}
                   </span>
@@ -575,8 +764,12 @@ const LoginPage = () => {
             </div>
             <button
               type="submit"
+
               className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
               disabled={loading}
+
+              className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-sm md:text-base"
+
             >
               {loading ? "Registering..." : "Register"}
             </button>
@@ -584,7 +777,7 @@ const LoginPage = () => {
             {success && <div className="mt-4 text-green-500 text-center">{success}</div>}
           </form>
         )}
-        <p className="mt-4 text-center">
+        <p className="mt-4 text-center text-sm md:text-base">
           {isLogin ? "Don't have an account?" : "Already have an account?"}
           <button
             onClick={() => setIsLogin(!isLogin)}
