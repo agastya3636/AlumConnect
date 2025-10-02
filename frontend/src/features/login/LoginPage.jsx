@@ -6,11 +6,15 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
+
+  const [loginData, setLoginData] = useState({ email: "", password: "", role: "student", remember: false });
+
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
     role: "",
   });
+
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
@@ -29,14 +33,22 @@ const LoginPage = () => {
     },
     customSkill: "",
     customInterest: "",
+    username: "", // for college/admin
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLoginChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData({ ...loginData, [name]: value });
+    const { name, value, type, checked } = e.target;
+    setLoginData({
+      ...loginData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   const handleRegisterChange = (e) => {
@@ -63,6 +75,12 @@ const LoginPage = () => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+
+
     try {
       const response = await fetch(
         `${API_BASE_URL}/api/${loginData.role.toLowerCase()}/login`,
@@ -79,14 +97,46 @@ const LoginPage = () => {
       if (!response.ok) {
         throw new Error("Failed to login");
       }
+      const data = await response.json();
+
+
+      if (!response.ok) {
+        throw new Error("Failed to login");
+      }
 
       const data = await response.json();
       console.log("Login Response:", data);
+
       const token = data.token;
       const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
       const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
       document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
       dispatch(updateProfile(data));
+
+      setSuccess("Login successful!");
+      setTimeout(() => navigate("/dashboard"), 1000);
+    } catch (error) {
+      setError("Error during login. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess("");
+    const finalRegisterData = {
+      ...registerData,
+      skills: registerData.customSkill
+        ? [...registerData.skills, registerData.customSkill]
+        : registerData.skills,
+      interests: registerData.customInterest
+        ? [...registerData.interests, registerData.customInterest]
+        : registerData.interests,
+    };
+
       navigate("/dashboard");
     } catch (error) {
       console.error("Error during login:", error);
@@ -110,6 +160,7 @@ const LoginPage = () => {
 
     console.log("Register Data:", finalRegisterData);
 
+
     try {
       const response = await fetch(
         `${API_BASE_URL}/api/${registerData.role.toLowerCase()}/register`,
@@ -126,20 +177,59 @@ const LoginPage = () => {
       if (!response.ok) {
         throw new Error("Failed to register user");
       }
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Failed to register user");
+      }
 
       const data = await response.json();
       console.log("Register Response:", data);
+
       const token = data.token;
       const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
       const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
       document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
       dispatch(updateProfile(data));
+
+      setSuccess("Registration successful!");
+      setTimeout(() => navigate("/dashboard"), 1000);
+    } catch (error) {
+      setError("Error during registration. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Dummy social login handlers
+  const handleGoogleLogin = () => {
+    setError("");
+    setSuccess("");
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess("Google login (demo) successful!");
+      setTimeout(() => navigate("/dashboard"), 1000);
+    }, 1200);
+  };
+  const handleLinkedInLogin = () => {
+    setError("");
+    setSuccess("");
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess("LinkedIn login (demo) successful!");
+      setTimeout(() => navigate("/dashboard"), 1000);
+    }, 1200);
+  };
+
       navigate("/dashboard");
     } catch (error) {
       console.error("Error during registration:", error);
       // Show an error message here, such as setting an error state
     }
   };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 p-4 md:p-8 flex items-center justify-center">
@@ -148,6 +238,121 @@ const LoginPage = () => {
           {isLogin ? "Login" : "Register"}
         </h2>
         {isLogin ? (
+
+          <>
+            <form onSubmit={handleLoginSubmit} className="space-y-4">
+              <div>
+                <label className="block text-gray-700">Role</label>
+                <select
+                  name="role"
+                  value={loginData.role}
+                  onChange={handleLoginChange}
+                  className="w-full p-2 border rounded-lg"
+                  required
+                >
+                  <option value="student">Student</option>
+                  <option value="alumni">Alumni</option>
+                  <option value="college">College</option>
+                  <option value="admin">Admin</option>
+                   <option value="faculty">Faculty</option>
+                   <option value="recruiter">Recruiter</option>
+                   <option value="guest">Guest</option>
+                </select>
+              </div>
+              {loginData.role === "college" || loginData.role === "admin" ? (
+                <div>
+                  <label className="block text-gray-700">Username</label>
+                  <input
+                    type="text"
+                    name="username"
+                    value={loginData.username || ""}
+                    onChange={handleLoginChange}
+                    className="w-full p-2 border rounded-lg"
+                    required
+                  />
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <label className="block text-gray-700">Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={loginData.email}
+                      onChange={handleLoginChange}
+                      className="w-full p-2 border rounded-lg"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-700">Or Mobile Number</label>
+                    <input
+                      type="tel"
+                      name="mobile"
+                      value={loginData.mobile || ""}
+                      onChange={handleLoginChange}
+                      className="w-full p-2 border rounded-lg"
+                      placeholder="Enter mobile number"
+                    />
+                    <button
+                      type="button"
+                      className="mt-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200"
+                      onClick={() => setError("OTP login feature coming soon!")}
+                    >
+                      Login with OTP
+                    </button>
+                  </div>
+                </>
+              )}
+              <div>
+                <label className="block text-gray-700">Password
+                  <span className="ml-2 text-xs text-gray-500 cursor-pointer" title="Password must be at least 8 characters, include a number and a special character.">❓</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={loginData.password}
+                    onChange={handleLoginChange}
+                    className="w-full p-2 border rounded-lg"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-2 top-2 text-sm text-blue-500"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="remember"
+                  checked={loginData.remember}
+                  onChange={handleLoginChange}
+                  className="mr-2"
+                />
+                <label className="text-gray-700">Remember Me</label>
+                <button
+                  type="button"
+                  className="ml-auto text-blue-500 hover:underline text-sm"
+                  onClick={() => setError("Forgot password feature coming soon!")}
+                >
+                  Forgot Password?
+                </button>
+              </div>
+              <div className="flex items-center mt-2">
+                <span className="text-gray-700 mr-2">2FA Enabled</span>
+                <input type="checkbox" disabled checked className="accent-blue-500" />
+                <span className="ml-2 text-xs text-gray-400">(Demo)</span>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+                disabled={loading}
+
           <form onSubmit={handleLoginSubmit} className="space-y-3 md:space-y-4">
             <div>
               <label className="block text-gray-700 text-sm md:text-base">
@@ -185,11 +390,116 @@ const LoginPage = () => {
                 onChange={handleLoginChange}
                 className="w-full p-2 border rounded-lg text-sm md:text-base"
                 required
+
               >
-                <option value="student">Student</option>
-                <option value="alumni">Alumni</option>
-              </select>
+                {loading ? "Logging in..." : "Login"}
+              </button>
+              <button
+                type="button"
+                className="w-full bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-200 mt-2"
+                onClick={() => setSuccess("Continuing as guest...")}
+              >
+                Continue as Guest
+              </button>
+              <button
+                type="button"
+                className="w-full bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition duration-200 mt-2"
+                onClick={() => setError("Magic link feature coming soon!")}
+              >
+                Sign in with Magic Link
+              </button>
+              <button
+                type="button"
+                className="w-full bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition duration-200 mt-2"
+                onClick={() => setError("QR code login feature coming soon!")}
+              >
+                Login with QR Code
+              </button>
+            </form>
+            <div className="mt-4 flex flex-col gap-2">
+              <button
+                type="button"
+                className="w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 flex items-center justify-center"
+                onClick={handleGoogleLogin}
+                disabled={loading}
+              >
+                <span className="mr-2">🔴</span> Login with Google
+              </button>
+              <button
+                type="button"
+                className="w-full bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition duration-200 flex items-center justify-center"
+                onClick={handleLinkedInLogin}
+                disabled={loading}
+              >
+                <span className="mr-2">💼</span> Login with LinkedIn
+              </button>
+              <button
+                type="button"
+                className="w-full bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition duration-200 flex items-center justify-center"
+                onClick={() => setError("Facebook login feature coming soon!")}
+                disabled={loading}
+              >
+                <span className="mr-2">📘</span> Login with Facebook
+              </button>
+              <button
+                type="button"
+                className="w-full bg-cyan-500 text-white px-4 py-2 rounded-lg hover:bg-cyan-600 transition duration-200 flex items-center justify-center"
+                onClick={() => setError("Twitter login feature coming soon!")}
+                disabled={loading}
+              >
+                <span className="mr-2">🐦</span> Login with Twitter
+              </button>
             </div>
+
+            <div className="mt-4 text-center">
+              <a href="mailto:support@alumconnect.com" className="text-blue-500 hover:underline">Contact Support</a>
+            </div>
+            {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
+            {success && <div className="mt-4 text-green-500 text-center">{success}</div>}
+          </>
+        ) : (
+          <form onSubmit={handleRegisterSubmit} className="space-y-4">
+            <div>
+              <label className="block text-gray-700">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={registerData.name}
+                onChange={handleRegisterChange}
+                className="w-full p-2 border rounded-lg"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={registerData.email}
+                onChange={handleRegisterChange}
+                className="w-full p-2 border rounded-lg"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={registerData.password}
+                  onChange={handleRegisterChange}
+                  className="w-full p-2 border rounded-lg"
+                  required
+                />
+                <button
+                  type="button"
+                  className="absolute right-2 top-2 text-sm text-blue-500"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+
             <button
               type="submit"
               className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-sm md:text-base"
@@ -228,6 +538,7 @@ const LoginPage = () => {
                   className="w-full p-2 border rounded-lg text-sm md:text-base"
                   required
                 />
+
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
@@ -271,8 +582,26 @@ const LoginPage = () => {
               >
                 <option value="student">Student</option>
                 <option value="alumni">Alumni</option>
+                <option value="college">College</option>
+                <option value="admin">Admin</option>
+                 <option value="faculty">Faculty</option>
+                 <option value="recruiter">Recruiter</option>
+                 <option value="guest">Guest</option>
               </select>
             </div>
+            {(registerData.role === "college" || registerData.role === "admin") && (
+              <div>
+                <label className="block text-gray-700">Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  value={registerData.username}
+                  onChange={handleRegisterChange}
+                  className="w-full p-2 border rounded-lg"
+                  required
+                />
+              </div>
+            )}
             <div>
               <label className="block text-gray-700 text-sm md:text-base">
                 Profile Picture URL
@@ -435,10 +764,17 @@ const LoginPage = () => {
             </div>
             <button
               type="submit"
+
+              className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+              disabled={loading}
+
               className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-sm md:text-base"
+
             >
-              Register
+              {loading ? "Registering..." : "Register"}
             </button>
+            {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
+            {success && <div className="mt-4 text-green-500 text-center">{success}</div>}
           </form>
         )}
         <p className="mt-4 text-center text-sm md:text-base">

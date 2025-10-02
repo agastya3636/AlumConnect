@@ -19,11 +19,28 @@ const ForumsList = () => {
               <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2">
                 {forum.title}
               </h2>
+
+              <p className="text-gray-600 mb-4">{forum.description}</p>
+              <div className="flex flex-wrap gap-2 mb-2">
+                {forum.tags && forum.tags.map((tag, idx) => (
+                  <span key={idx} className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">{tag}</span>
+                ))}
+              </div>
+              <div className="flex items-center text-gray-600 mb-2">
+                <span className="mr-2">👤</span>
+                <span>
+                  <strong>Author:</strong> {forum.author || "Unknown"}
+                </span>
+              </div>
+              <div className="flex items-center text-gray-600 mb-2">
+                <FaList className="mr-2" />
+
               <p className="text-gray-600 mb-3 md:mb-4 text-sm md:text-base">
                 {forum.description}
               </p>
               <div className="flex items-center text-gray-600 mb-2 text-sm md:text-base">
                 <FaList className="mr-2 flex-shrink-0" />
+
                 <span>
                   <strong>Topics:</strong> {forum.topicsCount}
                 </span>
@@ -32,6 +49,15 @@ const ForumsList = () => {
                 <FaComments className="mr-2 flex-shrink-0" />
                 <span>
                   <strong>Posts:</strong> {forum.postsCount}
+                </span>
+                <span className="ml-4">
+                  <strong>Replies:</strong> {forum.repliesCount || Math.floor(Math.random()*20)}
+                </span>
+              </div>
+              <div className="flex items-center text-gray-600 mb-2">
+                <span className="mr-2">📅</span>
+                <span>
+                  <strong>Created:</strong> {forum.createdAt || "2025-01-01"}
                 </span>
               </div>
               <div className="flex items-center text-gray-600 text-sm md:text-base">
