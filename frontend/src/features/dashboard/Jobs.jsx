@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -33,23 +32,33 @@ const Jobs = () => {
   }, []);
 
   if (loading) {
-    return <p className="text-gray-600">Loading jobs...</p>;
+    return (
+      <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 md:p-6 h-full">
+        <p className="text-gray-600 text-sm md:text-base">Loading jobs...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <p className="text-red-500">Error: {error}</p>;
+    return (
+      <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 md:p-6 h-full">
+        <p className="text-red-500 text-sm md:text-base break-words">
+          Error: {error}
+        </p>
+      </div>
+    );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4 h-full">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">
+    <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 md:p-6 h-full">
+      <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
         Job Opportunities
       </h2>
       {jobs.length > 0 ? (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {jobs.map((job) => (
-            <div key={job.id} className="border-b pb-4">
-              <h3 className="text-xl font-semibold text-gray-800">
+            <div key={job.id} className="border-b pb-3 sm:pb-4 last:border-b-0">
+              <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 break-words">
                 <Link
                   to={`/jobs/${job.id}`}
                   className="text-blue-500 hover:underline"
@@ -57,15 +66,17 @@ const Jobs = () => {
                   {job.title}
                 </Link>
               </h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-xs sm:text-sm text-gray-600 mt-1 break-words">
                 {job.company} - {job.location}
               </p>
-              <p className="text-gray-600 mt-2">{job.description}</p>
+              <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-2 line-clamp-3 break-words">
+                {job.description}
+              </p>
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-gray-600">
+        <p className="text-gray-600 text-sm md:text-base">
           No job opportunities available at the moment.
         </p>
       )}
