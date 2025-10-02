@@ -1,12 +1,14 @@
-import React from "react";
 import logo from "../assets/logo.png";
+
 const Logo = () => {
   return (
-    <>
-      <div className=" flex  justify-center items-center w-full px-4 py-4">
-        <img src={logo} className="w-24 " alt="logo" />
-      </div>
-    </>
+    <div className="flex justify-center items-center w-full py-2">
+      <img
+        src={logo || "/placeholder.svg"}
+        className="w-20 md:w-24"
+        alt="logo"
+      />
+    </div>
   );
 };
 
