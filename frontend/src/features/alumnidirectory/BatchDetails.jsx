@@ -61,7 +61,7 @@ const BatchDetails = ({ username, setUsername, room, setRoom, socket }) => {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-300 to-blue-400 p-4 md:p-8">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-300 to-blue-400 dark:from-gray-800 dark:to-gray-900 p-4 md:p-8">
       <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl mb-6 md:mb-8 gap-4">
         <h1 className="text-white text-2xl md:text-3xl font-bold text-center md:text-left">
           Batch of {year}
@@ -71,7 +71,7 @@ const BatchDetails = ({ username, setUsername, room, setRoom, socket }) => {
           placeholder="Search students..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className="p-2 px-4 rounded-lg w-full md:w-auto text-sm md:text-base"
+          className="p-2 px-4 rounded-lg w-full md:w-auto text-sm md:text-base dark:bg-gray-700 dark:text-white dark:border-gray-600"
         />
       </div>
       <div className="w-full max-w-6xl">
@@ -80,7 +80,7 @@ const BatchDetails = ({ username, setUsername, room, setRoom, socket }) => {
             {filteredStudents.map((student, index) => (
               <div
                 key={index}
-                className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-3xl p-4 md:p-6 shadow-lg transform transition duration-500 hover:scale-105 min-h-[180px] md:min-h-[200px] flex flex-col md:flex-row items-center md:items-start gap-4"
+                className="bg-white bg-opacity-20 dark:bg-gray-700 dark:bg-opacity-40 backdrop-filter backdrop-blur-lg rounded-3xl p-4 md:p-6 shadow-lg transform transition duration-500 hover:scale-105 min-h-[180px] md:min-h-[200px] flex flex-col md:flex-row items-center md:items-start gap-4"
               >
                 <img
                   src={`https://robohash.org/${student.name}.png?size=150x150`}

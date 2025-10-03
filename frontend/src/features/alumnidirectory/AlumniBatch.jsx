@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { alumnidata } from "../../utils/MockData.jsx";
 const AlumniBatch = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-full bg-gradient-to-r from-blue-400 via-blue-400 to-blue-400 p-4 md:p-8">
+    <div className="flex flex-col items-center justify-center min-h-full bg-gradient-to-r from-blue-400 via-blue-400 to-blue-400 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 p-4 md:p-8">
       <div className="text-white text-3xl md:text-4xl lg:text-5xl mb-6 md:mb-8 font-bold text-center">
         Alumni Directory
       </div>
@@ -11,7 +11,7 @@ const AlumniBatch = () => {
           <NavLink
             to={`${batch.year}`}
             key={batch.year}
-            className="bg-white bg-opacity-30 flex justify-center items-center backdrop-filter backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-lg transform transition duration-500 hover:scale-105 min-h-[150px] md:min-h-[200px]"
+            className="bg-white bg-opacity-30 dark:bg-gray-700 dark:bg-opacity-40 flex justify-center items-center backdrop-filter backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-lg transform transition duration-500 hover:scale-105 min-h-[150px] md:min-h-[200px]"
           >
             <h3 className="text-white text-2xl md:text-3xl font-bold hover:underline text-center">
               Batch of {batch.year}

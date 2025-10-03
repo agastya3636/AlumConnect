@@ -15,7 +15,7 @@ const MainNav = ({ onLinkClick }) => {
   return (
     <nav className="py-2 flex-1 overflow-y-auto">
       <ul className="flex flex-col gap-1 text-base md:text-lg font-semibold">
-        <li className="hover:bg-gray-200 rounded active:bg-purple-200">
+        <li className="hover:bg-gray-200 dark:hover:bg-gray-700 rounded active:bg-purple-200 dark:active:bg-purple-900/40">
           <NavLink
             to="dashboard"
             className="flex items-center gap-3 px-4 py-2 navlinks"
@@ -25,7 +25,7 @@ const MainNav = ({ onLinkClick }) => {
             <span>Home</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 rounded">
+        <li className="hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
           <NavLink
             to="alumnidirectory"
             className="flex items-center gap-3 px-4 py-2 navlinks"
@@ -35,7 +35,7 @@ const MainNav = ({ onLinkClick }) => {
             <span>Batches</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 rounded">
+        <li className="hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
           <NavLink
             to="events"
             className="flex items-center gap-3 px-4 py-2 navlinks"
@@ -45,7 +45,7 @@ const MainNav = ({ onLinkClick }) => {
             <span>Events</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 rounded">
+        <li className="hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
           <NavLink
             to="discussionforums"
             className="flex items-center gap-3 px-4 py-2 navlinks"
@@ -55,7 +55,7 @@ const MainNav = ({ onLinkClick }) => {
             <span>Forums</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 rounded">
+        <li className="hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
           <NavLink
             to="mentorship"
             className="flex items-center gap-3 px-4 py-2 navlinks"
@@ -65,7 +65,7 @@ const MainNav = ({ onLinkClick }) => {
             <span>Mentorship</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 rounded">
+        <li className="hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
           <NavLink
             to="opensource"
             className="flex items-center gap-3 px-4 py-2 navlinks"
@@ -75,7 +75,7 @@ const MainNav = ({ onLinkClick }) => {
             <span>OpenSource</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 rounded">
+        <li className="hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
           <NavLink
             to="placement"
             className="flex items-center gap-3 px-4 py-2 navlinks"
@@ -85,7 +85,7 @@ const MainNav = ({ onLinkClick }) => {
             <span>Placement</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 rounded">
+        <li className="hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
           <NavLink
             to="donation"
             className="flex items-center gap-3 px-4 py-2 navlinks"
@@ -95,7 +95,7 @@ const MainNav = ({ onLinkClick }) => {
             <span>Donation</span>
           </NavLink>
         </li>
-        <li className="hover:bg-gray-200 rounded">
+        <li className="hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
           <NavLink
             to="profile"
             className="flex items-center gap-3 px-4 py-2 navlinks"

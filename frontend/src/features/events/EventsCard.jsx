@@ -48,7 +48,7 @@ const EventsCard = () => {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-3 sm:p-4 md:p-6 lg:p-8">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 p-3 sm:p-4 md:p-6 lg:p-8">
       <div className="flex flex-col sm:flex-row items-center justify-between w-full max-w-6xl mb-4 sm:mb-6 md:mb-8 gap-3 sm:gap-4">
         <h1 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center sm:text-left">
           Events
@@ -58,7 +58,7 @@ const EventsCard = () => {
           placeholder="Search events..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className="p-2 sm:p-3 px-3 sm:px-4 rounded-lg w-full sm:w-64 md:w-80 text-sm md:text-base"
+          className="p-2 sm:p-3 px-3 sm:px-4 rounded-lg w-full sm:w-64 md:w-80 text-sm md:text-base bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 placeholder:text-gray-500 dark:placeholder:text-gray-400"
         />
       </div>
 
@@ -68,7 +68,7 @@ const EventsCard = () => {
             {filteredEvents.map((event) => (
               <div
                 key={event._id}
-                className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 shadow-lg transform transition duration-500 hover:scale-105 min-h-[160px] sm:min-h-[180px] md:min-h-[200px] flex flex-col"
+                className="bg-white/20 dark:bg-gray-800/60 backdrop-filter backdrop-blur-lg rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 shadow-lg ring-1 ring-white/20 dark:ring-gray-700 transform transition duration-500 hover:scale-105 min-h-[160px] sm:min-h-[180px] md:min-h-[200px] flex flex-col"
               >
                 <h2 className="text-white text-base sm:text-lg md:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 break-words">
                   {event.title}
@@ -84,7 +84,7 @@ const EventsCard = () => {
                 </p>
                 <a
                   href={event.collage}
-                  className="text-yellow-300 hover:underline text-xs sm:text-sm md:text-base break-all"
+                  className="text-blue-200 dark:text-blue-400 hover:underline text-xs sm:text-sm md:text-base break-all"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
