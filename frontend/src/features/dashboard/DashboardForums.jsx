@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const forumPosts = [
@@ -29,48 +28,31 @@ const forumPosts = [
 ];
 
 const DashboardForums = () => {
-
-  // const [forumPosts, setforumPosts] = useEffect([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchforumPosts = async () => {
-  //     try {
-  //       const response = await fetch("http://127.0.0.1:8000/events/?limit=2");
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch forumPosts");
-  //       }
-  //       const data = await response.json();
-  //       setforumPosts(data.forumPosts);
-  //     } catch (error) {
-  //       setError(error.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchforumPosts();  
-  // }, []);
-
-
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 h-full">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Forums</h2>
-      <div className="space-y-4">
+    <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 md:p-6 h-full">
+      <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
+        Forums
+      </h2>
+      <div className="space-y-3 sm:space-y-4">
         {forumPosts.map((post) => (
-          <div key={post.id} className="border-b pb-4">
-            <h3 className="text-xl font-semibold text-gray-800">
+          <div key={post.id} className="border-b pb-3 sm:pb-4 last:border-b-0">
+            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 break-words">
               {post.title}
             </h3>
-            <p className="text-sm text-gray-600">
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">
               by {post.author} on {post.date}
             </p>
-            <p className="text-gray-600 mt-2">{post.content}</p>
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-2 line-clamp-3">
+              {post.content}
+            </p>
           </div>
         ))}
       </div>
-      <div className="mt-4">
-        <Link to="/discussionforums" className="text-blue-500 hover:underline">
+      <div className="mt-3 sm:mt-4">
+        <Link
+          to="/discussionforums"
+          className="text-blue-500 hover:underline text-sm md:text-base"
+        >
           View Full Forum
         </Link>
       </div>
