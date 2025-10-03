@@ -6,7 +6,7 @@ const ProfileCard = () => {
 
   return (
     <div
-      className="bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg 
+      className="bg-gradient-to-r from-blue-400 to-blue-500 dark:from-gray-900 dark:to-gray-800 rounded-lg 
     shadow-lg p-4 sm:p-6 md:p-8 max-w-7xl mx-auto text-white"
     >
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 md:gap-8 lg:gap-12">
@@ -29,8 +29,8 @@ const ProfileCard = () => {
             <span
               className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${
                 profile.role === "student"
-                  ? "bg-green-200 text-green-800"
-                  : "bg-blue-200 text-blue-800"
+                  ? "bg-green-200 text-green-800 dark:bg-green-700 dark:text-green-100"
+                  : "bg-blue-200 text-blue-800 dark:bg-blue-700 dark:text-blue-100"
               }`}
             >
               {profile.role === "student" ? "Student" : "Alumnus"}
@@ -62,7 +62,7 @@ const ProfileCard = () => {
                   profile.skills.map((skill, index) => (
                     <span
                       key={index}
-                      className="bg-white text-gray-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold shadow-sm"
+                      className="bg-white text-gray-800 dark:bg-gray-700 dark:text-gray-100 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold shadow-sm"
                     >
                       {skill}
                     </span>
@@ -81,7 +81,7 @@ const ProfileCard = () => {
                   profile.interests.map((interest, index) => (
                     <span
                       key={index}
-                      className="bg-white text-gray-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold shadow-sm"
+                      className="bg-white text-gray-800 dark:bg-gray-700 dark:text-gray-100 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold shadow-sm"
                     >
                       {interest}
                     </span>

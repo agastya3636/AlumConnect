@@ -142,15 +142,15 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 p-4 md:p-8 flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-4 md:mb-6 text-center">
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 p-4 md:p-8 flex items-center justify-center">
+      <div className="bg-white dark:bg-slate-900/60 dark:border dark:border-slate-700 dark:shadow-none rounded-lg shadow-lg p-4 md:p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-slate-100 mb-4 md:mb-6 text-center">
           {isLogin ? "Login" : "Register"}
         </h2>
         {isLogin ? (
           <form onSubmit={handleLoginSubmit} className="space-y-3 md:space-y-4">
             <div>
-              <label className="block text-gray-700 text-sm md:text-base">
+              <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                 Email
               </label>
               <input
@@ -158,12 +158,12 @@ const LoginPage = () => {
                 name="email"
                 value={loginData.email}
                 onChange={handleLoginChange}
-                className="w-full p-2 border rounded-lg text-sm md:text-base"
+                className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                 required
               />
             </div>
             <div>
-              <label className="block text-gray-700 text-sm md:text-base">
+              <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                 Password
               </label>
               <input
@@ -171,19 +171,19 @@ const LoginPage = () => {
                 name="password"
                 value={loginData.password}
                 onChange={handleLoginChange}
-                className="w-full p-2 border rounded-lg text-sm md:text-base"
+                className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                 required
               />
             </div>
             <div>
-              <label className="block text-gray-700 text-sm md:text-base">
+              <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                 Role
               </label>
               <select
                 name="role"
                 value={loginData.role}
                 onChange={handleLoginChange}
-                className="w-full p-2 border rounded-lg text-sm md:text-base"
+                className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                 required
               >
                 <option value="student">Student</option>
@@ -192,7 +192,7 @@ const LoginPage = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-sm md:text-base"
+              className="w-full bg-blue-500 dark:bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-500 transition duration-200 text-sm md:text-base"
             >
               Login
             </button>
@@ -204,7 +204,7 @@ const LoginPage = () => {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
               <div>
-                <label className="block text-gray-700 text-sm md:text-base">
+                <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                   Name
                 </label>
                 <input
@@ -212,12 +212,12 @@ const LoginPage = () => {
                   name="name"
                   value={registerData.name}
                   onChange={handleRegisterChange}
-                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                  className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                   required
                 />
               </div>
               <div>
-                <label className="block text-gray-700 text-sm md:text-base">
+                <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                   Email
                 </label>
                 <input
@@ -225,14 +225,14 @@ const LoginPage = () => {
                   name="email"
                   value={registerData.email}
                   onChange={handleRegisterChange}
-                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                  className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                   required
                 />
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
               <div>
-                <label className="block text-gray-700 text-sm md:text-base">
+                <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                   Password
                 </label>
                 <input
@@ -240,12 +240,12 @@ const LoginPage = () => {
                   name="password"
                   value={registerData.password}
                   onChange={handleRegisterChange}
-                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                  className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                   required
                 />
               </div>
               <div>
-                <label className="block text-gray-700 text-sm md:text-base">
+                <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                   Batch
                 </label>
                 <input
@@ -253,20 +253,20 @@ const LoginPage = () => {
                   name="batch"
                   value={registerData.batch}
                   onChange={handleRegisterChange}
-                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                  className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                   required
                 />
               </div>
             </div>
             <div>
-              <label className="block text-gray-700 text-sm md:text-base">
+              <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                 Role
               </label>
               <select
                 name="role"
                 value={registerData.role}
                 onChange={handleRegisterChange}
-                className="w-full p-2 border rounded-lg text-sm md:text-base"
+                className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                 required
               >
                 <option value="student">Student</option>
@@ -274,7 +274,7 @@ const LoginPage = () => {
               </select>
             </div>
             <div>
-              <label className="block text-gray-700 text-sm md:text-base">
+              <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                 Profile Picture URL
               </label>
               <input
@@ -282,12 +282,12 @@ const LoginPage = () => {
                 name="image"
                 value={registerData.image}
                 onChange={handleRegisterChange}
-                className="w-full p-2 border rounded-lg text-sm md:text-base"
+                className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                 required
               />
             </div>
             <div>
-              <label className="block text-gray-700 text-sm md:text-base">
+              <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                 Education
               </label>
               <input
@@ -295,26 +295,26 @@ const LoginPage = () => {
                 name="education"
                 value={registerData.education}
                 onChange={handleRegisterChange}
-                className="w-full p-2 border rounded-lg text-sm md:text-base"
+                className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                 required
               />
             </div>
             <div>
-              <label className="block text-gray-700 text-sm md:text-base">
+              <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                 Bio
               </label>
               <textarea
                 name="bio"
                 value={registerData.bio}
                 onChange={handleRegisterChange}
-                className="w-full p-2 border rounded-lg text-sm md:text-base"
+                className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                 rows="3"
                 required
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
               <div>
-                <label className="block text-gray-700 text-sm md:text-base">
+                <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                   LinkedIn
                 </label>
                 <input
@@ -322,11 +322,11 @@ const LoginPage = () => {
                   name="linkedin"
                   value={registerData.socialLinks.linkedin}
                   onChange={handleSocialLinkChange}
-                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                  className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                 />
               </div>
               <div>
-                <label className="block text-gray-700 text-sm md:text-base">
+                <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                   GitHub
                 </label>
                 <input
@@ -334,11 +334,11 @@ const LoginPage = () => {
                   name="github"
                   value={registerData.socialLinks.github}
                   onChange={handleSocialLinkChange}
-                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                  className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                 />
               </div>
               <div>
-                <label className="block text-gray-700 text-sm md:text-base">
+                <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                   Twitter
                 </label>
                 <input
@@ -346,12 +346,12 @@ const LoginPage = () => {
                   name="twitter"
                   value={registerData.socialLinks.twitter}
                   onChange={handleSocialLinkChange}
-                  className="w-full p-2 border rounded-lg text-sm md:text-base"
+                  className="w-full p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-gray-700 text-sm md:text-base">
+              <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                 Skills
               </label>
               <div className="flex gap-2">
@@ -360,7 +360,7 @@ const LoginPage = () => {
                   name="customSkill"
                   value={registerData.customSkill}
                   onChange={handleCustomSkillChange}
-                  className="flex-1 p-2 border rounded-lg text-sm md:text-base"
+                  className="flex-1 p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                   placeholder="Enter a skill"
                 />
                 <button
@@ -374,7 +374,7 @@ const LoginPage = () => {
                       }));
                     }
                   }}
-                  className="bg-blue-500 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-sm md:text-base whitespace-nowrap"
+                  className="bg-blue-500 dark:bg-blue-600 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-500 transition duration-200 text-sm md:text-base whitespace-nowrap"
                 >
                   Add
                 </button>
@@ -383,7 +383,7 @@ const LoginPage = () => {
                 {registerData.skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs md:text-sm font-semibold text-gray-700"
+                    className="inline-block bg-gray-200 dark:bg-slate-800 dark:border dark:border-slate-700 rounded-full px-3 py-1 text-xs md:text-sm font-semibold text-gray-700 dark:text-slate-200"
                   >
                     {skill}
                   </span>
@@ -391,7 +391,7 @@ const LoginPage = () => {
               </div>
             </div>
             <div>
-              <label className="block text-gray-700 text-sm md:text-base">
+              <label className="block text-gray-700 dark:text-slate-300 text-sm md:text-base">
                 Interests
               </label>
               <div className="flex gap-2">
@@ -400,7 +400,7 @@ const LoginPage = () => {
                   name="customInterest"
                   value={registerData.customInterest}
                   onChange={handleCustomInterestChange}
-                  className="flex-1 p-2 border rounded-lg text-sm md:text-base"
+                  className="flex-1 p-2 border rounded-lg text-sm md:text-base border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 placeholder:text-slate-400"
                   placeholder="Enter an interest"
                 />
                 <button
@@ -417,7 +417,7 @@ const LoginPage = () => {
                       }));
                     }
                   }}
-                  className="bg-blue-500 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-sm md:text-base whitespace-nowrap"
+                  className="bg-blue-500 dark:bg-blue-600 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-500 transition duration-200 text-sm md:text-base whitespace-nowrap"
                 >
                   Add
                 </button>
@@ -426,7 +426,7 @@ const LoginPage = () => {
                 {registerData.interests.map((interest, index) => (
                   <span
                     key={index}
-                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs md:text-sm font-semibold text-gray-700"
+                    className="inline-block bg-gray-200 dark:bg-slate-800 dark:border dark:border-slate-700 rounded-full px-3 py-1 text-xs md:text-sm font-semibold text-gray-700 dark:text-slate-200"
                   >
                     {interest}
                   </span>
@@ -435,7 +435,7 @@ const LoginPage = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-sm md:text-base"
+              className="w-full bg-blue-500 dark:bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-500 transition duration-200 text-sm md:text-base"
             >
               Register
             </button>
@@ -445,7 +445,7 @@ const LoginPage = () => {
           {isLogin ? "Don't have an account?" : "Already have an account?"}
           <button
             onClick={() => setIsLogin(!isLogin)}
-            className="text-blue-500 ml-2 hover:underline"
+            className="text-blue-500 dark:text-blue-400 ml-2 hover:underline"
           >
             {isLogin ? "Register" : "Login"}
           </button>
