@@ -6,7 +6,8 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [loginData, setLoginData] = useState({ email: "", password: "", role: "student", remember: false });
+  const [loginData, setLoginData] = useState({ email: "", password: "", role: "student", remember: false,username:"",
+  mobile: "" });
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
@@ -88,7 +89,12 @@ const LoginPage = () => {
       const token = data.token;
       const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
       const expires = new Date(Date.now() + oneDayInMilliseconds).toUTCString();
-      document.cookie = `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
+      const cookieFlags =
+  window.location.hostname === "localhost"
+    ? `token=${token}; path=/; expires=${expires}`
+    : `token=${token}; path=/; expires=${expires}; Secure; SameSite=None`;
+
+document.cookie = cookieFlags;
       dispatch(updateProfile(data));
       setSuccess("Login successful!");
       setTimeout(() => navigate("/dashboard"), 1000);
