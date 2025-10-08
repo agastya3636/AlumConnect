@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateProfile } from "../profile/profileSlice";
 import { registerFormFields } from "./registerFormFields.js";
@@ -78,19 +78,52 @@ const RegisterPage = () => {
 
       const value = registerData[field.name];
 
+      // Multi-select field
       if (field.type === "multiselect") {
-        return Array.isArray(value) && value.length > 0; // ensure at least one selected
+        return Array.isArray(value) && value.length > 0;
       }
 
+      // Select field
       if (field.type === "select") {
-        return value?.toString().trim() !== ""; // check select value is not empty
+        return value?.toString().trim() !== "";
       }
 
-      // text/email/password
+      // Email validation
+      if (field.type === "email") {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(value?.toString().trim());
+      }
+
+      // URL/link validation
+      if (field.type === "link") {
+        try {
+          new URL(value); // throws if invalid
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      // Password validation
+      if (field.type === "password") {
+        // If it's a "confirmPassword" field, compare with "password"
+        if (field.name === "confirmPassword") {
+          return value === registerData["password"];
+        }
+
+        // If it's "currentPassword" and you want to check it matches existing one:
+        if (field.name === "currentPassword") {
+          return value === registerData["existingPassword"]; // adjust key if needed
+        }
+
+        // For new password, you can also check min length if desired
+        return value?.toString().trim() !== "";
+      }
+
+      // Default text field
       return value?.toString().trim() !== "";
     });
   };
-
 
   const allStepsValid = () => {
     return Object.keys(registerFormFields).every((step) => validateStep(Number(step)));
@@ -302,6 +335,16 @@ const RegisterPage = () => {
             )}
           </div>
         </form>
+
+        <p className="mt-4 text-center text-sm text-gray-700 dark:text-slate-300">
+          Already have an account?{" "}
+          <NavLink
+            to="/login"
+            className="text-blue-500 hover:underline dark:text-blue-400"
+          >
+            Login
+          </NavLink>
+        </p>
       </div>
     </section>
   );

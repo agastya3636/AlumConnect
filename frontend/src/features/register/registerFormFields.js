@@ -22,6 +22,13 @@ export const registerFormFields = {
       required: true,
     },
     {
+      label: "Confirm Password",
+      name: "confirmPassword",
+      type: "password",
+      placeholder: "********",
+      required: true,
+    },
+    {
       label: "Batch",
       name: "batch",
       type: "text",
