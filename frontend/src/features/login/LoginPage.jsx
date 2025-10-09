@@ -128,7 +128,6 @@ const LoginPage = () => {
           </button>
         </form>
 
-
         <p className="mt-4 text-center text-sm text-gray-700 dark:text-slate-300">
           Don't have an account?{" "}
           <NavLink
