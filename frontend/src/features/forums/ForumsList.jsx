@@ -50,7 +50,7 @@ const ForumsList = () => {
                 </span>
                 <span className="ml-4">
                   <strong>Replies:</strong>{" "}
-                  {forum.repliesCount || Math.floor(Math.random() * 20)}
+                  {forum.repliesCount ?? "N/A"}
                 </span>
               </div>
               <div className="flex items-center text-gray-600 mb-2">
