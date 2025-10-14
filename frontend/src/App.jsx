@@ -6,6 +6,7 @@ import AlumniDirectory from "./pages/AlumniDirectory";
 import Events from "./pages/Events";
 import Mentorship from "./pages/Mentorship";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Placement from "./pages/Placement";
 import Profile from "./pages/Profile";
 import DiscussionForums from "./pages/DiscussionForums";
@@ -63,6 +64,7 @@ const App = () => {
         <Routes>
           <Route element={<AppLayout />}>
             <Route index element={<Navigate replace to="login" />} />
+            <Route index element={<Register replace to="register" />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="alumnidirectory" element={<AlumniDirectory />} />
             <Route
@@ -103,6 +105,7 @@ const App = () => {
             />
           </Route>
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
 
           <Route path="*" element={<PageNotFound />} />
         </Routes>
