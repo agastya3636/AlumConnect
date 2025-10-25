@@ -3,7 +3,7 @@ import { mentorshipPrograms } from "../../utils/MockData"; // Adjust the import 
 
 const MentorshipLayout = () => {
   return (
-    <div className="min-h-full bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 p-4 md:p-8">
+   <div className="min-h-screen w-full bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 text-gray-900 dark:text-gray-100 p-4 md:p-8">
       <h1 className="text-3xl md:text-4xl font-bold text-center text-white mb-6 md:mb-8">
         Mentorship Programs
       </h1>
