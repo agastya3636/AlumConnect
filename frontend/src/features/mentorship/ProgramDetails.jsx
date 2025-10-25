@@ -12,7 +12,7 @@ const ProgramDetails = () => {
   }
 
   return (
-    <div className="min-h-full bg-gradient-to-r from-blue-400 via-blue-300 to-blue-400 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 p-8">
+    <div className="min-h-screen w-full bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 text-gray-900 dark:text-gray-100 p-8">
       <div className="max-w-12xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
         <img
           src={program.mentor.image || "/placeholder.svg"}
