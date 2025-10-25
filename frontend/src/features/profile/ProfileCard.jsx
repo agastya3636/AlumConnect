@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
-
 const ProfileCard = () => {
   const profile = useSelector((state) => state.profile);
 
   return (
     <div
-      className="bg-gradient-to-r from-blue-400 to-blue-500 dark:from-gray-900 dark:to-gray-800 rounded-lg 
-    shadow-lg p-4 sm:p-6 md:p-8 max-w-7xl mx-auto text-white"
+      className="relative bg-gradient-to-r from-blue-400 to-blue-500 dark:from-gray-900 dark:to-gray-800 rounded-lg 
+  shadow-lg p-4 sm:p-6 md:p-8 max-w-7xl mx-auto text-white"
     >
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 md:gap-8 lg:gap-12">
         {/* Profile Picture */}
@@ -101,41 +100,35 @@ const ProfileCard = () => {
           </div>
         </div>
 
-        {/* Social Links */}
-        <div className="flex lg:flex-col items-center justify-center gap-4 lg:gap-6 w-full lg:w-auto">
-          {profile.socialLinks?.github && (
-            <a
-              href={profile.socialLinks.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition-transform"
-              aria-label="GitHub"
-            >
-              <FaGithub className="text-2xl sm:text-3xl hover:text-gray-300" />
-            </a>
-          )}
-          {profile.socialLinks?.linkedin && (
-            <a
-              href={profile.socialLinks.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition-transform"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedin className="text-2xl sm:text-3xl hover:text-gray-300" />
-            </a>
-          )}
-          {profile.socialLinks?.twitter && (
-            <a
-              href={profile.socialLinks.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition-transform"
-              aria-label="Twitter"
-            >
-              <FaTwitter className="text-2xl sm:text-3xl hover:text-gray-300" />
-            </a>
-          )}
+        {/* Social Icons Rail */}
+        <div className="flex flex-col gap-4 absolute right-6 top-1/2 -translate-y-1/2">
+          <a
+            href="https://github.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="grid place-items-center w-10 h-10 rounded-full bg-white/90 text-gray-900 hover:scale-110 hover:-translate-y-0.5 transition-transform duration-200 shadow ring-1 ring-black/5"
+          >
+            <FaGithub size={20} />
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="grid place-items-center w-10 h-10 rounded-full bg-white/90 text-[#0A66C2] hover:scale-110 hover:-translate-y-0.5 transition-transform duration-200 shadow ring-1 ring-black/5"
+          >
+            <FaLinkedin size={20} />
+          </a>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Twitter"
+            className="grid place-items-center w-10 h-10 rounded-full bg-white/90 text-[#1DA1F2] hover:scale-110 hover:-translate-y-0.5 transition-transform duration-200 shadow ring-1 ring-black/5"
+          >
+            <FaTwitter size={20} />
+          </a>
         </div>
       </div>
     </div>
